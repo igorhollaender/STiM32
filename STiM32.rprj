@@ -1,0 +1,5 @@
+
+<Project Header="Project 'STiM32'" Path=".\STiM32.rprj" Project="Yes" OutputFile="" sate="96" ActiveApp="STiM32" >
+	<ApplicationBuild Header="STiM32" Extern=".\STiM32.rapp" Path=".\STiM32.rapp" OutputFile=".\objdebug\STiM32.elf" sate="98" Config="Circle_Debug" />
+	<ApplicationBuild Header="Cx_Demo_STM32F429" Extern="..\..\..\Example Apps\Cx_Demo\Cx_Demo_STM32F429.rapp" Path="..\..\..\Example Apps\Cx_Demo\Cx_Demo_STM32F429.rapp" OutputFile="..\..\..\Example Apps\Cx_Demo\OP4_STM32F429_obj\Cx_Demo_STM32F429.elf" sate="96" />
+</Project>
