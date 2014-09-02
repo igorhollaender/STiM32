@@ -1,55 +1,54 @@
 
-<ApplicationBuild Header="STiM32" Extern=".\STiM32.rapp" Path=".\STiM32.rapp" OutputFile=".\objdebug\STiM32.elf" sate="98" Config="Circle_Debug" >
+<ApplicationBuild Header="STiM32" Extern=".\STiM32.rapp" Path=".\STiM32.rapp" OutputFile=".\objdebug\STiM32.elf" sate="96" Config="Circle_Debug" >
 	<NodeC Path=".\STiM32.c" Header="STiM32.c" Marker="-1" OutputFile=".\objdebug\STiM32.o" sate="0" />
-	<NodeApp Path="..\..\..\..\..\Program Files\Raisonance\Ride\Lib\ARM\CircleOS\Evo_Circle_STM3242x.elf" Header="Evo_Circle_STM3242x.elf" Marker="-1" OutputFile="" LoadExclude="No" sate="0" />
+	<NodeApp Path="..\..\..\..\..\Program Files\Raisonance\Ride\Lib\ARM\CircleOS\Evo_Circle_STM3242x.elf" Header="Evo_Circle_STM3242x.elf" Marker="-1" OutputFile="" LoadExclude="No" sate="2" />
 	<NodeApp Path="..\..\..\..\..\Program Files\Raisonance\Ride\Lib\ARM\CircleOS\FAT_OP4.elf" Header="FAT_OP4.elf" Marker="-1" OutputFile="" LoadExclude="No" sate="0" />
-	<NodeC Path="..\..\..\STlib\STM32F4xx_StdPeriph_Lib\Source\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c" Header="stm32f4xx_tim.c" Marker="-1" OutputFile=".\objdebug\stm32f4xx_tim.o" sate="0" />
 	<Options>
 		<Config Header="Standard" >
 			<Set Header="ApplicationBuild" >
 				<Section Header="General" >
 					<Property Header="TargetFamily" Value="ARM" />
-																																																																																																	
+																																																																																																										
 				</Section>
-																																																																											
+																																																																																		
 			</Set>
 			<Set Header="Target" >
 				<Section Header="ProcessorARM" >
 					<Property Header="Processor" Value="STM32F429ZI_CircleOS_EVO" />
-																																																																																																	
+																																																																																																										
 				</Section>
 				<Section Header="ToolSetARM" >
 					<Property Header="BuildToolSetARM" Value="ARM\GNU.config" />
-																																																																																																	
+																																																																																																										
 				</Section>
-																																																																											
+																																																																																		
 			</Set>
-																																																		
+																																																							
 		</Config>
 		<Config Header="Circle_Debug" >
 			<Set Header="Target" >
 				<Section Header="DebugARM" >
 					<Property Header="DebugTool_CORTEX" Value="RLINK_CORTEX" Removable="1" />
-																
+																									
 				</Section>
-												
+																			
 			</Set>
 			<Set Header="ApplicationBuild" >
 				<Section Header="Directories" >
 					<Property Header="IncDir" Value=".;$(RkitLib)\ARM\CircleOS;C:\TEMP\Raisonance\STlib\STM32F4xx_StdPeriph_Lib\Source\Libraries\STM32F4xx_StdPeriph_Driver\inc;C:\TEMP\Raisonance\STlib\STM32F4xx_StdPeriph_Lib\Source\Libraries\CMSIS\Device\ST\STM32F4xx\Include;C:\TEMP\Raisonance\STlib\STM32F4xx_StdPeriph_Lib\Source\Libraries\CMSIS\Include;C:\TEMP\Raisonance\STlib\STM32F4xx_StdPeriph_Lib\Test" Removable="1" />
-																																											
+																																																				
 				</Section>
-																																	
+																																								
 			</Set>
 			<Set Header="GCC" >
 				<Section Header="Defines" >
 					<Property Header="Defines" Value="OPEN4;USE_STDPERIPH_DRIVER" Removable="1" />
-																																																																																								
+																																																																																																	
 				</Section>
-																																																																				
+																																																																											
 			</Set>
-					
+										
 		</Config>
-			
+						
 	</Options>
 </ApplicationBuild>

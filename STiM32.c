@@ -3,12 +3,11 @@
 * File Name          :  STiM32.c
 * Description        :  STIMULATOR Control firmware 
 *
-* Last revision      :  IH 2014-09-01
+* Last revision      :  IH 2014-09-02
 *
 *******************************************************************************/
 
 /* Includes ------------------------------------------------------------------*/
-#include <stm32f4xx_tim.h>
 #include "circle_api.h"
 #include <string.h>
 
@@ -16,7 +15,7 @@
 #define DEBUG_NOHW
 
 /* Private defines -----------------------------------------------------------*/
-#define STIM32_VERSION          "140901"
+#define STIM32_VERSION          "140902"
 
 #define  STIMULATOR_HANDLER_ID  UNUSED5_SCHHDL_ID
 #define  GUIUPDATE_DIVIDER      1       // GUI is called every 100 SysTicks
@@ -180,10 +179,6 @@ static u16 ReadoutLimit_CAE1_for_Run;
 static u16 ReadoutLimit_CAE1_for_Idle;
 
 static bool time1Elapsed;
-
-TIM_TimeBaseInitTypeDef  TIM4_InitStructure;
-TIM_OCInitTypeDef  TIM4_OCInitStruct;
-
 
 /*******************************************************************************
 * Function Name  : STIMULATOR_Handler
@@ -362,28 +357,6 @@ enum MENU_code Application_Ini(void)
     CX_Configure( CX_GPIO_PIN4, CX_GPIO_Mode_OUT_PP, 0 );  //Push-pull mode
     CX_Write( CX_GPIO_PIN4, CX_GPIO_LOW, 0 );
     
-
-#if 0        
-    // ... Timer    
-    // see http://www.scribd.com/doc/150508044/Open4-Timer-Tutorial    
-
-    TIM_TimeBaseStructInit(&TIM4_InitStructure);
-    TIM4_InitStructure.TIM_Period = 32000;          
-    TIM4_InitStructure.TIM_Prescaler = 0x0;
-    TIM4_InitStructure.TIM_ClockDivision = 0x0;
-    TIM4_InitStructure.TIM_CounterMode = TIM_CounterMode_Up;
-    TIM_TimeBaseInit(TIM4,&TIM4_InitStructure);
-     
-    TIM4_OCInitStruct.TIM_OCMode = TIM_OCMode_Timing;
-    TIM4_OCInitStruct.TIM_OutputState = TIM_OutputState_Enable;
-    TIM4_OCInitStruct.TIM_Pulse = 32000;
-    TIM4_OCInitStruct.TIM_OCPolarity = TIM_OCPolarity_High;
-    TIM_OC1Init(TIM4, &TIM4_OCInitStruct);
-    TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Disable);
-    TIM_ITConfig(TIM4, TIM_IT_CC1,ENABLE);
-    
-    TIM_Cmd(TIM4,ENABLE);
-#endif    
     //-------------------------------------
     
     //--- at start, show intro screen for 2 seconds
