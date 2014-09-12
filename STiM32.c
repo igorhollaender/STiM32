@@ -3,7 +3,7 @@
 * File Name          :  STiM32.c
 * Description        :  STIMULATOR Control firmware 
 *
-* Last revision      :  IH 2014-09-02
+* Last revision      :  IH 2014-09-12
 *
 *******************************************************************************/
 
@@ -12,15 +12,16 @@
 #include <string.h>
 
 /* DEBUG Setting defines -----------------------------------------------------------*/
-#define DEBUG_NOHW
+//#define DEBUG_NOHW
 
 /* Private defines -----------------------------------------------------------*/
-#define STIM32_VERSION          "140902"
+#define STIM32_VERSION          "140912"
 
 #define  STIMULATOR_HANDLER_ID  UNUSED5_SCHHDL_ID
 #define  GUIUPDATE_DIVIDER      1       // GUI is called every 100 SysTicks
 #define  STATECHANGE_CNT_LIMIT  10
 
+#define  FIFO_SIZE              128
 
 /* Typedefs ------------------------------------------------------------------*/
 typedef enum {
@@ -46,9 +47,17 @@ typedef enum {
     } StimState_code;
 
 typedef enum {
-    FREQUENCY_1KHZ,
-    FREQUENCY_2KHZ,
-    FREQUENCY_3KHZ,
+    POSITIVE_VOLTAGE_MAX,
+    POSITIVE_VOLTAGE_HALF,
+    ZERO_VOLTAGE,
+    NEGATIVE_VOLTAGE_HALF,
+    NEGATIVE_VOLTAGE_MAX,
+    } OutputVoltage_code;
+
+typedef enum {
+    FREQUENCY_1KHZ=1,
+    FREQUENCY_2KHZ=2,
+    FREQUENCY_3KHZ=3,
     } Frequency_code;
 
 typedef struct 
@@ -108,7 +117,6 @@ enum MENU_code  MenuSetup_D();
 enum MENU_code  SetFrequency_1();
 enum MENU_code  SetFrequency_2();
 enum MENU_code  SetFrequency_3();
-enum MENU_code  SetFrequency_4();
 
 enum MENU_code  SetPulseDuration_1();
 enum MENU_code  SetPulseDuration_2();
@@ -120,7 +128,9 @@ void TimerHandler1(void);
 static void GUI(GUIaction_code, u16 );
 static void LongDelay(u8 delayInSeconds);
 static enum MENU_code MsgVersion(void);
-static void UpdatePulseSequence();
+static void UpdatePulseSequence(void);
+
+static void SetOutputVoltage(OutputVoltage_code);
     
 
 /* Constants -----------------------------------------------------------------*/
@@ -178,6 +188,9 @@ static StimState_code StimState;
 static u16 ReadoutLimit_CAE1_for_Run;
 static u16 ReadoutLimit_CAE1_for_Idle;
 
+static u8 MyFifoRxBuffer[FIFO_SIZE];       
+static u8 MyFifoTxBuffer[FIFO_SIZE];
+
 static bool time1Elapsed;
 
 /*******************************************************************************
@@ -191,13 +204,21 @@ void STIMULATOR_Handler( void )
 static u32 state_change_cnt = 0;
 static u32 frequency_cnt = 0;
 
+volatile u32 nb_bytes = 0;
+volatile u32 nb_byteSent = 0;
+char* pbuff; 
+
 if((frequency_cnt++) % PulseSeq.frequency_divider)
             {
             return;
             }
 
-
+#define WHILE_DELAY_LOOP(loopCounts)      {i=(loopCounts);while(i--);}
+        
 #ifdef DEBUG_NOHW
+
+    // Code for debugging (no hardware connected)
+
     static u16 TickCnt=0;    
     
     if(TickCnt<1000)
@@ -214,10 +235,9 @@ if((frequency_cnt++) % PulseSeq.frequency_divider)
         }        
     if(TickCnt++==4000)
         {
-        TickCnt=0;        
-        
+        TickCnt=0;                
         }    
-#define WHILE_DELAY_LOOP(loopCounts)      {i=(loopCounts);while(i--);}
+
     {u32 i;
     CX_Write( CX_GPIO_PIN4, CX_GPIO_LOW, 0 );
     WHILE_DELAY_LOOP(PulseSeq.delay0_loop_counts)
@@ -234,8 +254,46 @@ if((frequency_cnt++) % PulseSeq.frequency_divider)
     CX_Write( CX_GPIO_PIN4, CX_GPIO_LOW, 0 );
     }
     
-#else    
-    //IH140304 implement real code here
+#else        
+
+     
+                    static u16 TickCnt=0;    
+                    
+                    if(TickCnt<1000)
+                        {        
+                            Readout.CAE1 = ReadoutLimit_CAE1_for_Run-1;                           
+                        }
+                    else if(TickCnt<3000)
+                        {
+                            Readout.CAE1 = ReadoutLimit_CAE1_for_Run + ((float)TickCnt-1000.0)/2000.0*100;        
+                        }
+                    else if(TickCnt<4000)
+                        {
+                            Readout.CAE1 = ReadoutLimit_CAE1_for_Run + 100;                    
+                        }        
+                    if(TickCnt++==4000)
+                        {
+                        TickCnt=0;                
+                        }    
+
+
+    // Real code using connected hardware
+
+    {u32 i;
+    SetOutputVoltage(ZERO_VOLTAGE);
+    WHILE_DELAY_LOOP(PulseSeq.delay0_loop_counts)
+
+    SetOutputVoltage(POSITIVE_VOLTAGE_MAX);
+    WHILE_DELAY_LOOP(PulseSeq.delay1_loop_counts)    
+
+    SetOutputVoltage(ZERO_VOLTAGE);
+    WHILE_DELAY_LOOP(PulseSeq.delay2_loop_counts)    
+
+    SetOutputVoltage(POSITIVE_VOLTAGE_HALF);
+    WHILE_DELAY_LOOP(PulseSeq.delay3_loop_counts)    
+    
+    SetOutputVoltage(ZERO_VOLTAGE);
+    }
         
 #endif
         
@@ -351,12 +409,45 @@ enum MENU_code Application_Ini(void)
     // ... miscellaneous    
 
 
+
     // ... CX Extension
+
+    
+#ifdef DEBUG_NOHW       
+
     // test settings
     
     CX_Configure( CX_GPIO_PIN4, CX_GPIO_Mode_OUT_PP, 0 );  //Push-pull mode
     CX_Write( CX_GPIO_PIN4, CX_GPIO_LOW, 0 );
     
+#else        
+
+    // real settings
+    
+    // SPI Setup
+    
+    tCX_SPI_Config s_SpiInit;
+    
+    s_SpiInit.Speed = CX_SPI_Mode_High;                 // The speed range of the serial bit rate.
+    s_SpiInit.WordLength = CX_SPI_8_Bits;               // The number of transferred data bit. Standard is 8, but could be 16 for some specific devices.
+    s_SpiInit.Mode = CX_SPI_MODE_MASTER;                // 1: master, 0: slave
+    s_SpiInit.Polarity = CX_SPI_POL_LOW;                // Indicates the steady state (idle state of the clock when no transmission).
+    s_SpiInit.Phase = CX_SPI_PHA_FIRST;                 // Phase:  0 indicates that the first edge of the clock when leaving the idle state is active
+                                                        //         1 indicates that the second edge of the clock when leaving the idle state is active
+    s_SpiInit.MSB1LSB0 = CX_SPI_MSBFIRST;               // First bit to be sent.  1: MSB first, 0: LSB first
+    s_SpiInit.Nss = CX_SPI_Soft;                        // NSS signal management : 1 = by hardware (NSS pin), 0 = by software using the SSI bit
+    s_SpiInit.RxBuffer = MyFifoRxBuffer;                // Rolling buffer to be used for reception
+    s_SpiInit.RxBufferLen = sizeof( MyFifoRxBuffer );   // Size of the receive buffer
+    s_SpiInit.TxBuffer = MyFifoTxBuffer;                // Buffer to be used for transmission
+    s_SpiInit.TxBufferLen = sizeof( MyFifoRxBuffer );   // Size
+
+    CX_Configure( CX_SPI,  &s_SpiInit, 0 );
+    
+    // ADC Setup
+   
+        //TODO
+ #endif   
+ 
     //-------------------------------------
     
     //--- at start, show intro screen for 2 seconds
@@ -591,6 +682,36 @@ static void UpdatePulseSequence()
         }
     }
 
+/*******************************************************************************
+* Function Name  : SetOutputVoltage
+* Description    : controls the MAX5439 digital potentiometer connected like this
+                    L ... negative voltage input (typ -10V)
+                    H ... positive voltage input (typ +10V)
+                    W ... output voltage (the wiper between L and H)
+                   MAX5439 has 128 taps so the control word has 7 bits.
+
+* Input          : OutputVoltage_code oVcode
+* Return         : None
+*******************************************************************************/
+static void SetOutputVoltage(OutputVoltage_code oVcode)
+    {
+    
+        static u8 controlByteForMAX5439=0;        
+        volatile u32 nb_byteSent = 1;
+    
+        switch(oVcode)
+        {
+            case POSITIVE_VOLTAGE_MAX:      controlByteForMAX5439=127;  break;
+            case POSITIVE_VOLTAGE_HALF:     controlByteForMAX5439=95;   break;
+            case ZERO_VOLTAGE:              controlByteForMAX5439=63;   break;
+            case NEGATIVE_VOLTAGE_HALF:     controlByteForMAX5439=31;   break;
+            case NEGATIVE_VOLTAGE_MAX:      controlByteForMAX5439=0;    break;
+        }
+    
+        CX_Write(CX_SPI,&controlByteForMAX5439,&nb_byteSent);
+        //IH140912 we do not wait for end of the transmission here, neither do we check the success
+    
+    }
 
 /*******************************************************************************
 * Function Name  : GUI
