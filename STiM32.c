@@ -3,9 +3,14 @@
 * File Name          :  STiM32.c
 * Description        :  STIMULATOR Control firmware 
 *
-* Last revision      :  IH 2014-09-12
+* Last revision      :  IH 2014-12-16
 *
 *******************************************************************************/
+
+/* 
+*   IH1412116
+*   IMPORTANT: The FPU type (ARM toolsets) should be set to Hard EABI
+*/
 
 /* Includes ------------------------------------------------------------------*/
 #include "circle_api.h"
@@ -15,7 +20,7 @@
 //#define DEBUG_NOHW
 
 /* Private defines -----------------------------------------------------------*/
-#define STIM32_VERSION          "140912"
+#define STIM32_VERSION          "141216"
 
 #define  STIMULATOR_HANDLER_ID  UNUSED5_SCHHDL_ID
 #define  GUIUPDATE_DIVIDER      1       // GUI is called every 100 SysTicks
@@ -98,7 +103,8 @@ d0    |    | d2|      |
 
 typedef struct 
     {
-        u16 CAE1;   // current after edge1
+        u32 CAE1;   // current after edge1
+        u32 ADCOUT_FOR_DEBUG;
     }
     Readout_struct;
 
@@ -206,6 +212,9 @@ static u32 frequency_cnt = 0;
 
 volatile u32 nb_bytes = 0;
 volatile u32 nb_byteSent = 0;
+
+volatile u32 ad_value_0_to_4095;
+
 char* pbuff; 
 
 if((frequency_cnt++) % PulseSeq.frequency_divider)
@@ -259,13 +268,14 @@ if((frequency_cnt++) % PulseSeq.frequency_divider)
      
                     static u16 TickCnt=0;    
                     
+                    
                     if(TickCnt<1000)
                         {        
                             Readout.CAE1 = ReadoutLimit_CAE1_for_Run-1;                           
                         }
                     else if(TickCnt<3000)
                         {
-                            Readout.CAE1 = ReadoutLimit_CAE1_for_Run + ((float)TickCnt-1000.0)/2000.0*100;        
+                            Readout.CAE1 = ReadoutLimit_CAE1_for_Run + ((float)TickCnt-1000.0)/2000.0*100;                                
                         }
                     else if(TickCnt<4000)
                         {
@@ -278,13 +288,18 @@ if((frequency_cnt++) % PulseSeq.frequency_divider)
 
 
     // Real code using connected hardware
+                    
+                        
 
     {u32 i;
+    
+    
     SetOutputVoltage(ZERO_VOLTAGE);
     WHILE_DELAY_LOOP(PulseSeq.delay0_loop_counts)
 
     SetOutputVoltage(POSITIVE_VOLTAGE_MAX);
     WHILE_DELAY_LOOP(PulseSeq.delay1_loop_counts)    
+        
 
     SetOutputVoltage(ZERO_VOLTAGE);
     WHILE_DELAY_LOOP(PulseSeq.delay2_loop_counts)    
@@ -293,6 +308,9 @@ if((frequency_cnt++) % PulseSeq.frequency_divider)
     WHILE_DELAY_LOOP(PulseSeq.delay3_loop_counts)    
     
     SetOutputVoltage(ZERO_VOLTAGE);
+    
+    CX_Read(CX_ADC1, &ad_value_0_to_4095, 0);
+    Readout.ADCOUT_FOR_DEBUG = ad_value_0_to_4095;    
     }
         
 #endif
@@ -442,10 +460,11 @@ enum MENU_code Application_Ini(void)
     s_SpiInit.TxBufferLen = sizeof( MyFifoRxBuffer );   // Size
 
     CX_Configure( CX_SPI,  &s_SpiInit, 0 );
-    
+        
     // ADC Setup
    
-        //TODO
+    CX_Configure( CX_ADC1,  0 , 0 );
+    
  #endif   
  
     //-------------------------------------
@@ -740,7 +759,7 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
     u16 barWidth = STIM_SINGLE_BAR_WIDTH;
     
         
-    float readoutYScalingFactor = 1.1;
+    float readoutYScalingFactor = 0.1;  //was 1.1 for debugging
     
         switch(GUIaction)
         {
@@ -783,6 +802,10 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
             {
             u8 str[30];        
             UTIL_int2str( str, Readout.CAE1, 4, FALSE);    
+            
+            //IH141010 FOR DEBUGGING ONLY --------
+                UTIL_int2str( str, Readout.ADCOUT_FOR_DEBUG, 4, FALSE);    
+            //------------------                
             
             DRAW_SetCharMagniCoeff(4);            
             DRAW_SetTextColor(RGB_YELLOW);     
