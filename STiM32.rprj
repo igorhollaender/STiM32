@@ -1,4 +1,4 @@
 
 <Project Header="Project 'STiM32'" Path=".\STiM32.rprj" Project="Yes" OutputFile="" sate="96" ActiveApp="STiM32" >
-	<ApplicationBuild Header="STiM32" Extern=".\STiM32.rapp" Path=".\STiM32.rapp" OutputFile=".\objdebug\STiM32.elf" sate="96" Config="Circle_Debug" />
+	<ApplicationBuild Header="STiM32" Extern=".\STiM32.rapp" Path=".\STiM32.rapp" OutputFile=".\objdebug\STiM32.elf" sate="98" Config="Circle_Debug" />
 </Project>
