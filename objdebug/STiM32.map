@@ -200,7 +200,7 @@ END GROUP
  *(.flashtext)
                 0x0800c010                . = ALIGN (0x4)
 
-.text           0x0800c010     0x1458
+.text           0x0800c010     0x14d8
                 0x0800c010                . = ALIGN (0x4)
  *(.text)
  .text          0x0800c010      0x370 c:/raisonance/ride/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7e-m/softfp\libgcc.a(_arm_addsubdf3.o)
@@ -231,79 +231,79 @@ END GROUP
  .text.Application_Entry
                 0x0800c7e4       0x50 C:\Raisonance\Ride\Lib\ARM\CircleOS\Application_Startup.o
  .text.STIMULATOR_Handler
-                0x0800c834      0x298 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800c834      0x290 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
                 0x0800c834                STIMULATOR_Handler
  .text.Application_Ini
-                0x0800cacc      0x150 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800cacc                Application_Ini
+                0x0800cac4      0x174 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800cac4                Application_Ini
  .text.Application_Handler
-                0x0800cc1c       0x8c C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800cc1c                Application_Handler
+                0x0800cc38       0x8c C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800cc38                Application_Handler
  .text.TimerHandler1
-                0x0800cca8       0x18 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800cca8                TimerHandler1
+                0x0800ccc4       0x18 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800ccc4                TimerHandler1
  .text.MenuSetup_Freq
-                0x0800ccc0       0x20 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800ccc0                MenuSetup_Freq
+                0x0800ccdc       0x20 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800ccdc                MenuSetup_Freq
  .text.MenuSetup_PDur
-                0x0800cce0       0x20 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800cce0                MenuSetup_PDur
+                0x0800ccfc       0x20 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800ccfc                MenuSetup_PDur
  .text.SetFrequency_1
-                0x0800cd00       0x24 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800cd00                SetFrequency_1
+                0x0800cd1c       0x24 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800cd1c                SetFrequency_1
  .text.SetFrequency_2
-                0x0800cd24       0x24 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800cd24                SetFrequency_2
+                0x0800cd40       0x24 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800cd40                SetFrequency_2
  .text.SetFrequency_3
-                0x0800cd48       0x24 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800cd48                SetFrequency_3
+                0x0800cd64       0x24 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800cd64                SetFrequency_3
  .text.SetPulseDuration_1
-                0x0800cd6c       0x30 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800cd6c                SetPulseDuration_1
+                0x0800cd88       0x30 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800cd88                SetPulseDuration_1
  .text.SetPulseDuration_2
-                0x0800cd9c       0x30 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800cd9c                SetPulseDuration_2
+                0x0800cdb8       0x30 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800cdb8                SetPulseDuration_2
  .text.SetPulseDuration_3
-                0x0800cdcc       0x1c C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800cdcc                SetPulseDuration_3
+                0x0800cde8       0x30 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800cde8                SetPulseDuration_3
  .text.SetPulseDuration_4
-                0x0800cde8       0x1c C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800cde8                SetPulseDuration_4
- .text.Quit     0x0800ce04       0xb8 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800ce04                Quit
+                0x0800ce18       0x34 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800ce18                SetPulseDuration_4
+ .text.Quit     0x0800ce4c       0xb8 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800ce4c                Quit
  .text.RestoreApp
-                0x0800cebc       0x1c C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800cebc                RestoreApp
- .text.Cancel   0x0800ced8       0x1c C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800ced8                Cancel
- *fill*         0x0800cef4        0x4 
+                0x0800cf04       0x1c C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800cf04                RestoreApp
+ .text.Cancel   0x0800cf20       0x1c C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800cf20                Cancel
+ *fill*         0x0800cf3c        0x4 
  .text.UpdatePulseSequence
-                0x0800cef8      0x128 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800cf40      0x128 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
  .text.SetOutputVoltage
-                0x0800d020       0x78 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
- .text.GUI      0x0800d098      0x328 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800d068       0xb0 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+ .text.GUI      0x0800d118      0x328 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
  *(.rodata)
- .rodata        0x0800d3c0       0xa8 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                0x0800d3c0                Application_Name
+ .rodata        0x0800d440       0xa8 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                0x0800d440                Application_Name
  *(.rodata*)
  *(.glue_7)
  .glue_7        0x00000000        0x0 linker stubs
  *(.glue_7t)
  .glue_7t       0x00000000        0x0 linker stubs
-                0x0800d468                . = ALIGN (0x4)
-                0x0800d468                _etext = .
-                0x0800d468                _sidata = _etext
+                0x0800d4e8                . = ALIGN (0x4)
+                0x0800d4e8                _etext = .
+                0x0800d4e8                _sidata = _etext
 
-.vfp11_veneer   0x0800d468        0x0
+.vfp11_veneer   0x0800d4e8        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x0800d468        0x0
+.v4_bx          0x0800d4e8        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x0800d468        0x0
+.iplt           0x0800d4e8        0x0
  .iplt          0x00000000        0x0 C:\Raisonance\Ride\Lib\ARM\CircleOS\Application_Startup.o
 
-.data           0x20000000      0x1f0 load address 0x0800d468
+.data           0x20000000      0x1f0 load address 0x0800d4e8
                 0x20000000                . = ALIGN (0x4)
                 0x20000000                _sdata = .
  *(.data)
@@ -316,10 +316,10 @@ END GROUP
                 0x200001f0                _edata = .
                 0x00000000                toobig = ((_sidata + (_edata - _sdata)) > _eflash)?!!!!!!!!! FLASH IS FULL !!!!!!!!!:0x0
 
-.igot.plt       0x200001f0        0x0 load address 0x0800d658
+.igot.plt       0x200001f0        0x0 load address 0x0800d6d8
  .igot.plt      0x00000000        0x0 C:\Raisonance\Ride\Lib\ARM\CircleOS\Application_Startup.o
 
-.bss            0x200001f0      0x14c load address 0x0800d658
+.bss            0x200001f0      0x14c load address 0x0800d6d8
                 0x200001f0                . = ALIGN (0x4)
                 0x200001f0                _sbss = .
  *(.bss)
@@ -332,7 +332,7 @@ END GROUP
                 0x2000033c                PROVIDE (end, _ebss)
                 0x2000033c                PROVIDE (_end, _ebss)
 
-._usrstack      0x2000033c      0x100 load address 0x0800d7a4
+._usrstack      0x2000033c      0x100 load address 0x0800d824
                 0x2000033c                . = ALIGN (0x4)
                 0x2000033c                _susrstack = .
                 0x2000043c                . = (. + _Minimum_Stack_Size)
@@ -426,26 +426,26 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0xd16
+.debug_info     0x00000000      0xd64
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000      0xd16 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+ .debug_info    0x00000000      0xd64 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
 
 .debug_abbrev   0x00000000      0x27f
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x27f C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
 
-.debug_line     0x00000000      0x501
+.debug_line     0x00000000      0x516
  *(.debug_line)
- .debug_line    0x00000000      0x501 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+ .debug_line    0x00000000      0x516 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
 
 .debug_frame    0x00000000      0x248
  *(.debug_frame)
  .debug_frame   0x00000000      0x248 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
 
-.debug_str      0x00000000     0xd486
+.debug_str      0x00000000     0xd4f6
  *(.debug_str)
- .debug_str     0x00000000     0xd486 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
-                               0xd6c6 (size before relaxing)
+ .debug_str     0x00000000     0xd4f6 C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o
+                               0xd736 (size before relaxing)
 
 .debug_loc
  *(.debug_loc)

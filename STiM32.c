@@ -3,7 +3,7 @@
 * File Name          :  STiM32.c
 * Description        :  STIMULATOR Control firmware 
 *
-* Last revision      :  IH 2014-12-16
+* Last revision      :  IH 2014-12-30
 *
 *******************************************************************************/
 
@@ -20,7 +20,7 @@
 //#define DEBUG_NOHW
 
 /* Private defines -----------------------------------------------------------*/
-#define STIM32_VERSION          "141216"
+#define STIM32_VERSION          "141230"
 
 #define  STIMULATOR_HANDLER_ID  UNUSED5_SCHHDL_ID
 #define  GUIUPDATE_DIVIDER      1       // GUI is called every 100 SysTicks
@@ -99,7 +99,10 @@ d0    |    | d2|      |
     
     } 
     Pulse_Sequence_struct;
-
+    // IH141230 in the current implementation, the values of edgeN are ignored
+    // and the pulse pattern is like follows:
+    // If d1>0, the first pulse is POSITIVE_VOLTAGE_MAX, otherwise the first pulse is omitted
+    // If d3>0, the second pulse is NEGATIVE_VOLTAGE_MAX, otherwise the second pulse is omitted    
 
 typedef struct 
     {
@@ -221,7 +224,7 @@ if((frequency_cnt++) % PulseSeq.frequency_divider)
             {
             return;
             }
-
+        
 #define WHILE_DELAY_LOOP(loopCounts)      {i=(loopCounts);while(i--);}
         
 #ifdef DEBUG_NOHW
@@ -291,26 +294,34 @@ if((frequency_cnt++) % PulseSeq.frequency_divider)
                     
                         
 
-    {u32 i;
-    
+    {u32 i;    
     
     SetOutputVoltage(ZERO_VOLTAGE);
     WHILE_DELAY_LOOP(PulseSeq.delay0_loop_counts)
 
-    SetOutputVoltage(POSITIVE_VOLTAGE_MAX);
-    WHILE_DELAY_LOOP(PulseSeq.delay1_loop_counts)    
+    if(PulseSeq.delay1_loop_counts>0)
+    {    
+        SetOutputVoltage(POSITIVE_VOLTAGE_MAX);
+        WHILE_DELAY_LOOP(PulseSeq.delay1_loop_counts)        
+    }
         
-
     SetOutputVoltage(ZERO_VOLTAGE);
+    
     WHILE_DELAY_LOOP(PulseSeq.delay2_loop_counts)    
-
-    SetOutputVoltage(POSITIVE_VOLTAGE_HALF);
-    WHILE_DELAY_LOOP(PulseSeq.delay3_loop_counts)    
+   
+    if(PulseSeq.delay3_loop_counts>0)
+    {    
+        SetOutputVoltage(NEGATIVE_VOLTAGE_MAX);
+        WHILE_DELAY_LOOP(PulseSeq.delay3_loop_counts)    
+    }
     
     SetOutputVoltage(ZERO_VOLTAGE);
     
-    CX_Read(CX_ADC1, &ad_value_0_to_4095, 0);
-    Readout.ADCOUT_FOR_DEBUG = ad_value_0_to_4095;    
+    
+    //CX_Read(CX_ADC1, &ad_value_0_to_4095, 0);
+    //Readout.ADCOUT_FOR_DEBUG = ad_value_0_to_4095;    
+                        
+        
     }
         
 #endif
@@ -320,7 +331,8 @@ if((frequency_cnt++) % PulseSeq.frequency_divider)
         case STIMSTATE_IDLE:  
         
                 LED_Set( LED_RED, LED_ON);                
-                LED_Set( LED_GREEN, LED_OFF);                
+                LED_Set( LED_GREEN, LED_OFF);           
+                            
         
                 // check if still idle    
                 if(Readout.CAE1 >= ReadoutLimit_CAE1_for_Run)
@@ -334,6 +346,7 @@ if((frequency_cnt++) % PulseSeq.frequency_divider)
             
                 LED_Set( LED_RED, LED_OFF);                
                 LED_Set( LED_GREEN, LED_ON);                
+                                                              
         
                 // check if still running
                 if(Readout.CAE1 <= ReadoutLimit_CAE1_for_Idle)
@@ -401,7 +414,7 @@ enum MENU_code Application_Ini(void)
     
     PulseSeq.delay0_microseconds = 0;    
     PulseSeq.edge1  = 10;    
-    PulseSeq.delay1_microseconds = 50;    
+    PulseSeq.delay1_microseconds = 500;    
     PulseSeq.edge2  = 10;    
     PulseSeq.delay2_microseconds = 10;    
     PulseSeq.edge3  = 10;    
@@ -446,7 +459,7 @@ enum MENU_code Application_Ini(void)
     
     tCX_SPI_Config s_SpiInit;
     
-    s_SpiInit.Speed = CX_SPI_Mode_High;                 // The speed range of the serial bit rate.
+    s_SpiInit.Speed = CX_SPI_Mode_VeryHigh;             // The speed range of the serial bit rate.
     s_SpiInit.WordLength = CX_SPI_8_Bits;               // The number of transferred data bit. Standard is 8, but could be 16 for some specific devices.
     s_SpiInit.Mode = CX_SPI_MODE_MASTER;                // 1: master, 0: slave
     s_SpiInit.Polarity = CX_SPI_POL_LOW;                // Indicates the steady state (idle state of the clock when no transmission).
@@ -454,13 +467,19 @@ enum MENU_code Application_Ini(void)
                                                         //         1 indicates that the second edge of the clock when leaving the idle state is active
     s_SpiInit.MSB1LSB0 = CX_SPI_MSBFIRST;               // First bit to be sent.  1: MSB first, 0: LSB first
     s_SpiInit.Nss = CX_SPI_Soft;                        // NSS signal management : 1 = by hardware (NSS pin), 0 = by software using the SSI bit
+                                                        // IH141230 this must be set to CX_SPI_Soft, but the actual didgital potentiometer
+                                                        // update is triggered by rising edge of NSS bit (PIN8)
     s_SpiInit.RxBuffer = MyFifoRxBuffer;                // Rolling buffer to be used for reception
     s_SpiInit.RxBufferLen = sizeof( MyFifoRxBuffer );   // Size of the receive buffer
     s_SpiInit.TxBuffer = MyFifoTxBuffer;                // Buffer to be used for transmission
     s_SpiInit.TxBufferLen = sizeof( MyFifoRxBuffer );   // Size
 
     CX_Configure( CX_SPI,  &s_SpiInit, 0 );
-        
+                            
+    // NSS (aka CS(neg)) pin setup                        
+    CX_Configure( CX_GPIO_PIN8, CX_GPIO_Mode_OUT_PP, 0 );  //Push-pull mode    
+    CX_Write( CX_GPIO_PIN8, CX_GPIO_HIGH, 0 );             // initial NSS state is HIGH
+    
     // ADC Setup
    
     CX_Configure( CX_ADC1,  0 , 0 );
@@ -583,8 +602,8 @@ enum MENU_code  SetFrequency_3(void)
 enum MENU_code  SetPulseDuration_1(void)
     {       
     PulseSeq.delay1_microseconds = 50;        
-    PulseSeq.delay2_microseconds = 10;        
-    PulseSeq.delay3_microseconds = 50;                
+    PulseSeq.delay2_microseconds = 50;        
+    PulseSeq.delay3_microseconds = 0;                
     UpdatePulseSequence();
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
@@ -593,9 +612,9 @@ enum MENU_code  SetPulseDuration_1(void)
 
 enum MENU_code  SetPulseDuration_2(void)
     {    
-    PulseSeq.delay1_microseconds = 10;        
-    PulseSeq.delay2_microseconds = 90;        
-    PulseSeq.delay3_microseconds = 10;                
+    PulseSeq.delay1_microseconds = 0;        
+    PulseSeq.delay2_microseconds = 50;        
+    PulseSeq.delay3_microseconds = 50;                
     UpdatePulseSequence();
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
@@ -604,12 +623,18 @@ enum MENU_code  SetPulseDuration_2(void)
 
 enum MENU_code  SetPulseDuration_3(void)
     {
+    PulseSeq.delay1_microseconds = 50;        
+    PulseSeq.delay2_microseconds = 50;        
+    PulseSeq.delay3_microseconds = 50;                
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
     return MENU_CONTINUE_COMMAND;
     }
 
 enum MENU_code  SetPulseDuration_4(void)
     {
+    PulseSeq.delay1_microseconds = 400;        
+    PulseSeq.delay2_microseconds = 0;        
+    PulseSeq.delay3_microseconds = 0;                
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
     return MENU_CONTINUE_COMMAND;
     }
@@ -695,7 +720,7 @@ static void UpdatePulseSequence()
     
         switch(PulseSeq.frequency)
         {
-            case FREQUENCY_1KHZ:    PulseSeq.frequency_divider = 3;     break;
+            case FREQUENCY_1KHZ:    PulseSeq.frequency_divider = 3;     break; 
             case FREQUENCY_2KHZ:    PulseSeq.frequency_divider = 1;     break;  //IH140321 TODO   THIS DOES NOT WORK LIKE THIS: 
             case FREQUENCY_3KHZ:    PulseSeq.frequency_divider = 1;     break;
         }
@@ -717,6 +742,7 @@ static void SetOutputVoltage(OutputVoltage_code oVcode)
     
         static u8 controlByteForMAX5439=0;        
         volatile u32 nb_byteSent = 1;
+        volatile u32 nb_byteToSend = 1;
     
         switch(oVcode)
         {
@@ -727,7 +753,12 @@ static void SetOutputVoltage(OutputVoltage_code oVcode)
             case NEGATIVE_VOLTAGE_MAX:      controlByteForMAX5439=0;    break;
         }
     
+        CX_Write(CX_GPIO_PIN8,CX_GPIO_LOW,0);        
+        {int i=400;while(i--);}                 //about 50us delay between NSS low and first clock edge
         CX_Write(CX_SPI,&controlByteForMAX5439,&nb_byteSent);
+        CX_Write(CX_GPIO_PIN8,CX_GPIO_HIGH,0);  //IH141230 this rising edge of the NSS signal actually sets the wiper 
+                                                // (see MAX5439 datasheet)
+    
         //IH140912 we do not wait for end of the transmission here, neither do we check the success
     
     }

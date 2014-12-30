@@ -1,5 +1,19 @@
 
 <Debug>
+	<STiM32>
+		<CodeView TopRow="134218012" Focus="134218016" >
+			<CodeReport>
+				<0>118</0>
+				<1>130</1>
+				<2>71</2>
+				<3>394</3>
+														
+			</CodeReport>
+										
+		</CodeView>
+		<MemoryView Focus="134219460" TopRow="0" NbPerLine="8" />
+						
+	</STiM32>
 	<Flags>
 		<Report>
 			<Def Header="FlagReport" NbCol="9" >
@@ -22,7 +36,8 @@
 			
 	</Flags>
 	<Views>
-		<View File=".\STiM32.c" Line="12" Index="0" focus="1" />
+		<View File=".\STiM32.c" Line="606" Index="0" focus="1" />
+		<View File="..\..\..\..\..\Raisonance\Ride\Lib\ARM\CircleOS\circle_api.h" Line="510" Index="1" />
 	</Views>
 	<BookMarks>
 		<BookMark File="" Line="0" />
@@ -59,6 +74,8 @@
 			<GrepReplaceWhatValue/>
 		</GrepReplaceWhat>
 	</Grep>
-	<FindStrings/>
+	<FindStrings>
+		<Find>High</Find>
+	</FindStrings>
 	<ReplaceStrings/>
 </Debug>

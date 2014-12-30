@@ -10,6 +10,7 @@ LoaderTool=ARM
 Target=ARM
 DebugTool=RLINK_CORTEX
 MakeApplicationPath=C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.elf
+ApplicationComponents="C:\Raisonance\Ride\lib\ARM\CircleOS\Evo_Circle_STM3242x.elf.dbi"|"C:\Raisonance\Ride\lib\ARM\CircleOS\FAT_OP4.elf.dbi"
 [Device]
 Name=STM32F429ZI_CircleOS_EVO
 [ARMSigDrv options]
@@ -24,3 +25,9 @@ ToolName=RLINK_CORTEX
 Crystal=12.000
 [General]
 FreqXTal=12.000
+[SimFile]
+path=C:\Raisonance\Ride\sim\ARM\STM32F429ZI_CircleOS_OP4.sim
+[Monitoring]
+Expressions=
+NbExpr=0
+State=0
