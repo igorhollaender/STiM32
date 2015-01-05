@@ -1,5 +1,5 @@
 [Application]
-ApplicationPath=C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.elf
+ApplicationPath=C:\Users\Igor\Documents\GitHub\STiM32\objdebug\STiM32.elf
 ExtraSegmentFilename=C:\Users\igor.hollaender\Documents\GitHub\STiM32\STiM32.segments
 CSX=0
 HighBankAddr=400000
@@ -9,7 +9,7 @@ CodeOffset=0x0
 LoaderTool=ARM
 Target=ARM
 DebugTool=RLINK_CORTEX
-MakeApplicationPath=C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.elf
+MakeApplicationPath=C:\Users\Igor\Documents\GitHub\STiM32\objdebug\STiM32.elf
 ApplicationComponents="C:\Raisonance\Ride\lib\ARM\CircleOS\Evo_Circle_STM3242x.elf.dbi"|"C:\Raisonance\Ride\lib\ARM\CircleOS\FAT_OP4.elf.dbi"
 [Device]
 Name=STM32F429ZI_CircleOS_EVO

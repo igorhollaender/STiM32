@@ -3,7 +3,10 @@
 * File Name          :  STiM32.c
 * Description        :  STIMULATOR Control firmware 
 *
-* Last revision      :  IH 2014-12-30
+* Last revision      :  IH 2015-01-05
+*
+*   TODO:
+*   150105      Implement persisting setup
 *
 *******************************************************************************/
 
@@ -20,7 +23,7 @@
 //#define DEBUG_NOHW
 
 /* Private defines -----------------------------------------------------------*/
-#define STIM32_VERSION          "141230"
+#define STIM32_VERSION          "150105"
 
 #define  STIMULATOR_HANDLER_ID  UNUSED5_SCHHDL_ID
 #define  GUIUPDATE_DIVIDER      1       // GUI is called every 100 SysTicks
@@ -65,10 +68,19 @@ typedef enum {
     FREQUENCY_3KHZ=3,
     } Frequency_code;
 
+typedef enum {
+    SEQUENCEMULTIPLICITY_SINGLE,
+    SEQUENCEMULTIPLICITY_DOUBLE,
+    } SequenceMultiplicity_code;
+
 typedef struct 
     {
         Frequency_code frequency;
         u16 frequency_divider;
+        SequenceMultiplicity_code sequence_multiplicity;
+    
+        u16 delay_between_sequences_microseconds;
+        u16 delay_between_sequences_loop_counts;
     
         u16 delay0_microseconds;     
         u16 delay0_loop_counts;     
@@ -99,10 +111,6 @@ d0    |    | d2|      |
     
     } 
     Pulse_Sequence_struct;
-    // IH141230 in the current implementation, the values of edgeN are ignored
-    // and the pulse pattern is like follows:
-    // If d1>0, the first pulse is POSITIVE_VOLTAGE_MAX, otherwise the first pulse is omitted
-    // If d3>0, the second pulse is NEGATIVE_VOLTAGE_MAX, otherwise the second pulse is omitted    
 
 typedef struct 
     {
@@ -119,7 +127,7 @@ enum MENU_code  Quit( void );
 enum MENU_code  RestoreApp( void );
 
 enum MENU_code  MenuSetup_Freq();
-enum MENU_code  MenuSetup_PDur();
+enum MENU_code  MenuSetup_PSeq();
 enum MENU_code  MenuSetup_C();
 enum MENU_code  MenuSetup_D();
 
@@ -127,10 +135,10 @@ enum MENU_code  SetFrequency_1();
 enum MENU_code  SetFrequency_2();
 enum MENU_code  SetFrequency_3();
 
-enum MENU_code  SetPulseDuration_1();
-enum MENU_code  SetPulseDuration_2();
-enum MENU_code  SetPulseDuration_3();
-enum MENU_code  SetPulseDuration_4();
+enum MENU_code  SetPulseSequence_1();
+enum MENU_code  SetPulseSequence_2();
+enum MENU_code  SetPulseSequence_3();
+enum MENU_code  SetPulseSequence_4();
 
 void TimerHandler1(void);
 
@@ -140,6 +148,7 @@ static enum MENU_code MsgVersion(void);
 static void UpdatePulseSequence(void);
 
 static void SetOutputVoltage(OutputVoltage_code);
+static void GeneratePulseSequenceAndReadCAE(void);        
     
 
 /* Constants -----------------------------------------------------------------*/
@@ -153,7 +162,7 @@ tMenu MenuMainSTiM32 =
     0,
     {
         { "Set Frequency",           MenuSetup_Freq,    Application_Handler,    0 },
-        { "Set Pulse Duration",      MenuSetup_PDur,    Application_Handler ,   0 },
+        { "Set Pulse Sequence",      MenuSetup_PSeq,    Application_Handler ,   0 },
         { "Cancel",                  Cancel,            RestoreApp ,            0 },
         { "Quit",                    Quit,              0,                      1 },            
     }
@@ -173,17 +182,17 @@ tMenu MenuSetFrequency =
     }
 };
 
-tMenu MenuSetPulseDuration =
+tMenu MenuSetPulseSequence =
 {
     1,
     "Set Pulse Duration",
     5, 0, 0, 0, 0, 0,
     0,
     {
-        { "PDur 1",     SetPulseDuration_1,    Application_Handler,    0 },
-        { "PDur 2",     SetPulseDuration_2,    Application_Handler ,   0 },
-        { "PDur 3",     SetPulseDuration_3,    Application_Handler ,   0 },
-        { "PDur 4",     SetPulseDuration_4,    Application_Handler ,   0 },
+        { "PSeq 1",     SetPulseSequence_1,    Application_Handler,    0 },
+        { "PSeq 2",     SetPulseSequence_2,    Application_Handler ,   0 },
+        { "PSeq 3",     SetPulseSequence_3,    Application_Handler ,   0 },
+        { "PSeq 4",     SetPulseSequence_4,    Application_Handler ,   0 },
         { "Cancel",     Cancel,                Application_Handler,    0 },
     }
 };
@@ -289,41 +298,21 @@ if((frequency_cnt++) % PulseSeq.frequency_divider)
                         TickCnt=0;                
                         }    
 
-
     // Real code using connected hardware
                     
-                        
-
-    {u32 i;    
-    
-    SetOutputVoltage(ZERO_VOLTAGE);
-    WHILE_DELAY_LOOP(PulseSeq.delay0_loop_counts)
-
-    if(PulseSeq.delay1_loop_counts>0)
-    {    
-        SetOutputVoltage(POSITIVE_VOLTAGE_MAX);
-        WHILE_DELAY_LOOP(PulseSeq.delay1_loop_counts)        
-    }
+    switch(PulseSeq.sequence_multiplicity)
+    {        
+        case SEQUENCEMULTIPLICITY_SINGLE:
+            GeneratePulseSequenceAndReadCAE();        
+            break;
         
-    SetOutputVoltage(ZERO_VOLTAGE);
-    
-    WHILE_DELAY_LOOP(PulseSeq.delay2_loop_counts)    
-   
-    if(PulseSeq.delay3_loop_counts>0)
-    {    
-        SetOutputVoltage(NEGATIVE_VOLTAGE_MAX);
-        WHILE_DELAY_LOOP(PulseSeq.delay3_loop_counts)    
-    }
-    
-    SetOutputVoltage(ZERO_VOLTAGE);
-    
-    
-    //CX_Read(CX_ADC1, &ad_value_0_to_4095, 0);
-    //Readout.ADCOUT_FOR_DEBUG = ad_value_0_to_4095;    
-                        
-        
-    }
-        
+        case SEQUENCEMULTIPLICITY_DOUBLE:
+            GeneratePulseSequenceAndReadCAE();        
+            {u32 i; WHILE_DELAY_LOOP(PulseSeq.delay_between_sequences_loop_counts)}
+            GeneratePulseSequenceAndReadCAE();        
+            break;
+    }   
+                    
 #endif
         
     switch(StimState)
@@ -409,19 +398,9 @@ enum MENU_code Application_Ini(void)
     // Initialize ...
         
     
-    // ... Pulse Sequence
-    PulseSeq.frequency = FREQUENCY_3KHZ; 
-    
-    PulseSeq.delay0_microseconds = 0;    
-    PulseSeq.edge1  = 10;    
-    PulseSeq.delay1_microseconds = 500;    
-    PulseSeq.edge2  = 10;    
-    PulseSeq.delay2_microseconds = 10;    
-    PulseSeq.edge3  = 10;    
-    PulseSeq.delay3_microseconds = 50;    
-    PulseSeq.edge4  = 10;    
-        
-    UpdatePulseSequence();
+    // ... Frequency and Pulse Sequence
+    SetFrequency_1();
+    SetPulseSequence_1();
         
     
     // ... GUI    
@@ -566,15 +545,15 @@ enum MENU_code  MenuSetup_Freq(void)
     return MENU_CHANGE;
     }
 
-enum MENU_code  MenuSetup_PDur(void)
+enum MENU_code  MenuSetup_PSeq(void)
     {    
-    MENU_Set( ( tMenu* ) &MenuSetPulseDuration );             
+    MENU_Set( ( tMenu* ) &MenuSetPulseSequence );             
     return MENU_CHANGE;
     }
 
 enum MENU_code  SetFrequency_1(void)
     {
-    PulseSeq.frequency = FREQUENCY_1KHZ;                
+    PulseSeq.frequency = FREQUENCY_1KHZ;     
     UpdatePulseSequence();
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
@@ -583,7 +562,7 @@ enum MENU_code  SetFrequency_1(void)
 
 enum MENU_code  SetFrequency_2(void)
     {
-    PulseSeq.frequency = FREQUENCY_2KHZ;                
+    PulseSeq.frequency = FREQUENCY_2KHZ;        
     UpdatePulseSequence();
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
@@ -592,14 +571,14 @@ enum MENU_code  SetFrequency_2(void)
 
 enum MENU_code  SetFrequency_3(void)
     {
-    PulseSeq.frequency = FREQUENCY_3KHZ;                
+    PulseSeq.frequency = FREQUENCY_3KHZ;    
     UpdatePulseSequence();
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
     return MENU_CONTINUE_COMMAND;
     }
 
-enum MENU_code  SetPulseDuration_1(void)
+enum MENU_code  SetPulseSequence_1(void)
     {       
     PulseSeq.delay1_microseconds = 50;        
     PulseSeq.delay2_microseconds = 50;        
@@ -610,7 +589,7 @@ enum MENU_code  SetPulseDuration_1(void)
     return MENU_CONTINUE_COMMAND;
     }
 
-enum MENU_code  SetPulseDuration_2(void)
+enum MENU_code  SetPulseSequence_2(void)
     {    
     PulseSeq.delay1_microseconds = 0;        
     PulseSeq.delay2_microseconds = 50;        
@@ -621,20 +600,24 @@ enum MENU_code  SetPulseDuration_2(void)
     return MENU_CONTINUE_COMMAND;
     }
 
-enum MENU_code  SetPulseDuration_3(void)
+enum MENU_code  SetPulseSequence_3(void)
     {
     PulseSeq.delay1_microseconds = 50;        
     PulseSeq.delay2_microseconds = 50;        
-    PulseSeq.delay3_microseconds = 50;                
+    PulseSeq.delay3_microseconds = 50;      
+    UpdatePulseSequence();    
+    
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
     return MENU_CONTINUE_COMMAND;
     }
 
-enum MENU_code  SetPulseDuration_4(void)
+enum MENU_code  SetPulseSequence_4(void)
     {
     PulseSeq.delay1_microseconds = 400;        
     PulseSeq.delay2_microseconds = 0;        
-    PulseSeq.delay3_microseconds = 0;                
+    PulseSeq.delay3_microseconds = 0;
+    UpdatePulseSequence();    
+    
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
     return MENU_CONTINUE_COMMAND;
     }
@@ -717,14 +700,69 @@ static void UpdatePulseSequence()
         PulseSeq.delay1_loop_counts = MICROSECONDS_TO_LOOP_COUNTS(PulseSeq.delay1_microseconds);
         PulseSeq.delay2_loop_counts = MICROSECONDS_TO_LOOP_COUNTS(PulseSeq.delay2_microseconds);
         PulseSeq.delay3_loop_counts = MICROSECONDS_TO_LOOP_COUNTS(PulseSeq.delay3_microseconds);     
+        PulseSeq.delay_between_sequences_loop_counts
+                                    = MICROSECONDS_TO_LOOP_COUNTS(PulseSeq.delay_between_sequences_microseconds);     
     
         switch(PulseSeq.frequency)
         {
-            case FREQUENCY_1KHZ:    PulseSeq.frequency_divider = 3;     break; 
-            case FREQUENCY_2KHZ:    PulseSeq.frequency_divider = 1;     break;  //IH140321 TODO   THIS DOES NOT WORK LIKE THIS: 
-            case FREQUENCY_3KHZ:    PulseSeq.frequency_divider = 1;     break;
+            case FREQUENCY_1KHZ:    
+                    PulseSeq.frequency_divider = 3;     
+                    PulseSeq.sequence_multiplicity = SEQUENCEMULTIPLICITY_SINGLE;
+                    break; 
+            case FREQUENCY_2KHZ:    
+                    PulseSeq.frequency_divider = 1;     
+                    PulseSeq.sequence_multiplicity = SEQUENCEMULTIPLICITY_DOUBLE;
+                    break;
+            case FREQUENCY_3KHZ:    
+                    PulseSeq.frequency_divider = 1;     
+                    PulseSeq.sequence_multiplicity = SEQUENCEMULTIPLICITY_SINGLE;
+                    break;
         }
     }
+
+
+/*******************************************************************************
+* Function Name  : GeneratePulseSequenceAndReadCAE
+* Description    : Generates a single output pulse sequence according to PulseSeq data
+                   and reads CAE (only if  PulseSeq.delay1_loop_counts>0)
+                    
+                    IH141230
+                    In the current implementation, the values of edgeN are ignored
+                    and the pulse pattern is like follows:
+                    If d1>0, the first pulse is POSITIVE_VOLTAGE_MAX, otherwise the first pulse is omitted
+                    If d3>0, the second pulse is NEGATIVE_VOLTAGE_MAX, otherwise the second pulse is omitted    
+
+* Input          : None
+* Return         : None
+*******************************************************************************/
+static void GeneratePulseSequenceAndReadCAE()
+    {u32 i;    
+    
+    SetOutputVoltage(ZERO_VOLTAGE);
+    WHILE_DELAY_LOOP(PulseSeq.delay0_loop_counts)
+
+    if(PulseSeq.delay1_loop_counts>0)
+    {    
+        SetOutputVoltage(POSITIVE_VOLTAGE_MAX);
+    
+        //CX_Read(CX_ADC1, &ad_value_0_to_4095, 0);
+        //Readout.ADCOUT_FOR_DEBUG = ad_value_0_to_4095;    
+    
+        WHILE_DELAY_LOOP(PulseSeq.delay1_loop_counts)        
+    }
+        
+    SetOutputVoltage(ZERO_VOLTAGE);
+    
+    WHILE_DELAY_LOOP(PulseSeq.delay2_loop_counts)    
+   
+    if(PulseSeq.delay3_loop_counts>0)
+    {    
+        SetOutputVoltage(NEGATIVE_VOLTAGE_MAX);
+        WHILE_DELAY_LOOP(PulseSeq.delay3_loop_counts)    
+    }
+    
+    SetOutputVoltage(ZERO_VOLTAGE);                  
+    }   
 
 /*******************************************************************************
 * Function Name  : SetOutputVoltage
@@ -739,10 +777,13 @@ static void UpdatePulseSequence()
 *******************************************************************************/
 static void SetOutputVoltage(OutputVoltage_code oVcode)
     {
-    
-        static u8 controlByteForMAX5439=0;        
+  
+        static u8 controlByteForMAX5439=0;
+
+        
         volatile u32 nb_byteSent = 1;
-        volatile u32 nb_byteToSend = 1;
+        //IH150105 obsolete
+        // volatile u32 nb_byteToSend = 1;
     
         switch(oVcode)
         {
@@ -753,8 +794,11 @@ static void SetOutputVoltage(OutputVoltage_code oVcode)
             case NEGATIVE_VOLTAGE_MAX:      controlByteForMAX5439=0;    break;
         }
     
-        CX_Write(CX_GPIO_PIN8,CX_GPIO_LOW,0);        
-        {int i=400;while(i--);}                 //about 50us delay between NSS low and first clock edge
+        CX_Write(CX_GPIO_PIN8,CX_GPIO_LOW,0);     
+
+        //IH150105 obsolete
+        //{int i=400;while(i--);}                 //about 50us delay between NSS low and first clock edge
+        
         CX_Write(CX_SPI,&controlByteForMAX5439,&nb_byteSent);
         CX_Write(CX_GPIO_PIN8,CX_GPIO_HIGH,0);  //IH141230 this rising edge of the NSS signal actually sets the wiper 
                                                 // (see MAX5439 datasheet)

@@ -1,22 +1,21 @@
-C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o: \
- C:\Users\igor.hollaender\Documents\GitHub\STiM32\STiM32.c \
+C:\Users\Igor\Documents\GitHub\STiM32\objdebug\STiM32.o: \
+ C:\Users\Igor\Documents\GitHub\STiM32\STiM32.c \
  C:\Raisonance\Ride\Lib\ARM\CircleOS/circle_api.h \
- c:\raisonance\ride\arm-gcc\lib\gcc\arm-none-eabi\4.8.4\include\stdint.h \
- c:\raisonance\ride\arm-gcc\arm-none-eabi\include\stdint.h \
- c:\raisonance\ride\arm-gcc\arm-none-eabi\include\machine\_default_types.h \
- c:\raisonance\ride\arm-gcc\arm-none-eabi\include\sys\features.h \
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/include/stdint.h \
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/stdint.h \
  C:\Raisonance\Ride\Lib\ARM\CircleOS/circle_types.h \
  C:\Raisonance\Ride\Lib\ARM\CircleOS/circle_spe.h \
- c:\raisonance\ride\arm-gcc\arm-none-eabi\include\string.h \
- c:\raisonance\ride\arm-gcc\arm-none-eabi\include\_ansi.h \
- c:\raisonance\ride\arm-gcc\arm-none-eabi\include\newlib.h \
- c:\raisonance\ride\arm-gcc\arm-none-eabi\include\sys\config.h \
- c:\raisonance\ride\arm-gcc\arm-none-eabi\include\machine\ieeefp.h \
- c:\raisonance\ride\arm-gcc\arm-none-eabi\include\sys\reent.h \
- c:\raisonance\ride\arm-gcc\arm-none-eabi\include\_ansi.h \
- c:\raisonance\ride\arm-gcc\lib\gcc\arm-none-eabi\4.8.4\include\stddef.h \
- c:\raisonance\ride\arm-gcc\arm-none-eabi\include\sys\_types.h \
- c:\raisonance\ride\arm-gcc\arm-none-eabi\include\machine\_types.h \
- c:\raisonance\ride\arm-gcc\arm-none-eabi\include\sys\lock.h \
- c:\raisonance\ride\arm-gcc\lib\gcc\arm-none-eabi\4.8.4\include-fixed\sys\cdefs.h \
- c:\raisonance\ride\arm-gcc\arm-none-eabi\include\sys\string.h
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/string.h \
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/_ansi.h \
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/newlib.h \
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/sys/config.h \
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/machine/ieeefp.h \
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/sys/features.h \
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/sys/reent.h \
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/_ansi.h \
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/sys/_types.h \
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/machine/_types.h \
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/machine/_default_types.h \
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/sys/lock.h \
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/include/stddef.h \
+ c:\raisonance\ride\arm-gcc\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/sys/string.h
