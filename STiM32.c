@@ -3,10 +3,13 @@
 * File Name          :  STiM32.c
 * Description        :  STIMULATOR Control firmware 
 *
-* Last revision      :  IH 2015-01-05
+* Last revision      :  IH 2015-01-07
 *
 *   TODO:
 *   150105      Implement persisting setup
+*   150107      Implement autorun of this application (currently, autorun has to be set up manually from menu,
+*               but, interestingly, this setting persist after new programming)
+*   150107      Implement battery status display 
 *
 *******************************************************************************/
 
@@ -23,7 +26,7 @@
 //#define DEBUG_NOHW
 
 /* Private defines -----------------------------------------------------------*/
-#define STIM32_VERSION          "150105"
+#define STIM32_VERSION          "150107"
 
 #define  STIMULATOR_HANDLER_ID  UNUSED5_SCHHDL_ID
 #define  GUIUPDATE_DIVIDER      1       // GUI is called every 100 SysTicks
@@ -115,7 +118,6 @@ d0    |    | d2|      |
 typedef struct 
     {
         u32 CAE1;   // current after edge1
-        u32 ADCOUT_FOR_DEBUG;
     }
     Readout_struct;
 
@@ -146,6 +148,7 @@ static void GUI(GUIaction_code, u16 );
 static void LongDelay(u8 delayInSeconds);
 static enum MENU_code MsgVersion(void);
 static void UpdatePulseSequence(void);
+static void SetAutorun(void);
 
 static void SetOutputVoltage(OutputVoltage_code);
 static void GeneratePulseSequenceAndReadCAE(void);        
@@ -185,7 +188,7 @@ tMenu MenuSetFrequency =
 tMenu MenuSetPulseSequence =
 {
     1,
-    "Set Pulse Duration",
+    "Set Pulse Sequence",
     5, 0, 0, 0, 0, 0,
     0,
     {
@@ -221,13 +224,6 @@ void STIMULATOR_Handler( void )
 {
 static u32 state_change_cnt = 0;
 static u32 frequency_cnt = 0;
-
-volatile u32 nb_bytes = 0;
-volatile u32 nb_byteSent = 0;
-
-volatile u32 ad_value_0_to_4095;
-
-char* pbuff; 
 
 if((frequency_cnt++) % PulseSeq.frequency_divider)
             {
@@ -276,27 +272,6 @@ if((frequency_cnt++) % PulseSeq.frequency_divider)
     }
     
 #else        
-
-     
-                    static u16 TickCnt=0;    
-                    
-                    
-                    if(TickCnt<1000)
-                        {        
-                            Readout.CAE1 = ReadoutLimit_CAE1_for_Run-1;                           
-                        }
-                    else if(TickCnt<3000)
-                        {
-                            Readout.CAE1 = ReadoutLimit_CAE1_for_Run + ((float)TickCnt-1000.0)/2000.0*100;                                
-                        }
-                    else if(TickCnt<4000)
-                        {
-                            Readout.CAE1 = ReadoutLimit_CAE1_for_Run + 100;                    
-                        }        
-                    if(TickCnt++==4000)
-                        {
-                        TickCnt=0;                
-                        }    
 
     // Real code using connected hardware
                     
@@ -370,7 +345,6 @@ if((frequency_cnt++) % PulseSeq.frequency_divider)
                 break;
     }
 
-    
 }
 
 /*******************************************************************************
@@ -393,6 +367,7 @@ enum MENU_code Application_Ini(void)
     UTIL_SetPll(SPEED_VERY_HIGH);                           // CPU frequency is 120MHz; Systick frequency is 3kHZ
                                                             // see EvoPrimer Manual for STM32F429ZI
     
+    SetAutorun();
     
     //-------------------------------------
     // Initialize ...
@@ -419,9 +394,7 @@ enum MENU_code Application_Ini(void)
     // ... miscellaneous    
 
 
-
     // ... CX Extension
-
     
 #ifdef DEBUG_NOHW       
 
@@ -580,9 +553,10 @@ enum MENU_code  SetFrequency_3(void)
 
 enum MENU_code  SetPulseSequence_1(void)
     {       
-    PulseSeq.delay1_microseconds = 50;        
+    PulseSeq.delay1_microseconds = 200;        
     PulseSeq.delay2_microseconds = 50;        
-    PulseSeq.delay3_microseconds = 0;                
+    PulseSeq.delay3_microseconds = 0;             
+    PulseSeq.delay_between_sequences_microseconds = 200;    
     UpdatePulseSequence();
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
@@ -593,7 +567,8 @@ enum MENU_code  SetPulseSequence_2(void)
     {    
     PulseSeq.delay1_microseconds = 0;        
     PulseSeq.delay2_microseconds = 50;        
-    PulseSeq.delay3_microseconds = 50;                
+    PulseSeq.delay3_microseconds = 50;          
+    PulseSeq.delay_between_sequences_microseconds = 400;        
     UpdatePulseSequence();
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
@@ -605,6 +580,7 @@ enum MENU_code  SetPulseSequence_3(void)
     PulseSeq.delay1_microseconds = 50;        
     PulseSeq.delay2_microseconds = 50;        
     PulseSeq.delay3_microseconds = 50;      
+    PulseSeq.delay_between_sequences_microseconds = 400;        
     UpdatePulseSequence();    
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
@@ -616,6 +592,7 @@ enum MENU_code  SetPulseSequence_4(void)
     PulseSeq.delay1_microseconds = 400;        
     PulseSeq.delay2_microseconds = 0;        
     PulseSeq.delay3_microseconds = 0;
+    PulseSeq.delay_between_sequences_microseconds = 100;        
     UpdatePulseSequence();    
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
@@ -692,7 +669,7 @@ static void LongDelay(u8 delayInSeconds)
 * Input          : u32 microseconds
 * Return         : u32 loopCounts
 *******************************************************************************/
-#define MICROSECONDS_TO_LOOP_COUNTS(us)   ((float)(us)*7.78)
+#define MICROSECONDS_TO_LOOP_COUNTS(us)   ((float)(us)*15.0)  //IH150107 corrected (was 7.78 before)
 
 static void UpdatePulseSequence()
     {
@@ -710,7 +687,7 @@ static void UpdatePulseSequence()
                     PulseSeq.sequence_multiplicity = SEQUENCEMULTIPLICITY_SINGLE;
                     break; 
             case FREQUENCY_2KHZ:    
-                    PulseSeq.frequency_divider = 1;     
+                    PulseSeq.frequency_divider = 3;     
                     PulseSeq.sequence_multiplicity = SEQUENCEMULTIPLICITY_DOUBLE;
                     break;
             case FREQUENCY_3KHZ:    
@@ -737,6 +714,7 @@ static void UpdatePulseSequence()
 *******************************************************************************/
 static void GeneratePulseSequenceAndReadCAE()
     {u32 i;    
+     u32 ad_value_0_to_4095;
     
     SetOutputVoltage(ZERO_VOLTAGE);
     WHILE_DELAY_LOOP(PulseSeq.delay0_loop_counts)
@@ -745,8 +723,9 @@ static void GeneratePulseSequenceAndReadCAE()
     {    
         SetOutputVoltage(POSITIVE_VOLTAGE_MAX);
     
-        //CX_Read(CX_ADC1, &ad_value_0_to_4095, 0);
-        //Readout.ADCOUT_FOR_DEBUG = ad_value_0_to_4095;    
+        CX_Read(CX_ADC1, &ad_value_0_to_4095, 0);    
+        //IH150107 TODO  Conversion from ad_value_0_to_4095 to 0 to XXX (??)
+        Readout.CAE1 = ad_value_0_to_4095;    
     
         WHILE_DELAY_LOOP(PulseSeq.delay1_loop_counts)        
     }
@@ -780,11 +759,8 @@ static void SetOutputVoltage(OutputVoltage_code oVcode)
   
         static u8 controlByteForMAX5439=0;
 
-        
         volatile u32 nb_byteSent = 1;
-        //IH150105 obsolete
-        // volatile u32 nb_byteToSend = 1;
-    
+        
         switch(oVcode)
         {
             case POSITIVE_VOLTAGE_MAX:      controlByteForMAX5439=127;  break;
@@ -796,9 +772,6 @@ static void SetOutputVoltage(OutputVoltage_code oVcode)
     
         CX_Write(CX_GPIO_PIN8,CX_GPIO_LOW,0);     
 
-        //IH150105 obsolete
-        //{int i=400;while(i--);}                 //about 50us delay between NSS low and first clock edge
-        
         CX_Write(CX_SPI,&controlByteForMAX5439,&nb_byteSent);
         CX_Write(CX_GPIO_PIN8,CX_GPIO_HIGH,0);  //IH141230 this rising edge of the NSS signal actually sets the wiper 
                                                 // (see MAX5439 datasheet)
@@ -877,10 +850,6 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
             {
             u8 str[30];        
             UTIL_int2str( str, Readout.CAE1, 4, FALSE);    
-            
-            //IH141010 FOR DEBUGGING ONLY --------
-                UTIL_int2str( str, Readout.ADCOUT_FOR_DEBUG, 4, FALSE);    
-            //------------------                
             
             DRAW_SetCharMagniCoeff(4);            
             DRAW_SetTextColor(RGB_YELLOW);     
@@ -977,4 +946,16 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
             break;                                                     
         }
     }
+
+/*******************************************************************************
+* Function Name  : SetAutorun
+* Description    : Sets the bit 7 in SYS2 backup register to autorun this application 
+* Input          : None                     
+* Return         : None
+*******************************************************************************/
+static void SetAutorun(void)
+    {
+        //IH150107 TODO
+    }
+
 

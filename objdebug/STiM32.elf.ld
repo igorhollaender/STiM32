@@ -6,17 +6,18 @@ It also includes the secondary/main linker script that is specified in the Ride 
 */
 
 SEARCH_DIR(".")
-SEARCH_DIR("C:\Users\Igor\Documents\GitHub\STiM32\objdebug")
+SEARCH_DIR("C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug")
 SEARCH_DIR("C:\Raisonance\Ride\Lib\ARM")
 STARTUP("C:\Raisonance\Ride\Lib\ARM\CircleOS\Application_Startup.o")
-INPUT("C:\Users\Igor\Documents\GitHub\STiM32\objdebug\STiM32.o")
+INPUT("C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o")
 GROUP(
-"std_sbrk_thumb.lib"
 "smallprintf_thumb.a"
-"libc.a"
+"Cortex_SWV_io_putchar_thumb.a"
+"libc_s.a"
 "libm.a"
 
 )
-INCLUDE "C:\Users\Igor\Documents\GitHub\STiM32\Circle_App_OP4.ld"
+INCLUDE "C:\Users\igor.hollaender\Documents\GitHub\STiM32\Circle_App_OP4.ld"
 PROVIDE ( _Minimum_Stack_Size = 0x20 );
-OUTPUT("C:\Users\Igor\Documents\GitHub\STiM32\objdebug\STiM32.elf")
+PROVIDE ( malloc_getpagesize_P = 0x1000 );
+OUTPUT("C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.elf")
