@@ -8,11 +8,11 @@
 				<1>130</1>
 				<2>71</2>
 				<3>394</3>
-														
+																																										
 			</CodeReport>
-										
+																														
 		</CodeView>
-						
+																		
 	</STiM32>
 	<Flags>
 		<Report>
@@ -36,7 +36,7 @@
 			
 	</Flags>
 	<Views>
-		<View File=".\STiM32.c" Line="455" Index="0" focus="1" />
+		<View File=".\STiM32.c" Line="15" Index="0" focus="1" />
 		<View File="..\..\..\..\..\Raisonance\Ride\Lib\ARM\CircleOS\circle_api.h" Line="1040" Index="1" />
 	</Views>
 	<BookMarks>
@@ -75,6 +75,7 @@
 		</GrepReplaceWhat>
 	</Grep>
 	<FindStrings>
+		<Find>batter</Find>
 		<Find>DEBUG</Find>
 		<Find>CAE1</Find>
 		<Find>ADCOUT_FOR_DEBUG</Find>

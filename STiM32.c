@@ -3,13 +3,16 @@
 * File Name          :  STiM32.c
 * Description        :  STIMULATOR Control firmware 
 *
-* Last revision      :  IH 2015-01-07
+* Last revision      :  IH 2015-01-25
 *
 *   TODO:
+*
 *   150105      Implement persisting setup
 *   150107      Implement autorun of this application (currently, autorun has to be set up manually from menu,
 *               but, interestingly, this setting persist after new programming)
-*   150107      Implement battery status display 
+*           150107      Implement battery status display 150125 DONE
+*   150125      Implement displaying time from measuremenent start
+*   150125      Implement switch off in the menu
 *
 *******************************************************************************/
 
@@ -26,13 +29,16 @@
 //#define DEBUG_NOHW
 
 /* Private defines -----------------------------------------------------------*/
-#define STIM32_VERSION          "150107"
+#define STIM32_VERSION          "150125"
 
 #define  STIMULATOR_HANDLER_ID  UNUSED5_SCHHDL_ID
 #define  GUIUPDATE_DIVIDER      1       // GUI is called every 100 SysTicks
 #define  STATECHANGE_CNT_LIMIT  10
 
 #define  FIFO_SIZE              128
+
+#define  VBAT_MV_LOW                    4000
+#define  BATTERY_STATUS_STRING_LENGHT   8
 
 /* Typedefs ------------------------------------------------------------------*/
 typedef enum {
@@ -149,6 +155,7 @@ static void LongDelay(u8 delayInSeconds);
 static enum MENU_code MsgVersion(void);
 static void UpdatePulseSequence(void);
 static void SetAutorun(void);
+static char* GetBatteryStatusString(void);
 
 static void SetOutputVoltage(OutputVoltage_code);
 static void GeneratePulseSequenceAndReadCAE(void);        
@@ -211,6 +218,8 @@ static u16 ReadoutLimit_CAE1_for_Idle;
 
 static u8 MyFifoRxBuffer[FIFO_SIZE];       
 static u8 MyFifoTxBuffer[FIFO_SIZE];
+
+static char BatteryStatusString[BATTERY_STATUS_STRING_LENGHT];
 
 static bool time1Elapsed;
 
@@ -940,9 +949,8 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
             DRAW_SetCharMagniCoeff(1);
             DRAW_DisplayStringWithMode( 0,160,STIM32_VERSION, ALL_SCREEN, INVERTED_TEXT, CENTER);            
         
-            //IH140321 TODO show battery status
             DRAW_SetCharMagniCoeff(1);
-            DRAW_DisplayStringWithMode( 0,100,"Battery: OK", ALL_SCREEN, NORMAL_TEXT, CENTER);            
+            DRAW_DisplayStringWithMode( 0,100,GetBatteryStatusString(), ALL_SCREEN, NORMAL_TEXT, CENTER);            
             break;                                                     
         }
     }
@@ -955,7 +963,22 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
 *******************************************************************************/
 static void SetAutorun(void)
     {
+            
         //IH150107 TODO
+    
+        //IH150125 the autorun is currently set in the CircleOS menu
     }
 
-
+static char* GetBatteryStatusString(void)
+    {
+        u16 vbat_mV = UTIL_GetBat();
+        
+        // max string lenght is BATTERY_STATUS_STRING_LENGHT
+        strcpy(BatteryStatusString, "Battery OK");
+        if(vbat_mV<VBAT_MV_LOW)
+        {
+            strcpy(BatteryStatusString, "Battery LOW");
+        }
+    
+        return BatteryStatusString;
+    }
