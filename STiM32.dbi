@@ -1,6 +1,6 @@
 [Application]
 ApplicationPath=C:\Users\Igor\Documents\GitHub\STiM32\objdebug\STiM32.elf
-ExtraSegmentFilename=C:\Users\igor.hollaender\Documents\GitHub\STiM32\STiM32.segments
+ExtraSegmentFilename=C:\Users\Igor\Documents\GitHub\STiM32\STiM32.segments
 CSX=0
 HighBankAddr=400000
 BootMode=0

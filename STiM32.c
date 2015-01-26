@@ -3,16 +3,16 @@
 * File Name          :  STiM32.c
 * Description        :  STIMULATOR Control firmware 
 *
-* Last revision      :  IH 2015-01-25
+* Last revision      :  IH 2015-01-26
 *
 *   TODO:
 *
-*   150105      Implement persisting setup
-*   150107      Implement autorun of this application (currently, autorun has to be set up manually from menu,
+*           150105      Implement persisting setup ---> DONE - to be tested
+*           150107      Implement autorun of this application (currently, autorun has to be set up manually from menu,
 *               but, interestingly, this setting persist after new programming)
-*           150107      Implement battery status display 150125 DONE
-*   150125      Implement displaying time from measuremenent start
-*   150125      Implement switch off in the menu
+*           150107      Implement battery status display ---> 150125 DONE - to be tested
+*           150125      Implement displaying time from measuremenent start ---> DONE - to be tested
+*           150125      Implement switch off in the menu ---> DONE - to be tested
 *
 *******************************************************************************/
 
@@ -29,7 +29,7 @@
 //#define DEBUG_NOHW
 
 /* Private defines -----------------------------------------------------------*/
-#define STIM32_VERSION          "150125"
+#define STIM32_VERSION          "150126"
 
 #define  STIMULATOR_HANDLER_ID  UNUSED5_SCHHDL_ID
 #define  GUIUPDATE_DIVIDER      1       // GUI is called every 100 SysTicks
@@ -39,6 +39,10 @@
 
 #define  VBAT_MV_LOW                    4000
 #define  BATTERY_STATUS_STRING_LENGHT   8
+#define  SETTINGS_STRING_LENGHT         16
+
+#define  BKP_FREQUENCY          BKP_USER1
+#define  BKP_PULSESEQ           BKP_USER2
 
 /* Typedefs ------------------------------------------------------------------*/
 typedef enum {
@@ -78,6 +82,13 @@ typedef enum {
     } Frequency_code;
 
 typedef enum {
+    PULSESEQUENCE_1=1,
+    PULSESEQUENCE_2=2,
+    PULSESEQUENCE_3=3,
+    PULSESEQUENCE_4=4,
+    } PulseSequence_code;
+
+typedef enum {
     SEQUENCEMULTIPLICITY_SINGLE,
     SEQUENCEMULTIPLICITY_DOUBLE,
     } SequenceMultiplicity_code;
@@ -85,6 +96,7 @@ typedef enum {
 typedef struct 
     {
         Frequency_code frequency;
+        PulseSequence_code pulseSeq;
         u16 frequency_divider;
         SequenceMultiplicity_code sequence_multiplicity;
     
@@ -131,6 +143,7 @@ typedef struct
 enum MENU_code Application_Handler(void);
 
 enum MENU_code  Cancel( void );
+enum MENU_code  ShutDown( void );
 enum MENU_code  Quit( void );
 enum MENU_code  RestoreApp( void );
 
@@ -155,7 +168,10 @@ static void LongDelay(u8 delayInSeconds);
 static enum MENU_code MsgVersion(void);
 static void UpdatePulseSequence(void);
 static void SetAutorun(void);
+static void BackUpParameters(void);
+static void RestoreParameters(void);
 static char* GetBatteryStatusString(void);
+static char* GetSettingsString(void);
 
 static void SetOutputVoltage(OutputVoltage_code);
 static void GeneratePulseSequenceAndReadCAE(void);        
@@ -174,7 +190,8 @@ tMenu MenuMainSTiM32 =
         { "Set Frequency",           MenuSetup_Freq,    Application_Handler,    0 },
         { "Set Pulse Sequence",      MenuSetup_PSeq,    Application_Handler ,   0 },
         { "Cancel",                  Cancel,            RestoreApp ,            0 },
-        { "Quit",                    Quit,              0,                      1 },            
+        { "Shutdown",                ShutDown,          0,                      1 },
+        //{ "Quit",                    Quit,              0,                      1 },            
     }
 };
 
@@ -220,8 +237,7 @@ static u8 MyFifoRxBuffer[FIFO_SIZE];
 static u8 MyFifoTxBuffer[FIFO_SIZE];
 
 static char BatteryStatusString[BATTERY_STATUS_STRING_LENGHT];
-
-static bool time1Elapsed;
+static char SettingsStatusString[SETTINGS_STRING_LENGHT];
 
 /*******************************************************************************
 * Function Name  : STIMULATOR_Handler
@@ -402,6 +418,7 @@ enum MENU_code Application_Ini(void)
 
     // ... miscellaneous    
 
+    RTC_SetTime(0,0,0);  //IH150126 this clears any preset RTC ... but we do not care in our app
 
     // ... CX Extension
     
@@ -562,10 +579,7 @@ enum MENU_code  SetFrequency_3(void)
 
 enum MENU_code  SetPulseSequence_1(void)
     {       
-    PulseSeq.delay1_microseconds = 200;        
-    PulseSeq.delay2_microseconds = 50;        
-    PulseSeq.delay3_microseconds = 0;             
-    PulseSeq.delay_between_sequences_microseconds = 200;    
+    PulseSeq.pulseSeq = PULSESEQUENCE_1;    
     UpdatePulseSequence();
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
@@ -573,11 +587,8 @@ enum MENU_code  SetPulseSequence_1(void)
     }
 
 enum MENU_code  SetPulseSequence_2(void)
-    {    
-    PulseSeq.delay1_microseconds = 0;        
-    PulseSeq.delay2_microseconds = 50;        
-    PulseSeq.delay3_microseconds = 50;          
-    PulseSeq.delay_between_sequences_microseconds = 400;        
+    {
+    PulseSeq.pulseSeq = PULSESEQUENCE_2;    
     UpdatePulseSequence();
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
@@ -586,10 +597,7 @@ enum MENU_code  SetPulseSequence_2(void)
 
 enum MENU_code  SetPulseSequence_3(void)
     {
-    PulseSeq.delay1_microseconds = 50;        
-    PulseSeq.delay2_microseconds = 50;        
-    PulseSeq.delay3_microseconds = 50;      
-    PulseSeq.delay_between_sequences_microseconds = 400;        
+    PulseSeq.pulseSeq = PULSESEQUENCE_3;    
     UpdatePulseSequence();    
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
@@ -598,16 +606,21 @@ enum MENU_code  SetPulseSequence_3(void)
 
 enum MENU_code  SetPulseSequence_4(void)
     {
-    PulseSeq.delay1_microseconds = 400;        
-    PulseSeq.delay2_microseconds = 0;        
-    PulseSeq.delay3_microseconds = 0;
-    PulseSeq.delay_between_sequences_microseconds = 100;        
+    PulseSeq.pulseSeq = PULSESEQUENCE_4;    
     UpdatePulseSequence();    
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
     return MENU_CONTINUE_COMMAND;
     }
 
+enum MENU_code ShutDown( void )
+{
+        //IH150126 immediate shutdown
+        BackUpParameters();
+        SHUTDOWN_Action();
+}
+
+//IH150126 currently not used -- using ShutDown() instead
 enum MENU_code Quit( void )
 {
         ActualPendingRequest = PENDING_REQUEST_REDRAW;   
@@ -629,6 +642,7 @@ enum MENU_code Quit( void )
         LED_Set( LED_GREEN, LED_OFF );
         LED_Set( LED_RED, LED_OFF );
         
+        BackUpParameters();
         return MENU_Quit();
 }
 
@@ -682,6 +696,37 @@ static void LongDelay(u8 delayInSeconds)
 
 static void UpdatePulseSequence()
     {
+        switch(PulseSeq.pulseSeq)
+        {
+            case PULSESEQUENCE_1:    
+                PulseSeq.delay1_microseconds = 200;        
+                PulseSeq.delay2_microseconds = 50;        
+                PulseSeq.delay3_microseconds = 0;             
+                PulseSeq.delay_between_sequences_microseconds = 200;    
+                break;
+            
+            case PULSESEQUENCE_2:    
+                PulseSeq.delay1_microseconds = 0;        
+                PulseSeq.delay2_microseconds = 50;        
+                PulseSeq.delay3_microseconds = 50;          
+                PulseSeq.delay_between_sequences_microseconds = 400;        
+                break;
+            
+            case PULSESEQUENCE_3:    
+                PulseSeq.delay1_microseconds = 50;        
+                PulseSeq.delay2_microseconds = 50;        
+                PulseSeq.delay3_microseconds = 50;      
+                PulseSeq.delay_between_sequences_microseconds = 400;        
+                break;
+            
+            case PULSESEQUENCE_4:    
+                PulseSeq.delay1_microseconds = 400;        
+                PulseSeq.delay2_microseconds = 0;        
+                PulseSeq.delay3_microseconds = 0;
+                PulseSeq.delay_between_sequences_microseconds = 100;        
+                break;
+        }
+    
         PulseSeq.delay0_loop_counts = MICROSECONDS_TO_LOOP_COUNTS(PulseSeq.delay0_microseconds);
         PulseSeq.delay1_loop_counts = MICROSECONDS_TO_LOOP_COUNTS(PulseSeq.delay1_microseconds);
         PulseSeq.delay2_loop_counts = MICROSECONDS_TO_LOOP_COUNTS(PulseSeq.delay2_microseconds);
@@ -725,6 +770,9 @@ static void GeneratePulseSequenceAndReadCAE()
     {u32 i;    
      u32 ad_value_0_to_4095;
     
+     u32 ad_value_offset  =  1500;          // ADC values under this are presented as 0
+     u32 ad_value_reciproq_scale   =  3;    // values are DIVIDED by this factor
+    
     SetOutputVoltage(ZERO_VOLTAGE);
     WHILE_DELAY_LOOP(PulseSeq.delay0_loop_counts)
 
@@ -733,8 +781,15 @@ static void GeneratePulseSequenceAndReadCAE()
         SetOutputVoltage(POSITIVE_VOLTAGE_MAX);
     
         CX_Read(CX_ADC1, &ad_value_0_to_4095, 0);    
-        //IH150107 TODO  Conversion from ad_value_0_to_4095 to 0 to XXX (??)
-        Readout.CAE1 = ad_value_0_to_4095;    
+        //IH150107 TODO  Conversion from ad_value_0_to_4095: CHECK THIS
+        if(ad_value_0_to_4095 < ad_value_offset)
+        {
+            Readout.CAE1 = 0;
+        }
+        else
+        {        
+            Readout.CAE1 = (ad_value_0_to_4095 - ad_value_offset)/ad_value_reciproq_scale;    
+        }
     
         WHILE_DELAY_LOOP(PulseSeq.delay1_loop_counts)        
     }
@@ -928,11 +983,13 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
                         }
                 break;
                                     
-            
             }        
                 
             // display time
-            DRAW_DisplayTime( 10, 10);            
+            DRAW_DisplayTime( 10, 10);         
+            
+            //display current settings
+            DRAW_DisplayStringWithMode( 0,10,GetSettingsString(), ALL_SCREEN, NORMAL_TEXT, CENTER);            
             break;            
         
         case GUI_INTRO_SCREEN:            
@@ -963,10 +1020,69 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
 *******************************************************************************/
 static void SetAutorun(void)
     {
-            
-        //IH150107 TODO
-    
         //IH150125 the autorun is currently set in the CircleOS menu
+    }
+
+static void BackUpParameters(void)
+{   
+    UTIL_WriteBackupRegister (BKP_FREQUENCY, PulseSeq.frequency);
+    UTIL_WriteBackupRegister (BKP_PULSESEQ, PulseSeq.pulseSeq);
+
+return;
+}
+
+static void RestoreParameters(void)
+{
+    u32 p_Frequency     = UTIL_ReadBackupRegister (BKP_FREQUENCY);
+    u32 p_PulseSeq      = UTIL_ReadBackupRegister (BKP_PULSESEQ);
+
+    // set defaults if backup not valid
+    if(p_Frequency>0)   { PulseSeq.frequency = p_Frequency; }  else  { PulseSeq.frequency = FREQUENCY_1KHZ; }
+    if(p_PulseSeq>0)    { PulseSeq.pulseSeq = p_PulseSeq;   }  else  { PulseSeq.pulseSeq  = PULSESEQUENCE_1;  }
+                
+    return;
+}
+
+static char* GetSettingsString(void)
+    {
+        char *frequency_string;
+        char *pulseSeq_string;
+    
+        switch(PulseSeq.frequency)
+        {
+            case FREQUENCY_1KHZ:
+                    frequency_string = "1kHz";                    
+                    break;
+            case FREQUENCY_2KHZ:
+                    frequency_string = "2kHz";                    
+                    break;
+            case FREQUENCY_3KHZ:
+                    frequency_string = "3kHz";                    
+                    break;
+        }
+    
+        switch(PulseSeq.pulseSeq)
+        {
+            case PULSESEQUENCE_1:
+                    pulseSeq_string = "Seq1";                    
+                    break;
+            case PULSESEQUENCE_2:
+                    pulseSeq_string = "Seq2";                    
+                    break;
+            case PULSESEQUENCE_3:
+                    pulseSeq_string = "Seq3";                    
+                    break;
+            case PULSESEQUENCE_4:
+                    pulseSeq_string = "Seq4";                    
+                    break;
+        }
+    
+        // max string lenght is SETTINGS_STRING_LENGHT
+        strcpy(SettingsStatusString, frequency_string);
+        strcat(SettingsStatusString, "   ");
+        strcat(SettingsStatusString, pulseSeq_string);
+    
+        return SettingsStatusString;
     }
 
 static char* GetBatteryStatusString(void)
