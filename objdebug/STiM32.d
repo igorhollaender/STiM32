@@ -1,5 +1,5 @@
-C:\Users\Igor\Documents\GitHub\STiM32\objdebug\STiM32.o: \
- C:\Users\Igor\Documents\GitHub\STiM32\STiM32.c \
+C:\Users\igor.hollaender\Documents\GitHub\STiM32\objdebug\STiM32.o: \
+ C:\Users\igor.hollaender\Documents\GitHub\STiM32\STiM32.c \
  C:\Raisonance\Ride\Lib\ARM\CircleOS/circle_api.h \
  c:\raisonance\ride\arm-gcc\lib\gcc\arm-none-eabi\4.8.4\include\stdint.h \
  c:\raisonance\ride\arm-gcc\arm-none-eabi\include\stdint.h \

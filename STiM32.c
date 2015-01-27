@@ -3,16 +3,17 @@
 * File Name          :  STiM32.c
 * Description        :  STIMULATOR Control firmware 
 *
-* Last revision      :  IH 2015-01-26
+* Last revision      :  IH 2015-01-27
 *
 *   TODO:
 *
-*           150105      Implement persisting setup ---> DONE - to be tested
 *           150107      Implement autorun of this application (currently, autorun has to be set up manually from menu,
 *               but, interestingly, this setting persist after new programming)
-*           150107      Implement battery status display ---> 150125 DONE - to be tested
 *           150125      Implement displaying time from measuremenent start ---> DONE - to be tested
 *           150125      Implement switch off in the menu ---> DONE - to be tested
+*
+*   150127      Bug: time display is being overwritten
+*   150127      Implement variable pulse voltage - do this by defining additional sequences
 *
 *******************************************************************************/
 
@@ -29,7 +30,7 @@
 //#define DEBUG_NOHW
 
 /* Private defines -----------------------------------------------------------*/
-#define STIM32_VERSION          "150126"
+#define STIM32_VERSION          "150127b"
 
 #define  STIMULATOR_HANDLER_ID  UNUSED5_SCHHDL_ID
 #define  GUIUPDATE_DIVIDER      1       // GUI is called every 100 SysTicks
@@ -135,7 +136,8 @@ d0    |    | d2|      |
 
 typedef struct 
     {
-        u32 CAE1;   // current after edge1
+        u32     CAE1;           // current after edge1
+        bool    isOverloaded;
     }
     Readout_struct;
 
@@ -172,6 +174,7 @@ static void BackUpParameters(void);
 static void RestoreParameters(void);
 static char* GetBatteryStatusString(void);
 static char* GetSettingsString(void);
+static void PlayBeep(void);
 
 static void SetOutputVoltage(OutputVoltage_code);
 static void GeneratePulseSequenceAndReadCAE(void);        
@@ -396,12 +399,10 @@ enum MENU_code Application_Ini(void)
     
     //-------------------------------------
     // Initialize ...
-        
-    
-    // ... Frequency and Pulse Sequence
-    SetFrequency_1();
-    SetPulseSequence_1();
-        
+              
+    // ... set frequency and pulse sequence   
+    RestoreParameters();  
+    UpdatePulseSequence();    
     
     // ... GUI    
     GUI(GUI_INITIALIZE,0);
@@ -413,8 +414,8 @@ enum MENU_code Application_Ini(void)
     StimState = STIMSTATE_IDLE; 
     
     // ... readout limits
-    ReadoutLimit_CAE1_for_Run = 10;
-    ReadoutLimit_CAE1_for_Idle = 10;
+    ReadoutLimit_CAE1_for_Run = 150;
+    ReadoutLimit_CAE1_for_Idle = 170;
 
     // ... miscellaneous    
 
@@ -781,14 +782,20 @@ static void GeneratePulseSequenceAndReadCAE()
         SetOutputVoltage(POSITIVE_VOLTAGE_MAX);
     
         CX_Read(CX_ADC1, &ad_value_0_to_4095, 0);    
-        //IH150107 TODO  Conversion from ad_value_0_to_4095: CHECK THIS
         if(ad_value_0_to_4095 < ad_value_offset)
         {
             Readout.CAE1 = 0;
+            Readout.isOverloaded = 0;
         }
-        else
+        else if (ad_value_0_to_4095 == 4095)
+        {
+            Readout.CAE1 = 0;
+            Readout.isOverloaded = 1;
+        }
+        else    
         {        
             Readout.CAE1 = (ad_value_0_to_4095 - ad_value_offset)/ad_value_reciproq_scale;    
+            Readout.isOverloaded = 0;
         }
     
         WHILE_DELAY_LOOP(PulseSeq.delay1_loop_counts)        
@@ -871,7 +878,7 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
     u16 barWidth = STIM_SINGLE_BAR_WIDTH;
     
         
-    float readoutYScalingFactor = 0.1;  //was 1.1 for debugging
+    float readoutYScalingFactor = 0.15;  
     
         switch(GUIaction)
         {
@@ -910,12 +917,32 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
             
         case GUI_NORMAL_UPDATE:
             
-            // display readout figure
+            // clear upper panel
+            LCD_FillRect(
+                0, SCREEN_HEIGHT-STIM_UPPERPANEL_HEIGHT, 
+                SCREEN_WIDTH, 
+                STIM_UPPERPANEL_HEIGHT, 
+                STIM_UPPERPANEL_COLOR );
             {
             u8 str[30];        
-            UTIL_int2str( str, Readout.CAE1, 4, FALSE);    
+            if(Readout.isOverloaded)
+            {
+                strcpy(str,"    OVERLOAD");
+                PlayBeep();
+                DRAW_SetCharMagniCoeff(2);            
+            }
+            else if(StimState==STIMSTATE_IDLE || StimState==STIMSTATE_WAITING_FOR_RUN)
+            {
+                strcpy(str,"    Waiting...");
+                DRAW_SetCharMagniCoeff(2);            
+            }
+            else
+            {
+                // display readout figure
+                UTIL_int2str( str, Readout.CAE1, 4, FALSE);    
+                DRAW_SetCharMagniCoeff(4);            
+            }
             
-            DRAW_SetCharMagniCoeff(4);            
             DRAW_SetTextColor(RGB_YELLOW);     
             DRAW_SetBGndColor(STIM_UPPERPANEL_COLOR);        
             
@@ -984,12 +1011,12 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
                 break;
                                     
             }        
-                
-            // display time
-            DRAW_DisplayTime( 10, 10);         
-            
+                                        
             //display current settings
-            DRAW_DisplayStringWithMode( 0,10,GetSettingsString(), ALL_SCREEN, NORMAL_TEXT, CENTER);            
+            DRAW_DisplayStringWithMode( 8,10,GetSettingsString(), 0, NORMAL_TEXT, RIGHT);            
+        
+            // display time
+            DRAW_DisplayTime( 10, 10);         //IH150127 Problem here: the time string is permanently being overwritten
             break;            
         
         case GUI_INTRO_SCREEN:            
@@ -1098,3 +1125,11 @@ static char* GetBatteryStatusString(void)
     
         return BatteryStatusString;
     }
+
+static void PlayBeep(void)
+{
+    u8 *beepMusic =
+    "";
+    BUZZER_PlayMusic(beepMusic);
+    //IH150127 TODO
+}
