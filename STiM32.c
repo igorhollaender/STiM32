@@ -3,16 +3,11 @@
 * File Name          :  STiM32.c
 * Description        :  STIMULATOR Control firmware 
 *
-* Last revision      :  IH 2015-01-27
+* Last revision      :  IH 2015-01-28
 *
 *   TODO:
-*
-*           150107      Implement autorun of this application (currently, autorun has to be set up manually from menu,
-*               but, interestingly, this setting persist after new programming)
-*           150125      Implement displaying time from measuremenent start ---> DONE - to be tested
-*           150125      Implement switch off in the menu ---> DONE - to be tested
-*
-*   150127      Bug: time display is being overwritten
+**
+*   150128      Bug: space between : and ss in time string
 *   150127      Implement variable pulse voltage - do this by defining additional sequences
 *
 *******************************************************************************/
@@ -30,7 +25,7 @@
 //#define DEBUG_NOHW
 
 /* Private defines -----------------------------------------------------------*/
-#define STIM32_VERSION          "150127b"
+#define STIM32_VERSION          "150128a"
 
 #define  STIMULATOR_HANDLER_ID  UNUSED5_SCHHDL_ID
 #define  GUIUPDATE_DIVIDER      1       // GUI is called every 100 SysTicks
@@ -40,7 +35,7 @@
 
 #define  VBAT_MV_LOW                    4000
 #define  BATTERY_STATUS_STRING_LENGHT   8
-#define  SETTINGS_STRING_LENGHT         16
+#define  SETTINGS_STRING_LENGHT         32
 
 #define  BKP_FREQUENCY          BKP_USER1
 #define  BKP_PULSESEQ           BKP_USER2
@@ -187,14 +182,14 @@ tMenu MenuMainSTiM32 =
 {
     1,
     "STiM32 Main Menu",
-    4, 0, 0, 0, 0, 0,
+    5, 0, 0, 0, 0, 0,
     0,
     {
         { "Set Frequency",           MenuSetup_Freq,    Application_Handler,    0 },
         { "Set Pulse Sequence",      MenuSetup_PSeq,    Application_Handler ,   0 },
         { "Cancel",                  Cancel,            RestoreApp ,            0 },
         { "Shutdown",                ShutDown,          0,                      1 },
-        //{ "Quit",                    Quit,              0,                      1 },            
+        { "Quit to OS",              Quit,              0,                      1 },            
     }
 };
 
@@ -395,6 +390,7 @@ enum MENU_code Application_Ini(void)
     UTIL_SetPll(SPEED_VERY_HIGH);                           // CPU frequency is 120MHz; Systick frequency is 3kHZ
                                                             // see EvoPrimer Manual for STM32F429ZI
     
+    LCD_SetRotateScreen( 1 );
     SetAutorun();
     
     //-------------------------------------
@@ -621,9 +617,9 @@ enum MENU_code ShutDown( void )
         SHUTDOWN_Action();
 }
 
-//IH150126 currently not used -- using ShutDown() instead
 enum MENU_code Quit( void )
 {
+        //IH Quit to OS
         ActualPendingRequest = PENDING_REQUEST_REDRAW;   
 
         BUTTON_WaitForRelease();                                     
@@ -1012,11 +1008,9 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
                                     
             }        
                                         
-            //display current settings
+            //display current settings and time
             DRAW_DisplayStringWithMode( 8,10,GetSettingsString(), 0, NORMAL_TEXT, RIGHT);            
-        
-            // display time
-            DRAW_DisplayTime( 10, 10);         //IH150127 Problem here: the time string is permanently being overwritten
+                   
             break;            
         
         case GUI_INTRO_SCREEN:            
@@ -1074,6 +1068,7 @@ static char* GetSettingsString(void)
     {
         char *frequency_string;
         char *pulseSeq_string;
+        char time_string[6];
     
         switch(PulseSeq.frequency)
         {
@@ -1104,10 +1099,26 @@ static char* GetSettingsString(void)
                     break;
         }
     
+        {
+        u32 THH, TMM, TSS;
+        char mm_string[3];
+        char ss_string[3];
+        RTC_GetTime (&THH, &TMM, &TSS);
+        UTIL_int2str( mm_string, TMM, 2, TRUE);    
+        UTIL_int2str( ss_string, TSS, 2, TRUE);    
+        strcpy(time_string, mm_string);   
+        strcat(time_string,":");    
+        strcat(time_string, ss_string);    //IH150128 BUG here: space between : and ss_string (??)
+        //IH150128 Hours are ignored
+        }
+        
+    
         // max string lenght is SETTINGS_STRING_LENGHT
-        strcpy(SettingsStatusString, frequency_string);
-        strcat(SettingsStatusString, "   ");
-        strcat(SettingsStatusString, pulseSeq_string);
+        strcpy(SettingsStatusString, frequency_string); // lenght = 4
+        strcat(SettingsStatusString, "   ");            // lenght = 3
+        strcat(SettingsStatusString, pulseSeq_string);  // length = 4
+        strcat(SettingsStatusString, "   ");            // lenght = 3
+        strcat(SettingsStatusString, time_string);      // length = 5
     
         return SettingsStatusString;
     }
@@ -1128,8 +1139,8 @@ static char* GetBatteryStatusString(void)
 
 static void PlayBeep(void)
 {
-    u8 *beepMusic =
-    "";
+    //IH150128 TODO this takes too long, we need a short buzzer beep here
+
+    u8 *beepMusic ="beep1:d=32,o=6,b=900:e";
     BUZZER_PlayMusic(beepMusic);
-    //IH150127 TODO
 }
