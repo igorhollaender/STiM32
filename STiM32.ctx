@@ -4,10 +4,10 @@
 		<MemoryView Focus="134219460" TopRow="0" NbPerLine="8" />
 		<CodeView TopRow="134218012" Focus="134218016" >
 			<CodeReport>
-				<0>123</0>
-				<1>136</1>
-				<2>74</2>
-				<3>415</3>
+				<0>143</0>
+				<1>159</1>
+				<2>86</2>
+				<3>486</3>
 														
 			</CodeReport>
 										
@@ -36,7 +36,7 @@
 			
 	</Flags>
 	<Views>
-		<View File=".\STiM32.c" Line="914" Index="0" focus="1" />
+		<View File=".\STiM32.c" Line="831" Index="0" focus="1" />
 		<View File="..\..\..\..\..\raisonance\ride\lib\arm\circleos\circle_api.h" Line="6" Index="1" />
 	</Views>
 	<BookMarks>
@@ -75,6 +75,7 @@
 		</GrepReplaceWhat>
 	</Grep>
 	<FindStrings>
+		<Find>ActualBatt</Find>
 		<Find>beep</Find>
 		<Find>RTC_Get</Find>
 		<Find>RTC</Find>
@@ -94,7 +95,6 @@
 		<Find>batter</Find>
 		<Find>DEBUG</Find>
 		<Find>CAE1</Find>
-		<Find>ADCOUT_FOR_DEBUG</Find>
 	</FindStrings>
 	<ReplaceStrings/>
 </Debug>

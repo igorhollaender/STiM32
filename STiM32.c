@@ -3,7 +3,7 @@
 * File Name          :  STiM32.c
 * Description        :  STIMULATOR Control firmware 
 *
-* Last revision      :  IH 2015-01-28
+* Last revision      :  IH 2015-02-03
 *
 *   TODO:
 **
@@ -25,7 +25,7 @@
 //#define DEBUG_NOHW
 
 /* Private defines -----------------------------------------------------------*/
-#define STIM32_VERSION          "150128a"
+#define STIM32_VERSION          "150203a"
 
 #define  STIMULATOR_HANDLER_ID  UNUSED5_SCHHDL_ID
 #define  GUIUPDATE_DIVIDER      1       // GUI is called every 100 SysTicks
@@ -39,6 +39,9 @@
 
 #define  BKP_FREQUENCY          BKP_USER1
 #define  BKP_PULSESEQ           BKP_USER2
+#define  BKP_PULSEPEAKVOLTAGE   BKP_USER3
+
+#define NOMINAL_BATTERY_VOLTAGE_MV     4.02
 
 /* Typedefs ------------------------------------------------------------------*/
 typedef enum {
@@ -72,6 +75,12 @@ typedef enum {
     } OutputVoltage_code;
 
 typedef enum {
+    PULSEPEAKVOLTAGE_8V=1,
+    PULSEPEAKVOLTAGE_6V=2,
+    PULSEPEAKVOLTAGE_4V=3,    
+    } PulsePeakVoltage_code;
+
+typedef enum {
     FREQUENCY_1KHZ=1,
     FREQUENCY_2KHZ=2,
     FREQUENCY_3KHZ=3,
@@ -93,8 +102,10 @@ typedef struct
     {
         Frequency_code frequency;
         PulseSequence_code pulseSeq;
+        PulsePeakVoltage_code peakVoltage;
         u16 frequency_divider;
         SequenceMultiplicity_code sequence_multiplicity;
+        float voltage_multiplication_factor;
     
         u16 delay_between_sequences_microseconds;
         u16 delay_between_sequences_loop_counts;
@@ -146,8 +157,7 @@ enum MENU_code  RestoreApp( void );
 
 enum MENU_code  MenuSetup_Freq();
 enum MENU_code  MenuSetup_PSeq();
-enum MENU_code  MenuSetup_C();
-enum MENU_code  MenuSetup_D();
+enum MENU_code  MenuSetup_PVolt();
 
 enum MENU_code  SetFrequency_1();
 enum MENU_code  SetFrequency_2();
@@ -157,6 +167,10 @@ enum MENU_code  SetPulseSequence_1();
 enum MENU_code  SetPulseSequence_2();
 enum MENU_code  SetPulseSequence_3();
 enum MENU_code  SetPulseSequence_4();
+
+enum MENU_code  SetPulsePeakVoltage_1(void);
+enum MENU_code  SetPulsePeakVoltage_2(void);
+enum MENU_code  SetPulsePeakVoltage_3(void);
 
 void TimerHandler1(void);
 
@@ -171,7 +185,7 @@ static char* GetBatteryStatusString(void);
 static char* GetSettingsString(void);
 static void PlayBeep(void);
 
-static void SetOutputVoltage(OutputVoltage_code);
+static void SetOutputVoltage(OutputVoltage_code, float multiplication_factor);
 static void GeneratePulseSequenceAndReadCAE(void);        
     
 
@@ -182,11 +196,12 @@ tMenu MenuMainSTiM32 =
 {
     1,
     "STiM32 Main Menu",
-    5, 0, 0, 0, 0, 0,
+    6, 0, 0, 0, 0, 0,
     0,
     {
         { "Set Frequency",           MenuSetup_Freq,    Application_Handler,    0 },
         { "Set Pulse Sequence",      MenuSetup_PSeq,    Application_Handler ,   0 },
+        { "Set Pulse Voltage",       MenuSetup_PVolt,   Application_Handler ,   0 },
         { "Cancel",                  Cancel,            RestoreApp ,            0 },
         { "Shutdown",                ShutDown,          0,                      1 },
         { "Quit to OS",              Quit,              0,                      1 },            
@@ -222,6 +237,20 @@ tMenu MenuSetPulseSequence =
     }
 };
 
+tMenu MenuSetPulsePeakVoltage =
+{
+    1,
+    "Set Peak Voltage",
+    4, 0, 0, 0, 0, 0,
+    0,
+    {
+        { " 8 V ",     SetPulsePeakVoltage_1,    Application_Handler,    0 },
+        { " 6 V ",     SetPulsePeakVoltage_2,    Application_Handler ,   0 },
+        { " 4 V ",     SetPulsePeakVoltage_3,    Application_Handler ,   0 },        
+        { "Cancel",    Cancel,                   Application_Handler,    0 },
+    }
+};
+
 
 /* Global variables ----------------------------------------------------------*/
 static PendingRequest_code ActualPendingRequest;
@@ -230,6 +259,7 @@ static Readout_struct Readout;
 static StimState_code StimState;
 static u16 ReadoutLimit_CAE1_for_Run;
 static u16 ReadoutLimit_CAE1_for_Idle;
+static u16 ActualBatteryVoltagemV;
 
 static u8 MyFifoRxBuffer[FIFO_SIZE];       
 static u8 MyFifoTxBuffer[FIFO_SIZE];
@@ -415,6 +445,8 @@ enum MENU_code Application_Ini(void)
 
     // ... miscellaneous    
 
+    ActualBatteryVoltagemV = UTIL_GetBat();
+    
     RTC_SetTime(0,0,0);  //IH150126 this clears any preset RTC ... but we do not care in our app
 
     // ... CX Extension
@@ -508,7 +540,8 @@ enum MENU_code Application_Handler(void)
     // normal processing    
     if (!(GUIUpdate_cnt % GUIUPDATE_DIVIDER))
         {
-        GUI(GUI_NORMAL_UPDATE,0);        
+        GUI(GUI_NORMAL_UPDATE,0);     
+        ActualBatteryVoltagemV = UTIL_GetBat();        //IH150202 check actual battery status every 100 ticks
         }   
     GUIUpdate_cnt++;
   
@@ -546,6 +579,13 @@ enum MENU_code  MenuSetup_PSeq(void)
     MENU_Set( ( tMenu* ) &MenuSetPulseSequence );             
     return MENU_CHANGE;
     }
+
+enum MENU_code  MenuSetup_PVolt(void)
+    {    
+    MENU_Set( ( tMenu* ) &MenuSetPulsePeakVoltage );             
+    return MENU_CHANGE;
+    }
+
 
 enum MENU_code  SetFrequency_1(void)
     {
@@ -609,6 +649,34 @@ enum MENU_code  SetPulseSequence_4(void)
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
     return MENU_CONTINUE_COMMAND;
     }
+
+enum MENU_code  SetPulsePeakVoltage_1(void)
+    {
+    PulseSeq.peakVoltage = PULSEPEAKVOLTAGE_8V;     
+    UpdatePulseSequence();
+    
+    ActualPendingRequest = PENDING_REQUEST_REDRAW;    
+    return MENU_CONTINUE_COMMAND;
+    }
+
+enum MENU_code  SetPulsePeakVoltage_2(void)
+    {
+    PulseSeq.peakVoltage = PULSEPEAKVOLTAGE_6V;     
+    UpdatePulseSequence();
+    
+    ActualPendingRequest = PENDING_REQUEST_REDRAW;    
+    return MENU_CONTINUE_COMMAND;
+    }
+
+enum MENU_code  SetPulsePeakVoltage_3(void)
+    {
+    PulseSeq.peakVoltage = PULSEPEAKVOLTAGE_4V;     
+    UpdatePulseSequence();
+    
+    ActualPendingRequest = PENDING_REQUEST_REDRAW;    
+    return MENU_CONTINUE_COMMAND;
+    }
+
 
 enum MENU_code ShutDown( void )
 {
@@ -746,6 +814,22 @@ static void UpdatePulseSequence()
                     PulseSeq.sequence_multiplicity = SEQUENCEMULTIPLICITY_SINGLE;
                     break;
         }
+    
+        switch(PulseSeq.peakVoltage)
+        {
+            case PULSEPEAKVOLTAGE_8V:    
+                    PulseSeq.voltage_multiplication_factor =  8.0/8.0;
+                    break;
+            case PULSEPEAKVOLTAGE_6V:    
+                    PulseSeq.voltage_multiplication_factor =  6.0/8.0;
+                    break;
+            case PULSEPEAKVOLTAGE_4V:    
+                    PulseSeq.voltage_multiplication_factor =  4.0/8.0;
+                    break;
+        }    
+    
+       // PulseSeq.voltage_multiplication_factor *= ((float)NOMINAL_BATTERY_VOLTAGE_MV)/((float)ActualBatteryVoltagemV);  //IH150203 TODO: 
+                    
     }
 
 
@@ -770,12 +854,12 @@ static void GeneratePulseSequenceAndReadCAE()
      u32 ad_value_offset  =  1500;          // ADC values under this are presented as 0
      u32 ad_value_reciproq_scale   =  3;    // values are DIVIDED by this factor
     
-    SetOutputVoltage(ZERO_VOLTAGE);
+    SetOutputVoltage(ZERO_VOLTAGE,PulseSeq.voltage_multiplication_factor);
     WHILE_DELAY_LOOP(PulseSeq.delay0_loop_counts)
 
     if(PulseSeq.delay1_loop_counts>0)
     {    
-        SetOutputVoltage(POSITIVE_VOLTAGE_MAX);
+        SetOutputVoltage(POSITIVE_VOLTAGE_MAX,PulseSeq.voltage_multiplication_factor);
     
         CX_Read(CX_ADC1, &ad_value_0_to_4095, 0);    
         if(ad_value_0_to_4095 < ad_value_offset)
@@ -797,17 +881,17 @@ static void GeneratePulseSequenceAndReadCAE()
         WHILE_DELAY_LOOP(PulseSeq.delay1_loop_counts)        
     }
         
-    SetOutputVoltage(ZERO_VOLTAGE);
+    SetOutputVoltage(ZERO_VOLTAGE,PulseSeq.voltage_multiplication_factor);
     
     WHILE_DELAY_LOOP(PulseSeq.delay2_loop_counts)    
    
     if(PulseSeq.delay3_loop_counts>0)
     {    
-        SetOutputVoltage(NEGATIVE_VOLTAGE_MAX);
+        SetOutputVoltage(NEGATIVE_VOLTAGE_MAX,PulseSeq.voltage_multiplication_factor);
         WHILE_DELAY_LOOP(PulseSeq.delay3_loop_counts)    
     }
     
-    SetOutputVoltage(ZERO_VOLTAGE);                  
+    SetOutputVoltage(ZERO_VOLTAGE,PulseSeq.voltage_multiplication_factor);                  
     }   
 
 /*******************************************************************************
@@ -819,9 +903,10 @@ static void GeneratePulseSequenceAndReadCAE()
                    MAX5439 has 128 taps so the control word has 7 bits.
 
 * Input          : OutputVoltage_code oVcode
+*                  multiplication_factor : float from 0 to 1
 * Return         : None
 *******************************************************************************/
-static void SetOutputVoltage(OutputVoltage_code oVcode)
+static void SetOutputVoltage(OutputVoltage_code oVcode,float multiplication_factor)
     {
   
         static u8 controlByteForMAX5439=0;
@@ -830,11 +915,12 @@ static void SetOutputVoltage(OutputVoltage_code oVcode)
         
         switch(oVcode)
         {
-            case POSITIVE_VOLTAGE_MAX:      controlByteForMAX5439=127;  break;
-            case POSITIVE_VOLTAGE_HALF:     controlByteForMAX5439=95;   break;
-            case ZERO_VOLTAGE:              controlByteForMAX5439=63;   break;
-            case NEGATIVE_VOLTAGE_HALF:     controlByteForMAX5439=31;   break;
-            case NEGATIVE_VOLTAGE_MAX:      controlByteForMAX5439=0;    break;
+            case POSITIVE_VOLTAGE_MAX:      controlByteForMAX5439= 63 + 64*multiplication_factor;  break;
+            case POSITIVE_VOLTAGE_HALF:     controlByteForMAX5439= 63 + 32*multiplication_factor;  break; 
+            case ZERO_VOLTAGE:              controlByteForMAX5439= 63 ; break;
+            case NEGATIVE_VOLTAGE_HALF:     controlByteForMAX5439= 63 - 32*multiplication_factor;  break;  
+            case NEGATIVE_VOLTAGE_MAX:      controlByteForMAX5439= 63 - 63*multiplication_factor;  break;  
+                                                                        //IH150203 not absolutely exact, but OK
         }
     
         CX_Write(CX_GPIO_PIN8,CX_GPIO_LOW,0);     
@@ -1048,18 +1134,23 @@ static void BackUpParameters(void)
 {   
     UTIL_WriteBackupRegister (BKP_FREQUENCY, PulseSeq.frequency);
     UTIL_WriteBackupRegister (BKP_PULSESEQ, PulseSeq.pulseSeq);
+    UTIL_WriteBackupRegister (BKP_PULSEPEAKVOLTAGE, PulseSeq.peakVoltage);
 
 return;
 }
 
 static void RestoreParameters(void)
 {
-    u32 p_Frequency     = UTIL_ReadBackupRegister (BKP_FREQUENCY);
-    u32 p_PulseSeq      = UTIL_ReadBackupRegister (BKP_PULSESEQ);
+    u32 p_Frequency             = UTIL_ReadBackupRegister (BKP_FREQUENCY);
+    u32 p_PulseSeq              = UTIL_ReadBackupRegister (BKP_PULSESEQ);
+    u32 p_PulsePeakVoltage      = UTIL_ReadBackupRegister (BKP_PULSEPEAKVOLTAGE);
 
     // set defaults if backup not valid
-    if(p_Frequency>0)   { PulseSeq.frequency = p_Frequency; }  else  { PulseSeq.frequency = FREQUENCY_1KHZ; }
-    if(p_PulseSeq>0)    { PulseSeq.pulseSeq = p_PulseSeq;   }  else  { PulseSeq.pulseSeq  = PULSESEQUENCE_1;  }
+    if(p_Frequency>0)           { PulseSeq.frequency = p_Frequency;         }  else  { PulseSeq.frequency = FREQUENCY_1KHZ; }
+    if(p_PulseSeq>0)            { PulseSeq.pulseSeq = p_PulseSeq;           }  else  { PulseSeq.pulseSeq  = PULSESEQUENCE_1;  }
+    if(p_PulsePeakVoltage>0)    { PulseSeq.peakVoltage = p_PulsePeakVoltage;}  else  { PulseSeq.peakVoltage  = PULSEPEAKVOLTAGE_8V
+    ;  }
+
                 
     return;
 }
@@ -1068,6 +1159,7 @@ static char* GetSettingsString(void)
     {
         char *frequency_string;
         char *pulseSeq_string;
+        char *peakVoltage_string;
         char time_string[6];
     
         switch(PulseSeq.frequency)
@@ -1099,6 +1191,19 @@ static char* GetSettingsString(void)
                     break;
         }
     
+        switch(PulseSeq.peakVoltage)
+        {
+            case PULSEPEAKVOLTAGE_8V:
+                    peakVoltage_string = "8V";                    
+                    break;
+            case PULSEPEAKVOLTAGE_6V:
+                    peakVoltage_string = "6V";                    
+                    break;
+            case PULSEPEAKVOLTAGE_4V:
+                    peakVoltage_string = "4V";                    
+                    break;
+        }       
+
         {
         u32 THH, TMM, TSS;
         char mm_string[3];
@@ -1117,6 +1222,8 @@ static char* GetSettingsString(void)
         strcpy(SettingsStatusString, frequency_string); // lenght = 4
         strcat(SettingsStatusString, "   ");            // lenght = 3
         strcat(SettingsStatusString, pulseSeq_string);  // length = 4
+        strcat(SettingsStatusString, "   ");            // lenght = 3
+        strcat(SettingsStatusString, peakVoltage_string);  // length = 2
         strcat(SettingsStatusString, "   ");            // lenght = 3
         strcat(SettingsStatusString, time_string);      // length = 5
     
