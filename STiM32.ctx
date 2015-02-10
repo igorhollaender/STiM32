@@ -1,7 +1,6 @@
 
 <Debug>
 	<STiM32>
-		<MemoryView Focus="134219460" TopRow="0" NbPerLine="8" />
 		<CodeView TopRow="134218012" Focus="134218016" >
 			<CodeReport>
 				<0>143</0>
@@ -12,6 +11,31 @@
 			</CodeReport>
 										
 		</CodeView>
+		<SpyWatch>
+			<Report>
+				<Def Header="InspectReport" NbCol="10" >
+					<Col Type="PT_STRING" Header="Name" sizeCache="DDDDDDDDDDDD" AutoSize="1" Edit="1" Sortable="1" />
+					<Col Type="PT_STRING" Header="Value" sizeCache="DDDDDDDDDDDDDDDDDDDDDDD" AutoSize="1" Edit="1" Sortable="0" />
+					<Col Type="PT_STRING" Header="Addr" sizeCache="DDDDDDDD" AutoSize="1" Edit="0" Visible="1" />
+					<Col Type="PT_STRING" Header="Nature" sizeCache="DDDDDDDD" AutoSize="1" Edit="0" Visible="0" />
+					<Col Type="PT_STRING" Header="Format" sizeCache="DDDD" AutoSize="1" Edit="0" Visible="0" />
+					<Col Type="PT_STRING" Header="RangeMin" sizeCache="DDDD" AutoSize="1" Edit="0" Visible="0" />
+					<Col Type="PT_STRING" Header="RangeMax" sizeCache="DDDD" AutoSize="1" Edit="0" Visible="0" />
+					<Col Type="PT_STRING" Header="Expression" sizeCache="DDDD" AutoSize="1" Edit="0" Visible="0" />
+					<Col Type="PT_STRING" Header="Type" sizeCache="DDDDDD" AutoSize="1" Edit="0" Visible="1" />
+					<Col Type="PT_BOOL" Header="Monitoring" sizeCache="18" AutoSize="0" Edit="1" Sortable="1" Icon="C:\Raisonance\Ride\Config\Resources\check.bmp" />
+																		
+				</Def>
+				<Rows>
+					<Row Expand="0" Name="ActualBatteryVoltagemV" Value="" Addr="20000372" Nature="Program/Data Memory" Format="0" RangeMin="0" RangeMax="1" Expression="ActualBatteryVoltagemV" Type="unsigned int" Monitoring="FALSE" />
+					<Row Expand="0" Name="lastStimState" Value="" Addr="20000334" Nature="Program/Data Memory" Format="0" RangeMin="0" RangeMax="1" Expression="lastStimState" Type="StimState_code" Monitoring="FALSE" />
+																		
+				</Rows>
+														
+			</Report>
+										
+		</SpyWatch>
+		<MemoryView Focus="134219460" TopRow="0" NbPerLine="8" />
 						
 	</STiM32>
 	<Flags>
@@ -36,8 +60,8 @@
 			
 	</Flags>
 	<Views>
-		<View File=".\STiM32.c" Line="831" Index="0" focus="1" />
-		<View File="..\..\..\..\..\raisonance\ride\lib\arm\circleos\circle_api.h" Line="6" Index="1" />
+		<View File=".\STiM32.c" Line="1039" Index="0" focus="1" />
+		<View File="..\..\..\..\..\raisonance\ride\lib\arm\circleos\circle_api.h" Line="939" Index="1" />
 	</Views>
 	<BookMarks>
 		<BookMark File="" Line="0" />
@@ -75,6 +99,11 @@
 		</GrepReplaceWhat>
 	</Grep>
 	<FindStrings>
+		<Find>PENDING_REQUEST_REDRAW</Find>
+		<Find>No8V</Find>
+		<Find>NOMI</Find>
+		<Find>ActualB</Find>
+		<Find>Actual</Find>
 		<Find>ActualBatt</Find>
 		<Find>beep</Find>
 		<Find>RTC_Get</Find>
@@ -90,11 +119,6 @@
 		<Find>Back</Find>
 		<Find>Quit</Find>
 		<Find>Shut</Find>
-		<Find>time1Elapse</Find>
-		<Find>time</Find>
-		<Find>batter</Find>
-		<Find>DEBUG</Find>
-		<Find>CAE1</Find>
 	</FindStrings>
 	<ReplaceStrings/>
 </Debug>

@@ -3,7 +3,7 @@
 * File Name          :  STiM32.c
 * Description        :  STIMULATOR Control firmware 
 *
-* Last revision      :  IH 2015-02-03
+* Last revision      :  IH 2015-02-10
 *
 *   TODO:
 **
@@ -25,7 +25,7 @@
 //#define DEBUG_NOHW
 
 /* Private defines -----------------------------------------------------------*/
-#define STIM32_VERSION          "150203a"
+#define STIM32_VERSION          "150210a"
 
 #define  STIMULATOR_HANDLER_ID  UNUSED5_SCHHDL_ID
 #define  GUIUPDATE_DIVIDER      1       // GUI is called every 100 SysTicks
@@ -41,7 +41,10 @@
 #define  BKP_PULSESEQ           BKP_USER2
 #define  BKP_PULSEPEAKVOLTAGE   BKP_USER3
 
-#define NOMINAL_BATTERY_VOLTAGE_MV     4.02
+#define NOMINAL_BATTERY_VOLTAGE_MV     4020
+/* lower voltage limit; under this voltage, the 8V pulse voltage option is disabled */ 
+#define LIMIT_FOR8V_BATTERY_VOLTAGE_MV 3900
+
 
 /* Typedefs ------------------------------------------------------------------*/
 typedef enum {
@@ -65,6 +68,12 @@ typedef enum {
     STIMSTATE_WAITING_FOR_RUN,
     STIMSTATE_WAITING_FOR_IDLE,
     } StimState_code;
+
+typedef enum {
+    UPPERPANELSTATE_OVERLOAD,
+    UPPERPANELSTATE_WAITING,
+    UPPERPANELSTATE_DISPLAY_READOUT,
+    } UpperPanelState_code;
 
 typedef enum {
     POSITIVE_VOLTAGE_MAX,
@@ -245,6 +254,19 @@ tMenu MenuSetPulsePeakVoltage =
     0,
     {
         { " 8 V ",     SetPulsePeakVoltage_1,    Application_Handler,    0 },
+        { " 6 V ",     SetPulsePeakVoltage_2,    Application_Handler ,   0 },
+        { " 4 V ",     SetPulsePeakVoltage_3,    Application_Handler ,   0 },        
+        { "Cancel",    Cancel,                   Application_Handler,    0 },
+    }
+};
+
+tMenu MenuSetPulsePeakVoltage_No8VOption =
+{
+    1,
+    "Set Peak Voltage",
+    3, 0, 0, 0, 0, 0,
+    0,
+    {
         { " 6 V ",     SetPulsePeakVoltage_2,    Application_Handler ,   0 },
         { " 4 V ",     SetPulsePeakVoltage_3,    Application_Handler ,   0 },        
         { "Cancel",    Cancel,                   Application_Handler,    0 },
@@ -582,7 +604,14 @@ enum MENU_code  MenuSetup_PSeq(void)
 
 enum MENU_code  MenuSetup_PVolt(void)
     {    
-    MENU_Set( ( tMenu* ) &MenuSetPulsePeakVoltage );             
+    if(ActualBatteryVoltagemV >= LIMIT_FOR8V_BATTERY_VOLTAGE_MV)
+    {
+        MENU_Set( ( tMenu* ) &MenuSetPulsePeakVoltage );
+    }
+    else
+    {
+        MENU_Set( ( tMenu* ) &MenuSetPulsePeakVoltage_No8VOption );
+    }
     return MENU_CHANGE;
     }
 
@@ -828,7 +857,11 @@ static void UpdatePulseSequence()
                     break;
         }    
     
-       // PulseSeq.voltage_multiplication_factor *= ((float)NOMINAL_BATTERY_VOLTAGE_MV)/((float)ActualBatteryVoltagemV);  //IH150203 TODO: 
+       PulseSeq.voltage_multiplication_factor *= ((float)NOMINAL_BATTERY_VOLTAGE_MV)/((float)ActualBatteryVoltagemV);  
+       if(PulseSeq.voltage_multiplication_factor >1.0)
+       {
+            PulseSeq.voltage_multiplication_factor = 1.0;
+       }       
                     
     }
 
@@ -959,6 +992,8 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
     static u16 barPosX = 0;
     u16 barWidth = STIM_SINGLE_BAR_WIDTH;
     
+    static UpperPanelState_code thisUpperPanelState;
+    static UpperPanelState_code lastUpperPanelState = UPPERPANELSTATE_WAITING;  //IH150210 check if this is correct initialization
         
     float readoutYScalingFactor = 0.15;  
     
@@ -998,22 +1033,39 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
             break;
             
         case GUI_NORMAL_UPDATE:
+                    
             
-            // clear upper panel
+            if(Readout.isOverloaded)
+            {
+                thisUpperPanelState = UPPERPANELSTATE_OVERLOAD;                
+            }
+            else if(StimState==STIMSTATE_IDLE || StimState==STIMSTATE_WAITING_FOR_RUN)
+            {
+                thisUpperPanelState = UPPERPANELSTATE_WAITING;                                
+            }
+            else                
+            {   
+                thisUpperPanelState = UPPERPANELSTATE_DISPLAY_READOUT;                
+            }
+            if((thisUpperPanelState == lastUpperPanelState) && (thisUpperPanelState != UPPERPANELSTATE_DISPLAY_READOUT)) break;
+            lastUpperPanelState = thisUpperPanelState;    
+        
+            // clear upper panel            
             LCD_FillRect(
                 0, SCREEN_HEIGHT-STIM_UPPERPANEL_HEIGHT, 
                 SCREEN_WIDTH, 
                 STIM_UPPERPANEL_HEIGHT, 
                 STIM_UPPERPANEL_COLOR );
+            
             {
             u8 str[30];        
-            if(Readout.isOverloaded)
+            if(thisUpperPanelState == UPPERPANELSTATE_OVERLOAD)
             {
                 strcpy(str,"    OVERLOAD");
                 PlayBeep();
                 DRAW_SetCharMagniCoeff(2);            
             }
-            else if(StimState==STIMSTATE_IDLE || StimState==STIMSTATE_WAITING_FOR_RUN)
+            else if(thisUpperPanelState == UPPERPANELSTATE_WAITING)
             {
                 strcpy(str,"    Waiting...");
                 DRAW_SetCharMagniCoeff(2);            
