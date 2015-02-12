@@ -3,12 +3,10 @@
 * File Name          :  STiM32.c
 * Description        :  STIMULATOR Control firmware 
 *
-* Last revision      :  IH 2015-02-10
+* Last revision      :  IH 2015-02-12
 *
 *   TODO:
 **
-*   150128      Bug: space between : and ss in time string
-*   150127      Implement variable pulse voltage - do this by defining additional sequences
 *
 *******************************************************************************/
 
@@ -25,7 +23,7 @@
 //#define DEBUG_NOHW
 
 /* Private defines -----------------------------------------------------------*/
-#define STIM32_VERSION          "150210a"
+#define STIM32_VERSION          "150212a"
 
 #define  STIMULATOR_HANDLER_ID  UNUSED5_SCHHDL_ID
 #define  GUIUPDATE_DIVIDER      1       // GUI is called every 100 SysTicks
@@ -70,6 +68,8 @@ typedef enum {
     } StimState_code;
 
 typedef enum {
+    UPPERPANELSTATE_UNDEFINED,
+
     UPPERPANELSTATE_OVERLOAD,
     UPPERPANELSTATE_WAITING,
     UPPERPANELSTATE_DISPLAY_READOUT,
@@ -192,7 +192,6 @@ static void BackUpParameters(void);
 static void RestoreParameters(void);
 static char* GetBatteryStatusString(void);
 static char* GetSettingsString(void);
-static void PlayBeep(void);
 
 static void SetOutputVoltage(OutputVoltage_code, float multiplication_factor);
 static void GeneratePulseSequenceAndReadCAE(void);        
@@ -471,6 +470,8 @@ enum MENU_code Application_Ini(void)
     
     RTC_SetTime(0,0,0);  //IH150126 this clears any preset RTC ... but we do not care in our app
 
+    BUZZER_SetMode(BUZZER_SHORTBEEP);
+    
     // ... CX Extension
     
 #ifdef DEBUG_NOHW       
@@ -993,7 +994,7 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
     u16 barWidth = STIM_SINGLE_BAR_WIDTH;
     
     static UpperPanelState_code thisUpperPanelState;
-    static UpperPanelState_code lastUpperPanelState = UPPERPANELSTATE_WAITING;  //IH150210 check if this is correct initialization
+    static UpperPanelState_code lastUpperPanelState = UPPERPANELSTATE_UNDEFINED;  
         
     float readoutYScalingFactor = 0.15;  
     
@@ -1050,6 +1051,8 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
             if((thisUpperPanelState == lastUpperPanelState) && (thisUpperPanelState != UPPERPANELSTATE_DISPLAY_READOUT)) break;
             lastUpperPanelState = thisUpperPanelState;    
         
+            BUZZER_SetMode(BUZZER_OFF);  //switch out buzzer if it has been activated before
+        
             // clear upper panel            
             LCD_FillRect(
                 0, SCREEN_HEIGHT-STIM_UPPERPANEL_HEIGHT, 
@@ -1062,7 +1065,7 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
             if(thisUpperPanelState == UPPERPANELSTATE_OVERLOAD)
             {
                 strcpy(str,"    OVERLOAD");
-                PlayBeep();
+                BUZZER_SetMode(BUZZER_ON);
                 DRAW_SetCharMagniCoeff(2);            
             }
             else if(thisUpperPanelState == UPPERPANELSTATE_WAITING)
@@ -1263,9 +1266,9 @@ static char* GetSettingsString(void)
         RTC_GetTime (&THH, &TMM, &TSS);
         UTIL_int2str( mm_string, TMM, 2, TRUE);    
         UTIL_int2str( ss_string, TSS, 2, TRUE);    
-        strcpy(time_string, mm_string);   
+        strcpy(time_string, mm_string+1);   
         strcat(time_string,":");    
-        strcat(time_string, ss_string);    //IH150128 BUG here: space between : and ss_string (??)
+        strcat(time_string, ss_string+1);    //IH150212 the "+1" solves the bug with leading space in the ss_string and mm_string
         //IH150128 Hours are ignored
         }
         
@@ -1295,11 +1298,3 @@ static char* GetBatteryStatusString(void)
     
         return BatteryStatusString;
     }
-
-static void PlayBeep(void)
-{
-    //IH150128 TODO this takes too long, we need a short buzzer beep here
-
-    u8 *beepMusic ="beep1:d=32,o=6,b=900:e";
-    BUZZER_PlayMusic(beepMusic);
-}

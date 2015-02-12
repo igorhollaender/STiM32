@@ -7,9 +7,9 @@
 				<1>159</1>
 				<2>86</2>
 				<3>486</3>
-														
+																												
 			</CodeReport>
-										
+																				
 		</CodeView>
 		<SpyWatch>
 			<Report>
@@ -24,19 +24,19 @@
 					<Col Type="PT_STRING" Header="Expression" sizeCache="DDDD" AutoSize="1" Edit="0" Visible="0" />
 					<Col Type="PT_STRING" Header="Type" sizeCache="DDDDDD" AutoSize="1" Edit="0" Visible="1" />
 					<Col Type="PT_BOOL" Header="Monitoring" sizeCache="18" AutoSize="0" Edit="1" Sortable="1" Icon="C:\Raisonance\Ride\Config\Resources\check.bmp" />
-																		
+																																				
 				</Def>
 				<Rows>
 					<Row Expand="0" Name="ActualBatteryVoltagemV" Value="" Addr="20000372" Nature="Program/Data Memory" Format="0" RangeMin="0" RangeMax="1" Expression="ActualBatteryVoltagemV" Type="unsigned int" Monitoring="FALSE" />
 					<Row Expand="0" Name="lastStimState" Value="" Addr="20000334" Nature="Program/Data Memory" Format="0" RangeMin="0" RangeMax="1" Expression="lastStimState" Type="StimState_code" Monitoring="FALSE" />
-																		
+																																				
 				</Rows>
-														
+																												
 			</Report>
-										
+																				
 		</SpyWatch>
 		<MemoryView Focus="134219460" TopRow="0" NbPerLine="8" />
-						
+												
 	</STiM32>
 	<Flags>
 		<Report>
@@ -60,8 +60,8 @@
 			
 	</Flags>
 	<Views>
-		<View File=".\STiM32.c" Line="1039" Index="0" focus="1" />
-		<View File="..\..\..\..\..\raisonance\ride\lib\arm\circleos\circle_api.h" Line="939" Index="1" />
+		<View File=".\STiM32.c" Line="23" Index="0" focus="1" />
+		<View File="..\..\..\..\..\raisonance\ride\lib\arm\circleos\circle_api.h" Line="894" Index="1" />
 	</Views>
 	<BookMarks>
 		<BookMark File="" Line="0" />
@@ -99,6 +99,9 @@
 		</GrepReplaceWhat>
 	</Grep>
 	<FindStrings>
+		<Find>Pla</Find>
+		<Find>Play</Find>
+		<Find>BUZZE</Find>
 		<Find>PENDING_REQUEST_REDRAW</Find>
 		<Find>No8V</Find>
 		<Find>NOMI</Find>
@@ -116,9 +119,6 @@
 		<Find>Limit</Find>
 		<Find>DRAW</Find>
 		<Find>BackUp</Find>
-		<Find>Back</Find>
-		<Find>Quit</Find>
-		<Find>Shut</Find>
 	</FindStrings>
 	<ReplaceStrings/>
 </Debug>
