@@ -7,36 +7,12 @@
 				<1>159</1>
 				<2>86</2>
 				<3>486</3>
-																												
+														
 			</CodeReport>
-																				
+										
 		</CodeView>
-		<SpyWatch>
-			<Report>
-				<Def Header="InspectReport" NbCol="10" >
-					<Col Type="PT_STRING" Header="Name" sizeCache="DDDDDDDDDDDD" AutoSize="1" Edit="1" Sortable="1" />
-					<Col Type="PT_STRING" Header="Value" sizeCache="DDDDDDDDDDDDDDDDDDDDDDD" AutoSize="1" Edit="1" Sortable="0" />
-					<Col Type="PT_STRING" Header="Addr" sizeCache="DDDDDDDD" AutoSize="1" Edit="0" Visible="1" />
-					<Col Type="PT_STRING" Header="Nature" sizeCache="DDDDDDDD" AutoSize="1" Edit="0" Visible="0" />
-					<Col Type="PT_STRING" Header="Format" sizeCache="DDDD" AutoSize="1" Edit="0" Visible="0" />
-					<Col Type="PT_STRING" Header="RangeMin" sizeCache="DDDD" AutoSize="1" Edit="0" Visible="0" />
-					<Col Type="PT_STRING" Header="RangeMax" sizeCache="DDDD" AutoSize="1" Edit="0" Visible="0" />
-					<Col Type="PT_STRING" Header="Expression" sizeCache="DDDD" AutoSize="1" Edit="0" Visible="0" />
-					<Col Type="PT_STRING" Header="Type" sizeCache="DDDDDD" AutoSize="1" Edit="0" Visible="1" />
-					<Col Type="PT_BOOL" Header="Monitoring" sizeCache="18" AutoSize="0" Edit="1" Sortable="1" Icon="C:\Raisonance\Ride\Config\Resources\check.bmp" />
-																																				
-				</Def>
-				<Rows>
-					<Row Expand="0" Name="ActualBatteryVoltagemV" Value="" Addr="20000372" Nature="Program/Data Memory" Format="0" RangeMin="0" RangeMax="1" Expression="ActualBatteryVoltagemV" Type="unsigned int" Monitoring="FALSE" />
-					<Row Expand="0" Name="lastStimState" Value="" Addr="20000334" Nature="Program/Data Memory" Format="0" RangeMin="0" RangeMax="1" Expression="lastStimState" Type="StimState_code" Monitoring="FALSE" />
-																																				
-				</Rows>
-																												
-			</Report>
-																				
-		</SpyWatch>
 		<MemoryView Focus="134219460" TopRow="0" NbPerLine="8" />
-												
+						
 	</STiM32>
 	<Flags>
 		<Report>
@@ -60,8 +36,8 @@
 			
 	</Flags>
 	<Views>
-		<View File=".\STiM32.c" Line="23" Index="0" focus="1" />
-		<View File="..\..\..\..\..\raisonance\ride\lib\arm\circleos\circle_api.h" Line="894" Index="1" />
+		<View File=".\STiM32.c" Line="26" Index="0" focus="1" />
+		<View File="..\..\..\..\..\Raisonance\Ride\Lib\ARM\CircleOS\circle_api.h" Line="1072" Index="1" />
 	</Views>
 	<BookMarks>
 		<BookMark File="" Line="0" />
@@ -99,6 +75,7 @@
 		</GrepReplaceWhat>
 	</Grep>
 	<FindStrings>
+		<Find>100</Find>
 		<Find>Pla</Find>
 		<Find>Play</Find>
 		<Find>BUZZE</Find>
@@ -118,7 +95,6 @@
 		<Find>GUI</Find>
 		<Find>Limit</Find>
 		<Find>DRAW</Find>
-		<Find>BackUp</Find>
 	</FindStrings>
 	<ReplaceStrings/>
 </Debug>

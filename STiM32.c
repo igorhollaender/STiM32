@@ -3,10 +3,14 @@
 * File Name          :  STiM32.c
 * Description        :  STIMULATOR Control firmware 
 *
-* Last revision      :  IH 2015-02-12
+* Last revision      :  IH 2015-02-16
 *
 *   TODO:
 **
+*   IH150216    Fine tune the limits for Run/Idle (100 is too high at 4V)
+*   IH150216    Time string shows SS values over 60 (??)
+*   IH150216    Time is not updated during 'waiting'
+*   IH150216    Implement time string showing net measuremement time
 *
 *******************************************************************************/
 
@@ -23,7 +27,7 @@
 //#define DEBUG_NOHW
 
 /* Private defines -----------------------------------------------------------*/
-#define STIM32_VERSION          "150212a"
+#define STIM32_VERSION          "150216a"
 
 #define  STIMULATOR_HANDLER_ID  UNUSED5_SCHHDL_ID
 #define  GUIUPDATE_DIVIDER      1       // GUI is called every 100 SysTicks
@@ -461,8 +465,8 @@ enum MENU_code Application_Ini(void)
     StimState = STIMSTATE_IDLE; 
     
     // ... readout limits
-    ReadoutLimit_CAE1_for_Run = 150;
-    ReadoutLimit_CAE1_for_Idle = 170;
+    ReadoutLimit_CAE1_for_Run =   60;
+    ReadoutLimit_CAE1_for_Idle = 100;
 
     // ... miscellaneous    
 
@@ -552,8 +556,9 @@ enum MENU_code Application_Handler(void)
         case PENDING_REQUEST_REDRAW:  
             
             BUTTON_SetMode( BUTTON_ONOFF ) ;            
-            ActualPendingRequest = PENDING_REQUEST_NONE;           
+            ActualPendingRequest = PENDING_REQUEST_NONE;                       
             GUI(GUI_CLEAR,0);                                                     
+            GUI(GUI_NORMAL_UPDATE,0);   
             break;       
         
         case PENDING_REQUEST_SHOWING_INTRO_SCREEN:            
@@ -1000,8 +1005,11 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
     
         switch(GUIaction)
         {
-        case GUI_CLEAR:         //IH140319 currently identical with GUI_INITIALIZE
+        
+        case GUI_CLEAR:   
         case GUI_INITIALIZE:
+            
+            lastUpperPanelState = UPPERPANELSTATE_UNDEFINED;  
             
             lastStimState = STIMSTATE_RUN;
             barPosX = 0;
@@ -1032,7 +1040,7 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
                 STIM_UPPERPANEL_COLOR );
                     
             break;
-            
+                    
         case GUI_NORMAL_UPDATE:
                     
             

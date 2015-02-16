@@ -7,7 +7,7 @@ Disassembly of section .text.STIMULATOR_Handler:
 
 00000000 <STIMULATOR_Handler>:
 STIMULATOR_Handler():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:298
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:299
 * Description    : Generates single pulse sequence and reads the feedback signal
 * Input          : None
 * Return         : Readout 
@@ -17,7 +17,7 @@ void STIMULATOR_Handler( void )
    0:	b580      	push	{r7, lr}
    2:	b082      	sub	sp, #8
    4:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:302
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:303
 static u32 state_change_cnt = 0;
 static u32 frequency_cnt = 0;
 
@@ -34,11 +34,11 @@ if((frequency_cnt++) % PulseSeq.frequency_divider)
   1c:	1a9b      	subs	r3, r3, r2
   1e:	2b00      	cmp	r3, #0
   20:	d000      	beq.n	24 <STIMULATOR_Handler+0x24>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:304
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:305
             {
             return;
   22:	e08e      	b.n	142 <STIMULATOR_Handler+0x142>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:352
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:353
     
 #else        
 
@@ -52,38 +52,38 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:352
   2c:	2b01      	cmp	r3, #1
   2e:	d003      	beq.n	38 <STIMULATOR_Handler+0x38>
   30:	e010      	b.n	54 <STIMULATOR_Handler+0x54>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:355
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:356
     {        
         case SEQUENCEMULTIPLICITY_SINGLE:
             GeneratePulseSequenceAndReadCAE();        
   32:	f7ff fffe 	bl	0 <STIMULATOR_Handler>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:356
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:357
             break;
   36:	e00d      	b.n	1e <STIMULATOR_Handler+0x1e>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:359
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:360
         
         case SEQUENCEMULTIPLICITY_DOUBLE:
             GeneratePulseSequenceAndReadCAE();        
   38:	f7ff fffe 	bl	0 <STIMULATOR_Handler>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:360
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:361
             {u32 i; WHILE_DELAY_LOOP(PulseSeq.delay_between_sequences_loop_counts)}
   3c:	4b43      	ldr	r3, [pc, #268]	; (14c <STIMULATOR_Handler+0x14c>)
   3e:	89db      	ldrh	r3, [r3, #14]
   40:	607b      	str	r3, [r7, #4]
   42:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:360 (discriminator 1)
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:361 (discriminator 1)
   44:	687b      	ldr	r3, [r7, #4]
   46:	1e5a      	subs	r2, r3, #1
   48:	607a      	str	r2, [r7, #4]
   4a:	2b00      	cmp	r3, #0
   4c:	d1fa      	bne.n	44 <STIMULATOR_Handler+0x44>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:361
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:362
             GeneratePulseSequenceAndReadCAE();        
   4e:	f7ff fffe 	bl	0 <STIMULATOR_Handler>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:362
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:363
             break;
   52:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:367
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:368
     }   
                     
 #endif
@@ -100,7 +100,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:367
   68:	000000ad 	.word	0x000000ad
   6c:	00000115 	.word	0x00000115
   70:	000000e5 	.word	0x000000e5
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:371
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:372
     {
         case STIMSTATE_IDLE:  
         
@@ -111,7 +111,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:371
   7c:	2001      	movs	r0, #1
   7e:	2101      	movs	r1, #1
   80:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:372
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:373
                 LED_Set( LED_GREEN, LED_OFF);           
   82:	4b34      	ldr	r3, [pc, #208]	; (154 <STIMULATOR_Handler+0x154>)
   84:	681b      	ldr	r3, [r3, #0]
@@ -119,7 +119,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:372
   8a:	2000      	movs	r0, #0
   8c:	2100      	movs	r1, #0
   8e:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:376
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:377
                             
         
                 // check if still idle    
@@ -130,23 +130,23 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:376
   96:	881b      	ldrh	r3, [r3, #0]
   98:	429a      	cmp	r2, r3
   9a:	d306      	bcc.n	aa <STIMULATOR_Handler+0xaa>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:378
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:379
                     {
                     StimState = STIMSTATE_WAITING_FOR_RUN;
   9c:	4b2c      	ldr	r3, [pc, #176]	; (150 <STIMULATOR_Handler+0x150>)
   9e:	2202      	movs	r2, #2
   a0:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:379
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:380
                     state_change_cnt = 0;
   a2:	4b2f      	ldr	r3, [pc, #188]	; (160 <STIMULATOR_Handler+0x160>)
   a4:	2200      	movs	r2, #0
   a6:	601a      	str	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:381
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:382
                     }
                 break;
   a8:	e04b      	b.n	142 <STIMULATOR_Handler+0x142>
   aa:	e04a      	b.n	142 <STIMULATOR_Handler+0x142>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:385
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:386
         
         case STIMSTATE_RUN:  
             
@@ -157,7 +157,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:385
   b4:	2001      	movs	r0, #1
   b6:	2100      	movs	r1, #0
   b8:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:386
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:387
                 LED_Set( LED_GREEN, LED_ON);                
   ba:	4b26      	ldr	r3, [pc, #152]	; (154 <STIMULATOR_Handler+0x154>)
   bc:	681b      	ldr	r3, [r3, #0]
@@ -165,7 +165,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:386
   c2:	2000      	movs	r0, #0
   c4:	2101      	movs	r1, #1
   c6:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:390
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:391
                                                               
         
                 // check if still running
@@ -176,23 +176,23 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:390
   ce:	881b      	ldrh	r3, [r3, #0]
   d0:	429a      	cmp	r2, r3
   d2:	d806      	bhi.n	e2 <STIMULATOR_Handler+0xe2>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:392
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:393
                     {
                     StimState = STIMSTATE_WAITING_FOR_IDLE;
   d4:	4b1e      	ldr	r3, [pc, #120]	; (150 <STIMULATOR_Handler+0x150>)
   d6:	2203      	movs	r2, #3
   d8:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:393
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:394
                     state_change_cnt = 0;
   da:	4b21      	ldr	r3, [pc, #132]	; (160 <STIMULATOR_Handler+0x160>)
   dc:	2200      	movs	r2, #0
   de:	601a      	str	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:395
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:396
                     }                
                 break;
   e0:	e02f      	b.n	142 <STIMULATOR_Handler+0x142>
   e2:	e02e      	b.n	142 <STIMULATOR_Handler+0x142>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:398
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:399
                 
         case STIMSTATE_WAITING_FOR_IDLE:  
                 if(Readout.CAE1 > ReadoutLimit_CAE1_for_Idle)
@@ -202,14 +202,14 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:398
   ea:	881b      	ldrh	r3, [r3, #0]
   ec:	429a      	cmp	r2, r3
   ee:	d903      	bls.n	f8 <STIMULATOR_Handler+0xf8>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:400
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:401
                     {
                     StimState = STIMSTATE_RUN;
   f0:	4b17      	ldr	r3, [pc, #92]	; (150 <STIMULATOR_Handler+0x150>)
   f2:	2201      	movs	r2, #1
   f4:	701a      	strb	r2, [r3, #0]
   f6:	e00c      	b.n	112 <STIMULATOR_Handler+0x112>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:403
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:404
                     }
                 else                    
                     if(++state_change_cnt == STATECHANGE_CNT_LIMIT)
@@ -222,18 +222,18 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:403
  104:	681b      	ldr	r3, [r3, #0]
  106:	2b0a      	cmp	r3, #10
  108:	d103      	bne.n	112 <STIMULATOR_Handler+0x112>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:405
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:406
                         {
                         StimState = STIMSTATE_IDLE;
  10a:	4b11      	ldr	r3, [pc, #68]	; (150 <STIMULATOR_Handler+0x150>)
  10c:	2200      	movs	r2, #0
  10e:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:407
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:408
                         }                                          
                 break;
  110:	e017      	b.n	142 <STIMULATOR_Handler+0x142>
  112:	e016      	b.n	142 <STIMULATOR_Handler+0x142>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:410
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:411
                     
         case STIMSTATE_WAITING_FOR_RUN:  
                 if(Readout.CAE1 < ReadoutLimit_CAE1_for_Run)
@@ -243,14 +243,14 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:410
  11a:	881b      	ldrh	r3, [r3, #0]
  11c:	429a      	cmp	r2, r3
  11e:	d203      	bcs.n	128 <STIMULATOR_Handler+0x128>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:412
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:413
                     {
                     StimState = STIMSTATE_IDLE;
  120:	4b0b      	ldr	r3, [pc, #44]	; (150 <STIMULATOR_Handler+0x150>)
  122:	2200      	movs	r2, #0
  124:	701a      	strb	r2, [r3, #0]
  126:	e00b      	b.n	140 <STIMULATOR_Handler+0x140>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:415
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:416
                     }
                 else                    
                     if(++state_change_cnt == STATECHANGE_CNT_LIMIT)
@@ -263,17 +263,17 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:415
  134:	681b      	ldr	r3, [r3, #0]
  136:	2b0a      	cmp	r3, #10
  138:	d102      	bne.n	140 <STIMULATOR_Handler+0x140>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:417
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:418
                         {
                         StimState = STIMSTATE_RUN;
  13a:	4b05      	ldr	r3, [pc, #20]	; (150 <STIMULATOR_Handler+0x150>)
  13c:	2201      	movs	r2, #1
  13e:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:419
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:420
                         }                                          
                 break;
  140:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:422
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:423
     }
 
 }
@@ -293,7 +293,7 @@ Disassembly of section .text.Application_Ini:
 
 00000000 <Application_Ini>:
 Application_Ini():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:432
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:433
 *                  be called only once by CircleOS.
 * Input          : None
 * Return         : MENU_CONTINUE_COMMAND
@@ -303,7 +303,7 @@ enum MENU_code Application_Ini(void)
    0:	b580      	push	{r7, lr}
    2:	b086      	sub	sp, #24
    4:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:434
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:435
 
     LCD_SetOffset(OFFSET_OFF);
    6:	4b53      	ldr	r3, [pc, #332]	; (154 <Application_Ini+0x154>)
@@ -311,7 +311,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:434
    a:	f8d3 3150 	ldr.w	r3, [r3, #336]	; 0x150
    e:	2000      	movs	r0, #0
   10:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:436
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:437
     
     UTIL_SetDividerHandler(MENU_SCHHDL_ID, 10);             //  10 is default
   12:	4b50      	ldr	r3, [pc, #320]	; (154 <Application_Ini+0x154>)
@@ -320,14 +320,14 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:436
   1a:	2004      	movs	r0, #4
   1c:	210a      	movs	r1, #10
   1e:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:437
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:438
     MENU_SetAppliDivider( 10 );                             // This application will be called every 10*10 =100 SysTicks
   20:	4b4c      	ldr	r3, [pc, #304]	; (154 <Application_Ini+0x154>)
   22:	681b      	ldr	r3, [r3, #0]
   24:	f8d3 32b8 	ldr.w	r3, [r3, #696]	; 0x2b8
   28:	200a      	movs	r0, #10
   2a:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:438
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:439
     UTIL_SetSchHandler(STIMULATOR_HANDLER_ID, STIMULATOR_Handler );
   2c:	4b49      	ldr	r3, [pc, #292]	; (154 <Application_Ini+0x154>)
   2e:	681b      	ldr	r3, [r3, #0]
@@ -336,7 +336,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:438
   36:	200d      	movs	r0, #13
   38:	4611      	mov	r1, r2
   3a:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:439
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:440
     UTIL_SetDividerHandler(STIMULATOR_HANDLER_ID, 1);       // This handler will be called every single SysTick
   3c:	4b45      	ldr	r3, [pc, #276]	; (154 <Application_Ini+0x154>)
   3e:	681b      	ldr	r3, [r3, #0]
@@ -344,7 +344,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:439
   44:	200d      	movs	r0, #13
   46:	2101      	movs	r1, #1
   48:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:441
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:442
     
     UTIL_SetPll(SPEED_VERY_HIGH);                           // CPU frequency is 120MHz; Systick frequency is 3kHZ
   4a:	4b42      	ldr	r3, [pc, #264]	; (154 <Application_Ini+0x154>)
@@ -352,7 +352,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:441
   4e:	f8d3 32c0 	ldr.w	r3, [r3, #704]	; 0x2c0
   52:	2005      	movs	r0, #5
   54:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:444
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:445
                                                             // see EvoPrimer Manual for STM32F429ZI
     
     LCD_SetRotateScreen( 1 );
@@ -361,10 +361,10 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:444
   5a:	f8d3 3130 	ldr.w	r3, [r3, #304]	; 0x130
   5e:	2001      	movs	r0, #1
   60:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:445
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:446
     SetAutorun();
   62:	f7ff fffe 	bl	0 <Application_Ini>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:451
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:452
     
     //-------------------------------------
     // Initialize ...
@@ -372,43 +372,43 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:451
     // ... set frequency and pulse sequence   
     RestoreParameters();  
   66:	f7ff fffe 	bl	0 <Application_Ini>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:452
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:453
     UpdatePulseSequence();    
   6a:	f7ff fffe 	bl	0 <Application_Ini>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:455
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:456
     
     // ... GUI    
     GUI(GUI_INITIALIZE,0);
   6e:	2000      	movs	r0, #0
   70:	2100      	movs	r1, #0
   72:	f7ff fffe 	bl	0 <Application_Ini>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:458
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:459
     
     // ... request mechanism
     ActualPendingRequest = PENDING_REQUEST_NONE;
   76:	4b39      	ldr	r3, [pc, #228]	; (15c <Application_Ini+0x15c>)
   78:	2200      	movs	r2, #0
   7a:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:461
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:462
     
     // ... state machine
     StimState = STIMSTATE_IDLE; 
   7c:	4b38      	ldr	r3, [pc, #224]	; (160 <Application_Ini+0x160>)
   7e:	2200      	movs	r2, #0
   80:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:464
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:465
     
     // ... readout limits
-    ReadoutLimit_CAE1_for_Run = 150;
+    ReadoutLimit_CAE1_for_Run = 100;
   82:	4b38      	ldr	r3, [pc, #224]	; (164 <Application_Ini+0x164>)
-  84:	2296      	movs	r2, #150	; 0x96
+  84:	2264      	movs	r2, #100	; 0x64
   86:	801a      	strh	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:465
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:466
     ReadoutLimit_CAE1_for_Idle = 170;
   88:	4b37      	ldr	r3, [pc, #220]	; (168 <Application_Ini+0x168>)
   8a:	22aa      	movs	r2, #170	; 0xaa
   8c:	801a      	strh	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:469
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:470
 
     // ... miscellaneous    
 
@@ -421,7 +421,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:469
   9a:	b29a      	uxth	r2, r3
   9c:	4b33      	ldr	r3, [pc, #204]	; (16c <Application_Ini+0x16c>)
   9e:	801a      	strh	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:471
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:472
     
     RTC_SetTime(0,0,0);  //IH150126 this clears any preset RTC ... but we do not care in our app
   a0:	4b2c      	ldr	r3, [pc, #176]	; (154 <Application_Ini+0x154>)
@@ -431,7 +431,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:471
   aa:	2100      	movs	r1, #0
   ac:	2200      	movs	r2, #0
   ae:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:473
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:474
 
     BUZZER_SetMode(BUZZER_SHORTBEEP);
   b0:	4b28      	ldr	r3, [pc, #160]	; (154 <Application_Ini+0x154>)
@@ -439,7 +439,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:473
   b4:	f8d3 3240 	ldr.w	r3, [r3, #576]	; 0x240
   b8:	2002      	movs	r0, #2
   ba:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:492
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:493
     
     // SPI Setup
     
@@ -448,50 +448,50 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:492
     s_SpiInit.Speed = CX_SPI_Mode_VeryHigh;             // The speed range of the serial bit rate.
   bc:	2304      	movs	r3, #4
   be:	703b      	strb	r3, [r7, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:493
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:494
     s_SpiInit.WordLength = CX_SPI_8_Bits;               // The number of transferred data bit. Standard is 8, but could be 16 for some specific devices.
   c0:	2300      	movs	r3, #0
   c2:	707b      	strb	r3, [r7, #1]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:494
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:495
     s_SpiInit.Mode = CX_SPI_MODE_MASTER;                // 1: master, 0: slave
   c4:	2301      	movs	r3, #1
   c6:	70bb      	strb	r3, [r7, #2]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:495
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:496
     s_SpiInit.Polarity = CX_SPI_POL_LOW;                // Indicates the steady state (idle state of the clock when no transmission).
   c8:	2300      	movs	r3, #0
   ca:	70fb      	strb	r3, [r7, #3]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:496
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:497
     s_SpiInit.Phase = CX_SPI_PHA_FIRST;                 // Phase:  0 indicates that the first edge of the clock when leaving the idle state is active
   cc:	2300      	movs	r3, #0
   ce:	713b      	strb	r3, [r7, #4]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:498
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:499
                                                         //         1 indicates that the second edge of the clock when leaving the idle state is active
     s_SpiInit.MSB1LSB0 = CX_SPI_MSBFIRST;               // First bit to be sent.  1: MSB first, 0: LSB first
   d0:	2300      	movs	r3, #0
   d2:	717b      	strb	r3, [r7, #5]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:499
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:500
     s_SpiInit.Nss = CX_SPI_Soft;                        // NSS signal management : 1 = by hardware (NSS pin), 0 = by software using the SSI bit
   d4:	2300      	movs	r3, #0
   d6:	71bb      	strb	r3, [r7, #6]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:502
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:503
                                                         // IH141230 this must be set to CX_SPI_Soft, but the actual didgital potentiometer
                                                         // update is triggered by rising edge of NSS bit (PIN8)
     s_SpiInit.RxBuffer = MyFifoRxBuffer;                // Rolling buffer to be used for reception
   d8:	4b25      	ldr	r3, [pc, #148]	; (170 <Application_Ini+0x170>)
   da:	60bb      	str	r3, [r7, #8]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:503
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:504
     s_SpiInit.RxBufferLen = sizeof( MyFifoRxBuffer );   // Size of the receive buffer
   dc:	2380      	movs	r3, #128	; 0x80
   de:	60fb      	str	r3, [r7, #12]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:504
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:505
     s_SpiInit.TxBuffer = MyFifoTxBuffer;                // Buffer to be used for transmission
   e0:	4b24      	ldr	r3, [pc, #144]	; (174 <Application_Ini+0x174>)
   e2:	613b      	str	r3, [r7, #16]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:505
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:506
     s_SpiInit.TxBufferLen = sizeof( MyFifoRxBuffer );   // Size
   e4:	2380      	movs	r3, #128	; 0x80
   e6:	617b      	str	r3, [r7, #20]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:507
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:508
 
     CX_Configure( CX_SPI,  &s_SpiInit, 0 );
   e8:	4b1a      	ldr	r3, [pc, #104]	; (154 <Application_Ini+0x154>)
@@ -502,7 +502,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:507
   f4:	4611      	mov	r1, r2
   f6:	2200      	movs	r2, #0
   f8:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:510
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:511
                             
     // NSS (aka CS(neg)) pin setup                        
     CX_Configure( CX_GPIO_PIN8, CX_GPIO_Mode_OUT_PP, 0 );  //Push-pull mode    
@@ -513,7 +513,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:510
  104:	2104      	movs	r1, #4
  106:	2200      	movs	r2, #0
  108:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:511
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:512
     CX_Write( CX_GPIO_PIN8, CX_GPIO_HIGH, 0 );             // initial NSS state is HIGH
  10a:	4b12      	ldr	r3, [pc, #72]	; (154 <Application_Ini+0x154>)
  10c:	681b      	ldr	r3, [r3, #0]
@@ -522,7 +522,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:511
  114:	2101      	movs	r1, #1
  116:	2200      	movs	r2, #0
  118:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:515
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:516
     
     // ADC Setup
    
@@ -534,7 +534,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:515
  124:	2100      	movs	r1, #0
  126:	2200      	movs	r2, #0
  128:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:523
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:524
  
     //-------------------------------------
     
@@ -544,12 +544,12 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:523
  12a:	4b0c      	ldr	r3, [pc, #48]	; (15c <Application_Ini+0x15c>)
  12c:	2202      	movs	r2, #2
  12e:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:524
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:525
     GUI(GUI_INTRO_SCREEN,0);                                                     
  130:	2003      	movs	r0, #3
  132:	2100      	movs	r1, #0
  134:	f7ff fffe 	bl	0 <Application_Ini>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:525
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:526
     UTIL_SetTimer(2000,TimerHandler1);
  138:	4b06      	ldr	r3, [pc, #24]	; (154 <Application_Ini+0x154>)
  13a:	681b      	ldr	r3, [r3, #0]
@@ -558,11 +558,11 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:525
  142:	f44f 60fa 	mov.w	r0, #2000	; 0x7d0
  146:	4611      	mov	r1, r2
  148:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:527
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:528
         
     return MENU_CONTINUE_COMMAND;
  14a:	2304      	movs	r3, #4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:528
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:529
     }
  14c:	4618      	mov	r0, r3
  14e:	3718      	adds	r7, #24
@@ -581,7 +581,7 @@ Disassembly of section .text.Application_Handler:
 
 00000000 <Application_Handler>:
 Application_Handler():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:539
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:540
 *                  every multiple of SysTisk by CircleOS while it returns MENU_CONTINUE.
 * Input          : None
 * Return         : MENU_CONTINUE
@@ -590,134 +590,139 @@ enum MENU_code Application_Handler(void)
     {
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:547
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:548
     
     static int GUIUpdate_cnt = 0;    
         
   
     // process special requests first    
     switch(ActualPendingRequest)
-   4:	4b22      	ldr	r3, [pc, #136]	; (90 <Application_Handler+0x90>)
+   4:	4b24      	ldr	r3, [pc, #144]	; (98 <Application_Handler+0x98>)
    6:	781b      	ldrb	r3, [r3, #0]
    8:	2b01      	cmp	r3, #1
    a:	d003      	beq.n	14 <Application_Handler+0x14>
    c:	2b02      	cmp	r3, #2
-   e:	d00f      	beq.n	30 <Application_Handler+0x30>
+   e:	d013      	beq.n	38 <Application_Handler+0x38>
   10:	2b00      	cmp	r3, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:550
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:551
     {
         case PENDING_REQUEST_NONE:  // this is default; continue
             break;
-  12:	e00f      	b.n	34 <Application_Handler+0x34>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:554
+  12:	e013      	b.n	3c <Application_Handler+0x3c>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:555
                               
         case PENDING_REQUEST_REDRAW:  
             
             BUTTON_SetMode( BUTTON_ONOFF ) ;            
-  14:	4b1f      	ldr	r3, [pc, #124]	; (94 <Application_Handler+0x94>)
+  14:	4b21      	ldr	r3, [pc, #132]	; (9c <Application_Handler+0x9c>)
   16:	681b      	ldr	r3, [r3, #0]
   18:	f8d3 3204 	ldr.w	r3, [r3, #516]	; 0x204
   1c:	2000      	movs	r0, #0
   1e:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:555
-            ActualPendingRequest = PENDING_REQUEST_NONE;           
-  20:	4b1b      	ldr	r3, [pc, #108]	; (90 <Application_Handler+0x90>)
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:556
+            ActualPendingRequest = PENDING_REQUEST_NONE;                       
+  20:	4b1d      	ldr	r3, [pc, #116]	; (98 <Application_Handler+0x98>)
   22:	2200      	movs	r2, #0
   24:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:556
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:557
             GUI(GUI_CLEAR,0);                                                     
   26:	2002      	movs	r0, #2
   28:	2100      	movs	r1, #0
   2a:	f7ff fffe 	bl	0 <Application_Handler>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:557
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:558
+            GUI(GUI_NORMAL_UPDATE,0);   
+  2e:	2001      	movs	r0, #1
+  30:	2100      	movs	r1, #0
+  32:	f7ff fffe 	bl	0 <Application_Handler>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:559
             break;       
-  2e:	e001      	b.n	34 <Application_Handler+0x34>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:560
+  36:	e001      	b.n	3c <Application_Handler+0x3c>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:562
         
         case PENDING_REQUEST_SHOWING_INTRO_SCREEN:            
             return MENU_CONTINUE;
-  30:	2301      	movs	r3, #1
-  32:	e02a      	b.n	8a <Application_Handler+0x8a>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:566
+  38:	2301      	movs	r3, #1
+  3a:	e02a      	b.n	92 <Application_Handler+0x92>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:568
     }
   
     // normal processing    
     if (!(GUIUpdate_cnt % GUIUPDATE_DIVIDER))
         {
         GUI(GUI_NORMAL_UPDATE,0);     
-  34:	2001      	movs	r0, #1
-  36:	2100      	movs	r1, #0
-  38:	f7ff fffe 	bl	0 <Application_Handler>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:567
-        ActualBatteryVoltagemV = UTIL_GetBat();        //IH150202 check actual battery status every 100 ticks
-  3c:	4b15      	ldr	r3, [pc, #84]	; (94 <Application_Handler+0x94>)
-  3e:	681b      	ldr	r3, [r3, #0]
-  40:	f8d3 32dc 	ldr.w	r3, [r3, #732]	; 0x2dc
-  44:	4798      	blx	r3
-  46:	4603      	mov	r3, r0
-  48:	b29a      	uxth	r2, r3
-  4a:	4b13      	ldr	r3, [pc, #76]	; (98 <Application_Handler+0x98>)
-  4c:	801a      	strh	r2, [r3, #0]
+  3c:	2001      	movs	r0, #1
+  3e:	2100      	movs	r1, #0
+  40:	f7ff fffe 	bl	0 <Application_Handler>
 C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:569
+        ActualBatteryVoltagemV = UTIL_GetBat();        //IH150202 check actual battery status every 100 ticks
+  44:	4b15      	ldr	r3, [pc, #84]	; (9c <Application_Handler+0x9c>)
+  46:	681b      	ldr	r3, [r3, #0]
+  48:	f8d3 32dc 	ldr.w	r3, [r3, #732]	; 0x2dc
+  4c:	4798      	blx	r3
+  4e:	4603      	mov	r3, r0
+  50:	b29a      	uxth	r2, r3
+  52:	4b13      	ldr	r3, [pc, #76]	; (a0 <Application_Handler+0xa0>)
+  54:	801a      	strh	r2, [r3, #0]
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:571
         }   
     GUIUpdate_cnt++;
-  4e:	4b13      	ldr	r3, [pc, #76]	; (9c <Application_Handler+0x9c>)
-  50:	681b      	ldr	r3, [r3, #0]
-  52:	1c5a      	adds	r2, r3, #1
-  54:	4b11      	ldr	r3, [pc, #68]	; (9c <Application_Handler+0x9c>)
-  56:	601a      	str	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:572
+  56:	4b13      	ldr	r3, [pc, #76]	; (a4 <Application_Handler+0xa4>)
+  58:	681b      	ldr	r3, [r3, #0]
+  5a:	1c5a      	adds	r2, r3, #1
+  5c:	4b11      	ldr	r3, [pc, #68]	; (a4 <Application_Handler+0xa4>)
+  5e:	601a      	str	r2, [r3, #0]
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:574
   
     // check button state to invoke main menu
     if ( BUTTON_GetState() == BUTTON_PUSHED )
-  58:	4b0e      	ldr	r3, [pc, #56]	; (94 <Application_Handler+0x94>)
-  5a:	681b      	ldr	r3, [r3, #0]
-  5c:	f8d3 3200 	ldr.w	r3, [r3, #512]	; 0x200
-  60:	4798      	blx	r3
-  62:	4603      	mov	r3, r0
-  64:	b2db      	uxtb	r3, r3
-  66:	b25b      	sxtb	r3, r3
-  68:	2b01      	cmp	r3, #1
-  6a:	d10d      	bne.n	88 <Application_Handler+0x88>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:574
+  60:	4b0e      	ldr	r3, [pc, #56]	; (9c <Application_Handler+0x9c>)
+  62:	681b      	ldr	r3, [r3, #0]
+  64:	f8d3 3200 	ldr.w	r3, [r3, #512]	; 0x200
+  68:	4798      	blx	r3
+  6a:	4603      	mov	r3, r0
+  6c:	b2db      	uxtb	r3, r3
+  6e:	b25b      	sxtb	r3, r3
+  70:	2b01      	cmp	r3, #1
+  72:	d10d      	bne.n	90 <Application_Handler+0x90>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:576
     {
         BUTTON_WaitForRelease();
-  6c:	4b09      	ldr	r3, [pc, #36]	; (94 <Application_Handler+0x94>)
-  6e:	681b      	ldr	r3, [r3, #0]
-  70:	f8d3 320c 	ldr.w	r3, [r3, #524]	; 0x20c
-  74:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:575
+  74:	4b09      	ldr	r3, [pc, #36]	; (9c <Application_Handler+0x9c>)
+  76:	681b      	ldr	r3, [r3, #0]
+  78:	f8d3 320c 	ldr.w	r3, [r3, #524]	; 0x20c
+  7c:	4798      	blx	r3
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:577
         MENU_Set( ( tMenu* ) &MenuMainSTiM32 );
-  76:	4b07      	ldr	r3, [pc, #28]	; (94 <Application_Handler+0x94>)
-  78:	681b      	ldr	r3, [r3, #0]
-  7a:	f8d3 3280 	ldr.w	r3, [r3, #640]	; 0x280
-  7e:	4a08      	ldr	r2, [pc, #32]	; (a0 <Application_Handler+0xa0>)
-  80:	4610      	mov	r0, r2
-  82:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:576
+  7e:	4b07      	ldr	r3, [pc, #28]	; (9c <Application_Handler+0x9c>)
+  80:	681b      	ldr	r3, [r3, #0]
+  82:	f8d3 3280 	ldr.w	r3, [r3, #640]	; 0x280
+  86:	4a08      	ldr	r2, [pc, #32]	; (a8 <Application_Handler+0xa8>)
+  88:	4610      	mov	r0, r2
+  8a:	4798      	blx	r3
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:578
         return MENU_CHANGE;
-  84:	2303      	movs	r3, #3
-  86:	e000      	b.n	8a <Application_Handler+0x8a>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:579
+  8c:	2303      	movs	r3, #3
+  8e:	e000      	b.n	92 <Application_Handler+0x92>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:581
     }
 
     return MENU_CONTINUE;  
-  88:	2301      	movs	r3, #1
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:580
+  90:	2301      	movs	r3, #1
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:582
     }
-  8a:	4618      	mov	r0, r3
-  8c:	bd80      	pop	{r7, pc}
-  8e:	bf00      	nop
+  92:	4618      	mov	r0, r3
+  94:	bd80      	pop	{r7, pc}
+  96:	bf00      	nop
 	...
-  98:	0000003a 	.word	0x0000003a
-  9c:	0000016c 	.word	0x0000016c
-  a0:	00000000 	.word	0x00000000
+  a0:	0000003a 	.word	0x0000003a
+  a4:	0000016c 	.word	0x0000016c
+  a8:	00000000 	.word	0x00000000
 
 Disassembly of section .text.TimerHandler1:
 
 00000000 <TimerHandler1>:
 TimerHandler1():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:586
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:588
 
 /*******************************************************************************
 * Function Group: Timer Handlers
@@ -726,17 +731,17 @@ void TimerHandler1(void)
     {    
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:587
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:589
     ActualPendingRequest = PENDING_REQUEST_NONE;
    4:	4b03      	ldr	r3, [pc, #12]	; (14 <TimerHandler1+0x14>)
    6:	2200      	movs	r2, #0
    8:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:588
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:590
     GUI(GUI_INITIALIZE,0);
    a:	2000      	movs	r0, #0
    c:	2100      	movs	r1, #0
    e:	f7ff fffe 	bl	0 <TimerHandler1>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:589
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:591
     }
   12:	bd80      	pop	{r7, pc}
   14:	00000000 	.word	0x00000000
@@ -745,7 +750,7 @@ Disassembly of section .text.MenuSetup_Freq:
 
 00000000 <MenuSetup_Freq>:
 MenuSetup_Freq():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:595
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:597
 
 /*******************************************************************************
 * Function Group: Setup Menu Handlers
@@ -754,7 +759,7 @@ enum MENU_code  MenuSetup_Freq(void)
     {
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:596
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:598
     MENU_Set( ( tMenu* ) &MenuSetFrequency );                 
    4:	4b04      	ldr	r3, [pc, #16]	; (18 <MenuSetup_Freq+0x18>)
    6:	681b      	ldr	r3, [r3, #0]
@@ -762,10 +767,10 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:596
    c:	4a03      	ldr	r2, [pc, #12]	; (1c <MenuSetup_Freq+0x1c>)
    e:	4610      	mov	r0, r2
   10:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:597
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:599
     return MENU_CHANGE;
   12:	2303      	movs	r3, #3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:598
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:600
     }
   14:	4618      	mov	r0, r3
   16:	bd80      	pop	{r7, pc}
@@ -775,13 +780,13 @@ Disassembly of section .text.MenuSetup_PSeq:
 
 00000000 <MenuSetup_PSeq>:
 MenuSetup_PSeq():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:601
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:603
 
 enum MENU_code  MenuSetup_PSeq(void)
     {    
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:602
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:604
     MENU_Set( ( tMenu* ) &MenuSetPulseSequence );             
    4:	4b04      	ldr	r3, [pc, #16]	; (18 <MenuSetup_PSeq+0x18>)
    6:	681b      	ldr	r3, [r3, #0]
@@ -789,10 +794,10 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:602
    c:	4a03      	ldr	r2, [pc, #12]	; (1c <MenuSetup_PSeq+0x1c>)
    e:	4610      	mov	r0, r2
   10:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:603
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:605
     return MENU_CHANGE;
   12:	2303      	movs	r3, #3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:604
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:606
     }
   14:	4618      	mov	r0, r3
   16:	bd80      	pop	{r7, pc}
@@ -802,20 +807,20 @@ Disassembly of section .text.MenuSetup_PVolt:
 
 00000000 <MenuSetup_PVolt>:
 MenuSetup_PVolt():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:607
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:609
 
 enum MENU_code  MenuSetup_PVolt(void)
     {    
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:608
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:610
     if(ActualBatteryVoltagemV >= LIMIT_FOR8V_BATTERY_VOLTAGE_MV)
    4:	4b0b      	ldr	r3, [pc, #44]	; (34 <MenuSetup_PVolt+0x34>)
    6:	881a      	ldrh	r2, [r3, #0]
    8:	f640 733b 	movw	r3, #3899	; 0xf3b
    c:	429a      	cmp	r2, r3
    e:	d907      	bls.n	20 <MenuSetup_PVolt+0x20>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:610
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:612
     {
         MENU_Set( ( tMenu* ) &MenuSetPulsePeakVoltage );
   10:	4b09      	ldr	r3, [pc, #36]	; (38 <MenuSetup_PVolt+0x38>)
@@ -825,7 +830,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:610
   1a:	4610      	mov	r0, r2
   1c:	4798      	blx	r3
   1e:	e006      	b.n	2e <MenuSetup_PVolt+0x2e>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:614
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:616
     }
     else
     {
@@ -836,11 +841,11 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:614
   28:	4a05      	ldr	r2, [pc, #20]	; (40 <MenuSetup_PVolt+0x40>)
   2a:	4610      	mov	r0, r2
   2c:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:616
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:618
     }
     return MENU_CHANGE;
   2e:	2303      	movs	r3, #3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:617
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:619
     }
   30:	4618      	mov	r0, r3
   32:	bd80      	pop	{r7, pc}
@@ -851,31 +856,31 @@ Disassembly of section .text.SetFrequency_1:
 
 00000000 <SetFrequency_1>:
 SetFrequency_1():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:621
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:623
 
 
 enum MENU_code  SetFrequency_1(void)
     {
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:622
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:624
     PulseSeq.frequency = FREQUENCY_1KHZ;     
    4:	4b05      	ldr	r3, [pc, #20]	; (1c <SetFrequency_1+0x1c>)
    6:	2201      	movs	r2, #1
    8:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:623
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:625
     UpdatePulseSequence();
    a:	f7ff fffe 	bl	0 <SetFrequency_1>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:625
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:627
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
    e:	4b04      	ldr	r3, [pc, #16]	; (20 <SetFrequency_1+0x20>)
   10:	2201      	movs	r2, #1
   12:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:626
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:628
     return MENU_CONTINUE_COMMAND;
   14:	2304      	movs	r3, #4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:627
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:629
     }
   16:	4618      	mov	r0, r3
   18:	bd80      	pop	{r7, pc}
@@ -887,30 +892,30 @@ Disassembly of section .text.SetFrequency_2:
 
 00000000 <SetFrequency_2>:
 SetFrequency_2():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:630
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:632
 
 enum MENU_code  SetFrequency_2(void)
     {
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:631
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:633
     PulseSeq.frequency = FREQUENCY_2KHZ;        
    4:	4b05      	ldr	r3, [pc, #20]	; (1c <SetFrequency_2+0x1c>)
    6:	2202      	movs	r2, #2
    8:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:632
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:634
     UpdatePulseSequence();
    a:	f7ff fffe 	bl	0 <SetFrequency_2>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:634
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:636
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
    e:	4b04      	ldr	r3, [pc, #16]	; (20 <SetFrequency_2+0x20>)
   10:	2201      	movs	r2, #1
   12:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:635
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:637
     return MENU_CONTINUE_COMMAND;
   14:	2304      	movs	r3, #4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:636
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:638
     }
   16:	4618      	mov	r0, r3
   18:	bd80      	pop	{r7, pc}
@@ -922,30 +927,30 @@ Disassembly of section .text.SetFrequency_3:
 
 00000000 <SetFrequency_3>:
 SetFrequency_3():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:639
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:641
 
 enum MENU_code  SetFrequency_3(void)
     {
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:640
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:642
     PulseSeq.frequency = FREQUENCY_3KHZ;    
    4:	4b05      	ldr	r3, [pc, #20]	; (1c <SetFrequency_3+0x1c>)
    6:	2203      	movs	r2, #3
    8:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:641
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:643
     UpdatePulseSequence();
    a:	f7ff fffe 	bl	0 <SetFrequency_3>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:643
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:645
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
    e:	4b04      	ldr	r3, [pc, #16]	; (20 <SetFrequency_3+0x20>)
   10:	2201      	movs	r2, #1
   12:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:644
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:646
     return MENU_CONTINUE_COMMAND;
   14:	2304      	movs	r3, #4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:645
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:647
     }
   16:	4618      	mov	r0, r3
   18:	bd80      	pop	{r7, pc}
@@ -957,30 +962,30 @@ Disassembly of section .text.SetPulseSequence_1:
 
 00000000 <SetPulseSequence_1>:
 SetPulseSequence_1():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:648
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:650
 
 enum MENU_code  SetPulseSequence_1(void)
     {       
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:649
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:651
     PulseSeq.pulseSeq = PULSESEQUENCE_1;    
    4:	4b05      	ldr	r3, [pc, #20]	; (1c <SetPulseSequence_1+0x1c>)
    6:	2201      	movs	r2, #1
    8:	705a      	strb	r2, [r3, #1]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:650
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:652
     UpdatePulseSequence();
    a:	f7ff fffe 	bl	0 <SetPulseSequence_1>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:652
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:654
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
    e:	4b04      	ldr	r3, [pc, #16]	; (20 <SetPulseSequence_1+0x20>)
   10:	2201      	movs	r2, #1
   12:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:653
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:655
     return MENU_CONTINUE_COMMAND;
   14:	2304      	movs	r3, #4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:654
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:656
     }
   16:	4618      	mov	r0, r3
   18:	bd80      	pop	{r7, pc}
@@ -992,30 +997,30 @@ Disassembly of section .text.SetPulseSequence_2:
 
 00000000 <SetPulseSequence_2>:
 SetPulseSequence_2():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:657
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:659
 
 enum MENU_code  SetPulseSequence_2(void)
     {
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:658
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:660
     PulseSeq.pulseSeq = PULSESEQUENCE_2;    
    4:	4b05      	ldr	r3, [pc, #20]	; (1c <SetPulseSequence_2+0x1c>)
    6:	2202      	movs	r2, #2
    8:	705a      	strb	r2, [r3, #1]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:659
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:661
     UpdatePulseSequence();
    a:	f7ff fffe 	bl	0 <SetPulseSequence_2>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:661
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:663
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
    e:	4b04      	ldr	r3, [pc, #16]	; (20 <SetPulseSequence_2+0x20>)
   10:	2201      	movs	r2, #1
   12:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:662
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:664
     return MENU_CONTINUE_COMMAND;
   14:	2304      	movs	r3, #4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:663
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:665
     }
   16:	4618      	mov	r0, r3
   18:	bd80      	pop	{r7, pc}
@@ -1027,30 +1032,30 @@ Disassembly of section .text.SetPulseSequence_3:
 
 00000000 <SetPulseSequence_3>:
 SetPulseSequence_3():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:666
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:668
 
 enum MENU_code  SetPulseSequence_3(void)
     {
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:667
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:669
     PulseSeq.pulseSeq = PULSESEQUENCE_3;    
    4:	4b05      	ldr	r3, [pc, #20]	; (1c <SetPulseSequence_3+0x1c>)
    6:	2203      	movs	r2, #3
    8:	705a      	strb	r2, [r3, #1]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:668
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:670
     UpdatePulseSequence();    
    a:	f7ff fffe 	bl	0 <SetPulseSequence_3>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:670
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:672
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
    e:	4b04      	ldr	r3, [pc, #16]	; (20 <SetPulseSequence_3+0x20>)
   10:	2201      	movs	r2, #1
   12:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:671
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:673
     return MENU_CONTINUE_COMMAND;
   14:	2304      	movs	r3, #4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:672
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:674
     }
   16:	4618      	mov	r0, r3
   18:	bd80      	pop	{r7, pc}
@@ -1062,30 +1067,30 @@ Disassembly of section .text.SetPulseSequence_4:
 
 00000000 <SetPulseSequence_4>:
 SetPulseSequence_4():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:675
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:677
 
 enum MENU_code  SetPulseSequence_4(void)
     {
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:676
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:678
     PulseSeq.pulseSeq = PULSESEQUENCE_4;    
    4:	4b05      	ldr	r3, [pc, #20]	; (1c <SetPulseSequence_4+0x1c>)
    6:	2204      	movs	r2, #4
    8:	705a      	strb	r2, [r3, #1]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:677
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:679
     UpdatePulseSequence();    
    a:	f7ff fffe 	bl	0 <SetPulseSequence_4>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:679
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:681
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
    e:	4b04      	ldr	r3, [pc, #16]	; (20 <SetPulseSequence_4+0x20>)
   10:	2201      	movs	r2, #1
   12:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:680
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:682
     return MENU_CONTINUE_COMMAND;
   14:	2304      	movs	r3, #4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:681
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:683
     }
   16:	4618      	mov	r0, r3
   18:	bd80      	pop	{r7, pc}
@@ -1097,30 +1102,30 @@ Disassembly of section .text.SetPulsePeakVoltage_1:
 
 00000000 <SetPulsePeakVoltage_1>:
 SetPulsePeakVoltage_1():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:684
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:686
 
 enum MENU_code  SetPulsePeakVoltage_1(void)
     {
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:685
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:687
     PulseSeq.peakVoltage = PULSEPEAKVOLTAGE_8V;     
    4:	4b05      	ldr	r3, [pc, #20]	; (1c <SetPulsePeakVoltage_1+0x1c>)
    6:	2201      	movs	r2, #1
    8:	709a      	strb	r2, [r3, #2]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:686
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:688
     UpdatePulseSequence();
    a:	f7ff fffe 	bl	0 <SetPulsePeakVoltage_1>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:688
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:690
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
    e:	4b04      	ldr	r3, [pc, #16]	; (20 <SetPulsePeakVoltage_1+0x20>)
   10:	2201      	movs	r2, #1
   12:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:689
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:691
     return MENU_CONTINUE_COMMAND;
   14:	2304      	movs	r3, #4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:690
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:692
     }
   16:	4618      	mov	r0, r3
   18:	bd80      	pop	{r7, pc}
@@ -1132,30 +1137,30 @@ Disassembly of section .text.SetPulsePeakVoltage_2:
 
 00000000 <SetPulsePeakVoltage_2>:
 SetPulsePeakVoltage_2():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:693
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:695
 
 enum MENU_code  SetPulsePeakVoltage_2(void)
     {
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:694
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:696
     PulseSeq.peakVoltage = PULSEPEAKVOLTAGE_6V;     
    4:	4b05      	ldr	r3, [pc, #20]	; (1c <SetPulsePeakVoltage_2+0x1c>)
    6:	2202      	movs	r2, #2
    8:	709a      	strb	r2, [r3, #2]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:695
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:697
     UpdatePulseSequence();
    a:	f7ff fffe 	bl	0 <SetPulsePeakVoltage_2>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:697
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:699
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
    e:	4b04      	ldr	r3, [pc, #16]	; (20 <SetPulsePeakVoltage_2+0x20>)
   10:	2201      	movs	r2, #1
   12:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:698
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:700
     return MENU_CONTINUE_COMMAND;
   14:	2304      	movs	r3, #4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:699
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:701
     }
   16:	4618      	mov	r0, r3
   18:	bd80      	pop	{r7, pc}
@@ -1167,30 +1172,30 @@ Disassembly of section .text.SetPulsePeakVoltage_3:
 
 00000000 <SetPulsePeakVoltage_3>:
 SetPulsePeakVoltage_3():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:702
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:704
 
 enum MENU_code  SetPulsePeakVoltage_3(void)
     {
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:703
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:705
     PulseSeq.peakVoltage = PULSEPEAKVOLTAGE_4V;     
    4:	4b05      	ldr	r3, [pc, #20]	; (1c <SetPulsePeakVoltage_3+0x1c>)
    6:	2203      	movs	r2, #3
    8:	709a      	strb	r2, [r3, #2]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:704
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:706
     UpdatePulseSequence();
    a:	f7ff fffe 	bl	0 <SetPulsePeakVoltage_3>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:706
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:708
     
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
    e:	4b04      	ldr	r3, [pc, #16]	; (20 <SetPulsePeakVoltage_3+0x20>)
   10:	2201      	movs	r2, #1
   12:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:707
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:709
     return MENU_CONTINUE_COMMAND;
   14:	2304      	movs	r3, #4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:708
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:710
     }
   16:	4618      	mov	r0, r3
   18:	bd80      	pop	{r7, pc}
@@ -1202,24 +1207,24 @@ Disassembly of section .text.ShutDown:
 
 00000000 <ShutDown>:
 ShutDown():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:712
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:714
 
 
 enum MENU_code ShutDown( void )
 {
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:714
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:716
         //IH150126 immediate shutdown
         BackUpParameters();
    4:	f7ff fffe 	bl	0 <ShutDown>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:715
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:717
         SHUTDOWN_Action();
    8:	4b03      	ldr	r3, [pc, #12]	; (18 <ShutDown+0x18>)
    a:	681b      	ldr	r3, [r3, #0]
    c:	f8d3 3340 	ldr.w	r3, [r3, #832]	; 0x340
   10:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:716
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:718
 }
   12:	4618      	mov	r0, r3
   14:	bd80      	pop	{r7, pc}
@@ -1230,79 +1235,79 @@ Disassembly of section .text.Quit:
 
 00000000 <Quit>:
 Quit():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:719
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:721
 
 enum MENU_code Quit( void )
 {
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:721
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:723
         //IH Quit to OS
         ActualPendingRequest = PENDING_REQUEST_REDRAW;   
    4:	4b2b      	ldr	r3, [pc, #172]	; (b4 <Quit+0xb4>)
    6:	2201      	movs	r2, #1
    8:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:723
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:725
 
         BUTTON_WaitForRelease();                                     
    a:	4b2b      	ldr	r3, [pc, #172]	; (b8 <Quit+0xb8>)
    c:	681b      	ldr	r3, [r3, #0]
    e:	f8d3 320c 	ldr.w	r3, [r3, #524]	; 0x20c
   12:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:724
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:726
         BUTTON_SetMode( BUTTON_ONOFF_FORMAIN );
   14:	4b28      	ldr	r3, [pc, #160]	; (b8 <Quit+0xb8>)
   16:	681b      	ldr	r3, [r3, #0]
   18:	f8d3 3204 	ldr.w	r3, [r3, #516]	; 0x204
   1c:	2001      	movs	r0, #1
   1e:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:726
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:728
         
         LCD_SetBackLightOn();
   20:	4b25      	ldr	r3, [pc, #148]	; (b8 <Quit+0xb8>)
   22:	681b      	ldr	r3, [r3, #0]
   24:	f8d3 3144 	ldr.w	r3, [r3, #324]	; 0x144
   28:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:727
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:729
         LCD_SetRotateScreen( 1 );
   2a:	4b23      	ldr	r3, [pc, #140]	; (b8 <Quit+0xb8>)
   2c:	681b      	ldr	r3, [r3, #0]
   2e:	f8d3 3130 	ldr.w	r3, [r3, #304]	; 0x130
   32:	2001      	movs	r0, #1
   34:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:728
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:730
         MENU_ClearCurrentCommand();
   36:	4b20      	ldr	r3, [pc, #128]	; (b8 <Quit+0xb8>)
   38:	681b      	ldr	r3, [r3, #0]
   3a:	f8d3 3290 	ldr.w	r3, [r3, #656]	; 0x290
   3e:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:729
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:731
         DRAW_SetDefaultColor();
   40:	4b1d      	ldr	r3, [pc, #116]	; (b8 <Quit+0xb8>)
   42:	681b      	ldr	r3, [r3, #0]
   44:	f8d3 3080 	ldr.w	r3, [r3, #128]	; 0x80
   48:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:730
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:732
         DRAW_SetCharMagniCoeff( 1 );                                                      
   4a:	4b1b      	ldr	r3, [pc, #108]	; (b8 <Quit+0xb8>)
   4c:	681b      	ldr	r3, [r3, #0]
   4e:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
   52:	2001      	movs	r0, #1
   54:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:731
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:733
         DRAW_Clear();
   56:	4b18      	ldr	r3, [pc, #96]	; (b8 <Quit+0xb8>)
   58:	681b      	ldr	r3, [r3, #0]
   5a:	f8d3 3084 	ldr.w	r3, [r3, #132]	; 0x84
   5e:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:732
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:734
         POINTER_SetMode( POINTER_ON );      
   60:	4b15      	ldr	r3, [pc, #84]	; (b8 <Quit+0xb8>)
   62:	681b      	ldr	r3, [r3, #0]
   64:	699b      	ldr	r3, [r3, #24]
   66:	2001      	movs	r0, #1
   68:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:734
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:736
         
         UTIL_SetPll(SPEED_MEDIUM);
   6a:	4b13      	ldr	r3, [pc, #76]	; (b8 <Quit+0xb8>)
@@ -1310,7 +1315,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:734
   6e:	f8d3 32c0 	ldr.w	r3, [r3, #704]	; 0x2c0
   72:	2003      	movs	r0, #3
   74:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:736
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:738
                 
         UTIL_SetSchHandler(STIMULATOR_HANDLER_ID, 0 );
   76:	4b10      	ldr	r3, [pc, #64]	; (b8 <Quit+0xb8>)
@@ -1319,7 +1324,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:736
   7e:	200d      	movs	r0, #13
   80:	2100      	movs	r1, #0
   82:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:737
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:739
         LED_Set( LED_GREEN, LED_OFF );
   84:	4b0c      	ldr	r3, [pc, #48]	; (b8 <Quit+0xb8>)
   86:	681b      	ldr	r3, [r3, #0]
@@ -1327,7 +1332,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:737
   8c:	2000      	movs	r0, #0
   8e:	2100      	movs	r1, #0
   90:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:738
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:740
         LED_Set( LED_RED, LED_OFF );
   92:	4b09      	ldr	r3, [pc, #36]	; (b8 <Quit+0xb8>)
   94:	681b      	ldr	r3, [r3, #0]
@@ -1335,18 +1340,18 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:738
   9a:	2001      	movs	r0, #1
   9c:	2100      	movs	r1, #0
   9e:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:740
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:742
         
         BackUpParameters();
   a0:	f7ff fffe 	bl	0 <Quit>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:741
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:743
         return MENU_Quit();
   a4:	4b04      	ldr	r3, [pc, #16]	; (b8 <Quit+0xb8>)
   a6:	681b      	ldr	r3, [r3, #0]
   a8:	f8d3 32a8 	ldr.w	r3, [r3, #680]	; 0x2a8
   ac:	4798      	blx	r3
   ae:	4603      	mov	r3, r0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:742
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:744
 }
   b0:	4618      	mov	r0, r3
   b2:	bd80      	pop	{r7, pc}
@@ -1356,21 +1361,21 @@ Disassembly of section .text.RestoreApp:
 
 00000000 <RestoreApp>:
 RestoreApp():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:745
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:747
 
 enum MENU_code RestoreApp( void )
 {    
    0:	b480      	push	{r7}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:746
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:748
     ActualPendingRequest = PENDING_REQUEST_REDRAW;    
    4:	4b04      	ldr	r3, [pc, #16]	; (18 <RestoreApp+0x18>)
    6:	2201      	movs	r2, #1
    8:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:747
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:749
     return MENU_RESTORE_COMMAND;    
    a:	2306      	movs	r3, #6
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:748
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:750
 }
    c:	4618      	mov	r0, r3
    e:	46bd      	mov	sp, r7
@@ -1383,21 +1388,21 @@ Disassembly of section .text.Cancel:
 
 00000000 <Cancel>:
 Cancel():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:751
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:753
 
 enum MENU_code Cancel( void )
 {
    0:	b480      	push	{r7}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:752
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:754
     ActualPendingRequest = PENDING_REQUEST_REDRAW;        
    4:	4b04      	ldr	r3, [pc, #16]	; (18 <Cancel+0x18>)
    6:	2201      	movs	r2, #1
    8:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:753
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:755
     return MENU_CONTINUE_COMMAND;
    a:	2304      	movs	r3, #4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:754
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:756
 }
    c:	4618      	mov	r0, r3
    e:	46bd      	mov	sp, r7
@@ -1410,7 +1415,7 @@ Disassembly of section .text.LongDelay:
 
 00000000 <LongDelay>:
 LongDelay():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:765
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:767
 *                  exit to main menu after 4 seconds
 * Input          : u8 delayInSeconds
 * Return         : None
@@ -1422,7 +1427,7 @@ static void LongDelay(u8 delayInSeconds)
    4:	af00      	add	r7, sp, #0
    6:	4603      	mov	r3, r0
    8:	71fb      	strb	r3, [r7, #7]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:768
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:770
     u8 hh, mm, ss, ss2;
     
     RTC_GetTime( &hh, &mm, &ss );
@@ -1433,14 +1438,14 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:768
   16:	f107 010e 	add.w	r1, r7, #14
   1a:	f107 020d 	add.w	r2, r7, #13
   1e:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:769
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:771
     ss = ss + delayInSeconds;
   20:	7b7a      	ldrb	r2, [r7, #13]
   22:	79fb      	ldrb	r3, [r7, #7]
   24:	4413      	add	r3, r2
   26:	b2db      	uxtb	r3, r3
   28:	737b      	strb	r3, [r7, #13]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:770
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:772
     ss = ss % 60;
   2a:	7b7a      	ldrb	r2, [r7, #13]
   2c:	4b0f      	ldr	r3, [pc, #60]	; (6c <LongDelay+0x6c>)
@@ -1453,7 +1458,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:770
   3c:	1ad3      	subs	r3, r2, r3
   3e:	b2db      	uxtb	r3, r3
   40:	737b      	strb	r3, [r7, #13]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:774 (discriminator 1)
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:776 (discriminator 1)
 
     do
         {
@@ -1465,14 +1470,14 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:774 (discriminator 1)
   4e:	f107 010e 	add.w	r1, r7, #14
   52:	f107 020c 	add.w	r2, r7, #12
   56:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:776 (discriminator 1)
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:778 (discriminator 1)
         }
     while ( ss2 != ss );           // do while < delayInSeconds seconds
   58:	7b3a      	ldrb	r2, [r7, #12]
   5a:	7b7b      	ldrb	r3, [r7, #13]
   5c:	429a      	cmp	r2, r3
   5e:	d1f0      	bne.n	42 <LongDelay+0x42>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:777
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:779
     }
   60:	3710      	adds	r7, #16
   62:	46bd      	mov	sp, r7
@@ -1485,7 +1490,7 @@ Disassembly of section .text.UpdatePulseSequence:
 
 00000000 <UpdatePulseSequence>:
 UpdatePulseSequence():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:793
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:795
 * Return         : u32 loopCounts
 *******************************************************************************/
 #define MICROSECONDS_TO_LOOP_COUNTS(us)   ((float)(us)*15.0)  //IH150107 corrected (was 7.78 before)
@@ -1494,7 +1499,7 @@ static void UpdatePulseSequence()
     {
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:794
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:796
         switch(PulseSeq.pulseSeq)
    4:	4b96      	ldr	r3, [pc, #600]	; (260 <UpdatePulseSequence+0x260>)
    6:	785b      	ldrb	r3, [r3, #1]
@@ -1507,107 +1512,107 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:794
   18:	0000003f 	.word	0x0000003f
   1c:	0000005b 	.word	0x0000005b
   20:	00000077 	.word	0x00000077
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:797
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:799
         {
             case PULSESEQUENCE_1:    
                 PulseSeq.delay1_microseconds = 200;        
   24:	4b8e      	ldr	r3, [pc, #568]	; (260 <UpdatePulseSequence+0x260>)
   26:	22c8      	movs	r2, #200	; 0xc8
   28:	82da      	strh	r2, [r3, #22]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:798
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:800
                 PulseSeq.delay2_microseconds = 50;        
   2a:	4b8d      	ldr	r3, [pc, #564]	; (260 <UpdatePulseSequence+0x260>)
   2c:	2232      	movs	r2, #50	; 0x32
   2e:	839a      	strh	r2, [r3, #28]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:799
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:801
                 PulseSeq.delay3_microseconds = 0;             
   30:	4b8b      	ldr	r3, [pc, #556]	; (260 <UpdatePulseSequence+0x260>)
   32:	2200      	movs	r2, #0
   34:	845a      	strh	r2, [r3, #34]	; 0x22
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:800
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:802
                 PulseSeq.delay_between_sequences_microseconds = 200;    
   36:	4b8a      	ldr	r3, [pc, #552]	; (260 <UpdatePulseSequence+0x260>)
   38:	22c8      	movs	r2, #200	; 0xc8
   3a:	819a      	strh	r2, [r3, #12]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:801
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:803
                 break;
   3c:	e029      	b.n	92 <UpdatePulseSequence+0x92>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:804
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:806
             
             case PULSESEQUENCE_2:    
                 PulseSeq.delay1_microseconds = 0;        
   3e:	4b88      	ldr	r3, [pc, #544]	; (260 <UpdatePulseSequence+0x260>)
   40:	2200      	movs	r2, #0
   42:	82da      	strh	r2, [r3, #22]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:805
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:807
                 PulseSeq.delay2_microseconds = 50;        
   44:	4b86      	ldr	r3, [pc, #536]	; (260 <UpdatePulseSequence+0x260>)
   46:	2232      	movs	r2, #50	; 0x32
   48:	839a      	strh	r2, [r3, #28]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:806
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:808
                 PulseSeq.delay3_microseconds = 50;          
   4a:	4b85      	ldr	r3, [pc, #532]	; (260 <UpdatePulseSequence+0x260>)
   4c:	2232      	movs	r2, #50	; 0x32
   4e:	845a      	strh	r2, [r3, #34]	; 0x22
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:807
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:809
                 PulseSeq.delay_between_sequences_microseconds = 400;        
   50:	4b83      	ldr	r3, [pc, #524]	; (260 <UpdatePulseSequence+0x260>)
   52:	f44f 72c8 	mov.w	r2, #400	; 0x190
   56:	819a      	strh	r2, [r3, #12]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:808
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:810
                 break;
   58:	e01b      	b.n	92 <UpdatePulseSequence+0x92>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:811
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:813
             
             case PULSESEQUENCE_3:    
                 PulseSeq.delay1_microseconds = 50;        
   5a:	4b81      	ldr	r3, [pc, #516]	; (260 <UpdatePulseSequence+0x260>)
   5c:	2232      	movs	r2, #50	; 0x32
   5e:	82da      	strh	r2, [r3, #22]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:812
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:814
                 PulseSeq.delay2_microseconds = 50;        
   60:	4b7f      	ldr	r3, [pc, #508]	; (260 <UpdatePulseSequence+0x260>)
   62:	2232      	movs	r2, #50	; 0x32
   64:	839a      	strh	r2, [r3, #28]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:813
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:815
                 PulseSeq.delay3_microseconds = 50;      
   66:	4b7e      	ldr	r3, [pc, #504]	; (260 <UpdatePulseSequence+0x260>)
   68:	2232      	movs	r2, #50	; 0x32
   6a:	845a      	strh	r2, [r3, #34]	; 0x22
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:814
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:816
                 PulseSeq.delay_between_sequences_microseconds = 400;        
   6c:	4b7c      	ldr	r3, [pc, #496]	; (260 <UpdatePulseSequence+0x260>)
   6e:	f44f 72c8 	mov.w	r2, #400	; 0x190
   72:	819a      	strh	r2, [r3, #12]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:815
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:817
                 break;
   74:	e00d      	b.n	92 <UpdatePulseSequence+0x92>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:818
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:820
             
             case PULSESEQUENCE_4:    
                 PulseSeq.delay1_microseconds = 400;        
   76:	4b7a      	ldr	r3, [pc, #488]	; (260 <UpdatePulseSequence+0x260>)
   78:	f44f 72c8 	mov.w	r2, #400	; 0x190
   7c:	82da      	strh	r2, [r3, #22]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:819
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:821
                 PulseSeq.delay2_microseconds = 0;        
   7e:	4b78      	ldr	r3, [pc, #480]	; (260 <UpdatePulseSequence+0x260>)
   80:	2200      	movs	r2, #0
   82:	839a      	strh	r2, [r3, #28]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:820
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:822
                 PulseSeq.delay3_microseconds = 0;
   84:	4b76      	ldr	r3, [pc, #472]	; (260 <UpdatePulseSequence+0x260>)
   86:	2200      	movs	r2, #0
   88:	845a      	strh	r2, [r3, #34]	; 0x22
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:821
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:823
                 PulseSeq.delay_between_sequences_microseconds = 100;        
   8a:	4b75      	ldr	r3, [pc, #468]	; (260 <UpdatePulseSequence+0x260>)
   8c:	2264      	movs	r2, #100	; 0x64
   8e:	819a      	strh	r2, [r3, #12]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:822
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:824
                 break;
   90:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:825
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:827
         }
     
         PulseSeq.delay0_loop_counts = MICROSECONDS_TO_LOOP_COUNTS(PulseSeq.delay0_microseconds);
@@ -1633,7 +1638,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:825
   c6:	b29a      	uxth	r2, r3
   c8:	4b65      	ldr	r3, [pc, #404]	; (260 <UpdatePulseSequence+0x260>)
   ca:	825a      	strh	r2, [r3, #18]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:826
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:828
         PulseSeq.delay1_loop_counts = MICROSECONDS_TO_LOOP_COUNTS(PulseSeq.delay1_microseconds);
   cc:	4b64      	ldr	r3, [pc, #400]	; (260 <UpdatePulseSequence+0x260>)
   ce:	8adb      	ldrh	r3, [r3, #22]
@@ -1657,7 +1662,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:826
  100:	b29a      	uxth	r2, r3
  102:	4b57      	ldr	r3, [pc, #348]	; (260 <UpdatePulseSequence+0x260>)
  104:	831a      	strh	r2, [r3, #24]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:827
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:829
         PulseSeq.delay2_loop_counts = MICROSECONDS_TO_LOOP_COUNTS(PulseSeq.delay2_microseconds);
  106:	4b56      	ldr	r3, [pc, #344]	; (260 <UpdatePulseSequence+0x260>)
  108:	8b9b      	ldrh	r3, [r3, #28]
@@ -1681,7 +1686,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:827
  13a:	b29a      	uxth	r2, r3
  13c:	4b48      	ldr	r3, [pc, #288]	; (260 <UpdatePulseSequence+0x260>)
  13e:	83da      	strh	r2, [r3, #30]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:828
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:830
         PulseSeq.delay3_loop_counts = MICROSECONDS_TO_LOOP_COUNTS(PulseSeq.delay3_microseconds);     
  140:	4b47      	ldr	r3, [pc, #284]	; (260 <UpdatePulseSequence+0x260>)
  142:	8c5b      	ldrh	r3, [r3, #34]	; 0x22
@@ -1705,7 +1710,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:828
  174:	b29a      	uxth	r2, r3
  176:	4b3a      	ldr	r3, [pc, #232]	; (260 <UpdatePulseSequence+0x260>)
  178:	849a      	strh	r2, [r3, #36]	; 0x24
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:830
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:832
         PulseSeq.delay_between_sequences_loop_counts
                                     = MICROSECONDS_TO_LOOP_COUNTS(PulseSeq.delay_between_sequences_microseconds);     
  17a:	4b39      	ldr	r3, [pc, #228]	; (260 <UpdatePulseSequence+0x260>)
@@ -1730,7 +1735,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:830
  1ae:	b29a      	uxth	r2, r3
  1b0:	4b2b      	ldr	r3, [pc, #172]	; (260 <UpdatePulseSequence+0x260>)
  1b2:	81da      	strh	r2, [r3, #14]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:832
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:834
     
         switch(PulseSeq.frequency)
  1b4:	4b2a      	ldr	r3, [pc, #168]	; (260 <UpdatePulseSequence+0x260>)
@@ -1741,50 +1746,50 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:832
  1be:	d00f      	beq.n	1e0 <UpdatePulseSequence+0x1e0>
  1c0:	2b01      	cmp	r3, #1
  1c2:	d114      	bne.n	1ee <UpdatePulseSequence+0x1ee>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:835
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:837
         {
             case FREQUENCY_1KHZ:    
                     PulseSeq.frequency_divider = 3;     
  1c4:	4b26      	ldr	r3, [pc, #152]	; (260 <UpdatePulseSequence+0x260>)
  1c6:	2203      	movs	r2, #3
  1c8:	809a      	strh	r2, [r3, #4]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:836
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:838
                     PulseSeq.sequence_multiplicity = SEQUENCEMULTIPLICITY_SINGLE;
  1ca:	4b25      	ldr	r3, [pc, #148]	; (260 <UpdatePulseSequence+0x260>)
  1cc:	2200      	movs	r2, #0
  1ce:	719a      	strb	r2, [r3, #6]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:837
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:839
                     break; 
  1d0:	e00d      	b.n	1ee <UpdatePulseSequence+0x1ee>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:839
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:841
             case FREQUENCY_2KHZ:    
                     PulseSeq.frequency_divider = 3;     
  1d2:	4b23      	ldr	r3, [pc, #140]	; (260 <UpdatePulseSequence+0x260>)
  1d4:	2203      	movs	r2, #3
  1d6:	809a      	strh	r2, [r3, #4]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:840
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:842
                     PulseSeq.sequence_multiplicity = SEQUENCEMULTIPLICITY_DOUBLE;
  1d8:	4b21      	ldr	r3, [pc, #132]	; (260 <UpdatePulseSequence+0x260>)
  1da:	2201      	movs	r2, #1
  1dc:	719a      	strb	r2, [r3, #6]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:841
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:843
                     break;
  1de:	e006      	b.n	1ee <UpdatePulseSequence+0x1ee>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:843
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:845
             case FREQUENCY_3KHZ:    
                     PulseSeq.frequency_divider = 1;     
  1e0:	4b1f      	ldr	r3, [pc, #124]	; (260 <UpdatePulseSequence+0x260>)
  1e2:	2201      	movs	r2, #1
  1e4:	809a      	strh	r2, [r3, #4]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:844
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:846
                     PulseSeq.sequence_multiplicity = SEQUENCEMULTIPLICITY_SINGLE;
  1e6:	4b1e      	ldr	r3, [pc, #120]	; (260 <UpdatePulseSequence+0x260>)
  1e8:	2200      	movs	r2, #0
  1ea:	719a      	strb	r2, [r3, #6]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:845
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:847
                     break;
  1ec:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:848
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:850
         }
     
         switch(PulseSeq.peakVoltage)
@@ -1796,35 +1801,35 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:848
  1f8:	d00b      	beq.n	212 <UpdatePulseSequence+0x212>
  1fa:	2b01      	cmp	r3, #1
  1fc:	d10e      	bne.n	21c <UpdatePulseSequence+0x21c>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:851
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:853
         {
             case PULSEPEAKVOLTAGE_8V:    
                     PulseSeq.voltage_multiplication_factor =  8.0/8.0;
  1fe:	4b18      	ldr	r3, [pc, #96]	; (260 <UpdatePulseSequence+0x260>)
  200:	f04f 527e 	mov.w	r2, #1065353216	; 0x3f800000
  204:	609a      	str	r2, [r3, #8]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:852
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:854
                     break;
  206:	e009      	b.n	21c <UpdatePulseSequence+0x21c>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:854
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:856
             case PULSEPEAKVOLTAGE_6V:    
                     PulseSeq.voltage_multiplication_factor =  6.0/8.0;
  208:	4b15      	ldr	r3, [pc, #84]	; (260 <UpdatePulseSequence+0x260>)
  20a:	f04f 527d 	mov.w	r2, #1061158912	; 0x3f400000
  20e:	609a      	str	r2, [r3, #8]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:855
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:857
                     break;
  210:	e004      	b.n	21c <UpdatePulseSequence+0x21c>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:857
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:859
             case PULSEPEAKVOLTAGE_4V:    
                     PulseSeq.voltage_multiplication_factor =  4.0/8.0;
  212:	4b13      	ldr	r3, [pc, #76]	; (260 <UpdatePulseSequence+0x260>)
  214:	f04f 527c 	mov.w	r2, #1056964608	; 0x3f000000
  218:	609a      	str	r2, [r3, #8]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:858
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:860
                     break;
  21a:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:861
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:863
         }    
     
        PulseSeq.voltage_multiplication_factor *= ((float)NOMINAL_BATTERY_VOLTAGE_MV)/((float)ActualBatteryVoltagemV);  
@@ -1839,7 +1844,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:861
  236:	ee67 7a27 	vmul.f32	s15, s14, s15
  23a:	4b09      	ldr	r3, [pc, #36]	; (260 <UpdatePulseSequence+0x260>)
  23c:	edc3 7a02 	vstr	s15, [r3, #8]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:862
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:864
        if(PulseSeq.voltage_multiplication_factor >1.0)
  240:	4b07      	ldr	r3, [pc, #28]	; (260 <UpdatePulseSequence+0x260>)
  242:	ed93 7a02 	vldr	s14, [r3, #8]
@@ -1847,13 +1852,13 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:862
  24a:	eeb4 7ae7 	vcmpe.f32	s14, s15
  24e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
  252:	dd03      	ble.n	25c <UpdatePulseSequence+0x25c>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:864
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:866
        {
             PulseSeq.voltage_multiplication_factor = 1.0;
  254:	4b02      	ldr	r3, [pc, #8]	; (260 <UpdatePulseSequence+0x260>)
  256:	f04f 527e 	mov.w	r2, #1065353216	; 0x3f800000
  25a:	609a      	str	r2, [r3, #8]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:867
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:869
        }       
                     
     }
@@ -1868,7 +1873,7 @@ Disassembly of section .text.GeneratePulseSequenceAndReadCAE:
 
 00000000 <GeneratePulseSequenceAndReadCAE>:
 GeneratePulseSequenceAndReadCAE():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:885
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:887
 
 * Input          : None
 * Return         : None
@@ -1878,17 +1883,17 @@ static void GeneratePulseSequenceAndReadCAE()
    0:	b580      	push	{r7, lr}
    2:	b084      	sub	sp, #16
    4:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:888
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:890
      u32 ad_value_0_to_4095;
     
      u32 ad_value_offset  =  1500;          // ADC values under this are presented as 0
    6:	f240 53dc 	movw	r3, #1500	; 0x5dc
    a:	60bb      	str	r3, [r7, #8]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:889
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:891
      u32 ad_value_reciproq_scale   =  3;    // values are DIVIDED by this factor
    c:	2303      	movs	r3, #3
    e:	607b      	str	r3, [r7, #4]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:891
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:893
     
     SetOutputVoltage(ZERO_VOLTAGE,PulseSeq.voltage_multiplication_factor);
   10:	4b3b      	ldr	r3, [pc, #236]	; (100 <GeneratePulseSequenceAndReadCAE+0x100>)
@@ -1896,26 +1901,26 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:891
   14:	2002      	movs	r0, #2
   16:	4619      	mov	r1, r3
   18:	f7ff fffe 	bl	0 <GeneratePulseSequenceAndReadCAE>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:892
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:894
     WHILE_DELAY_LOOP(PulseSeq.delay0_loop_counts)
   1c:	4b38      	ldr	r3, [pc, #224]	; (100 <GeneratePulseSequenceAndReadCAE+0x100>)
   1e:	8a5b      	ldrh	r3, [r3, #18]
   20:	60fb      	str	r3, [r7, #12]
   22:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:892 (discriminator 1)
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:894 (discriminator 1)
   24:	68fb      	ldr	r3, [r7, #12]
   26:	1e5a      	subs	r2, r3, #1
   28:	60fa      	str	r2, [r7, #12]
   2a:	2b00      	cmp	r3, #0
   2c:	d1fa      	bne.n	24 <GeneratePulseSequenceAndReadCAE+0x24>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:894
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:896
 
     if(PulseSeq.delay1_loop_counts>0)
   2e:	4b34      	ldr	r3, [pc, #208]	; (100 <GeneratePulseSequenceAndReadCAE+0x100>)
   30:	8b1b      	ldrh	r3, [r3, #24]
   32:	2b00      	cmp	r3, #0
   34:	d039      	beq.n	aa <GeneratePulseSequenceAndReadCAE+0xaa>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:896
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:898
     {    
         SetOutputVoltage(POSITIVE_VOLTAGE_MAX,PulseSeq.voltage_multiplication_factor);
   36:	4b32      	ldr	r3, [pc, #200]	; (100 <GeneratePulseSequenceAndReadCAE+0x100>)
@@ -1923,7 +1928,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:896
   3a:	2000      	movs	r0, #0
   3c:	4619      	mov	r1, r3
   3e:	f7ff fffe 	bl	0 <GeneratePulseSequenceAndReadCAE>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:898
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:900
     
         CX_Read(CX_ADC1, &ad_value_0_to_4095, 0);    
   42:	4b30      	ldr	r3, [pc, #192]	; (104 <GeneratePulseSequenceAndReadCAE+0x104>)
@@ -1934,44 +1939,44 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:898
   4e:	4611      	mov	r1, r2
   50:	2200      	movs	r2, #0
   52:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:899
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:901
         if(ad_value_0_to_4095 < ad_value_offset)
   54:	683a      	ldr	r2, [r7, #0]
   56:	68bb      	ldr	r3, [r7, #8]
   58:	429a      	cmp	r2, r3
   5a:	d206      	bcs.n	6a <GeneratePulseSequenceAndReadCAE+0x6a>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:901
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:903
         {
             Readout.CAE1 = 0;
   5c:	4b2a      	ldr	r3, [pc, #168]	; (108 <GeneratePulseSequenceAndReadCAE+0x108>)
   5e:	2200      	movs	r2, #0
   60:	601a      	str	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:902
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:904
             Readout.isOverloaded = 0;
   62:	4b29      	ldr	r3, [pc, #164]	; (108 <GeneratePulseSequenceAndReadCAE+0x108>)
   64:	2200      	movs	r2, #0
   66:	711a      	strb	r2, [r3, #4]
   68:	e016      	b.n	98 <GeneratePulseSequenceAndReadCAE+0x98>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:904
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:906
         }
         else if (ad_value_0_to_4095 == 4095)
   6a:	683a      	ldr	r2, [r7, #0]
   6c:	f640 73ff 	movw	r3, #4095	; 0xfff
   70:	429a      	cmp	r2, r3
   72:	d106      	bne.n	82 <GeneratePulseSequenceAndReadCAE+0x82>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:906
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:908
         {
             Readout.CAE1 = 0;
   74:	4b24      	ldr	r3, [pc, #144]	; (108 <GeneratePulseSequenceAndReadCAE+0x108>)
   76:	2200      	movs	r2, #0
   78:	601a      	str	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:907
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:909
             Readout.isOverloaded = 1;
   7a:	4b23      	ldr	r3, [pc, #140]	; (108 <GeneratePulseSequenceAndReadCAE+0x108>)
   7c:	2201      	movs	r2, #1
   7e:	711a      	strb	r2, [r3, #4]
   80:	e00a      	b.n	98 <GeneratePulseSequenceAndReadCAE+0x98>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:911
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:913
         }
         else    
         {        
@@ -1983,12 +1988,12 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:911
   8a:	fbb2 f2f3 	udiv	r2, r2, r3
   8e:	4b1e      	ldr	r3, [pc, #120]	; (108 <GeneratePulseSequenceAndReadCAE+0x108>)
   90:	601a      	str	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:912
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:914
             Readout.isOverloaded = 0;
   92:	4b1d      	ldr	r3, [pc, #116]	; (108 <GeneratePulseSequenceAndReadCAE+0x108>)
   94:	2200      	movs	r2, #0
   96:	711a      	strb	r2, [r3, #4]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:915
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:917
         }
     
         WHILE_DELAY_LOOP(PulseSeq.delay1_loop_counts)        
@@ -1996,13 +2001,13 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:915
   9a:	8b1b      	ldrh	r3, [r3, #24]
   9c:	60fb      	str	r3, [r7, #12]
   9e:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:915 (discriminator 1)
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:917 (discriminator 1)
   a0:	68fb      	ldr	r3, [r7, #12]
   a2:	1e5a      	subs	r2, r3, #1
   a4:	60fa      	str	r2, [r7, #12]
   a6:	2b00      	cmp	r3, #0
   a8:	d1fa      	bne.n	a0 <GeneratePulseSequenceAndReadCAE+0xa0>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:918
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:920
     }
         
     SetOutputVoltage(ZERO_VOLTAGE,PulseSeq.voltage_multiplication_factor);
@@ -2011,27 +2016,27 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:918
   ae:	2002      	movs	r0, #2
   b0:	4619      	mov	r1, r3
   b2:	f7ff fffe 	bl	0 <GeneratePulseSequenceAndReadCAE>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:920
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:922
     
     WHILE_DELAY_LOOP(PulseSeq.delay2_loop_counts)    
   b6:	4b12      	ldr	r3, [pc, #72]	; (100 <GeneratePulseSequenceAndReadCAE+0x100>)
   b8:	8bdb      	ldrh	r3, [r3, #30]
   ba:	60fb      	str	r3, [r7, #12]
   bc:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:920 (discriminator 1)
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:922 (discriminator 1)
   be:	68fb      	ldr	r3, [r7, #12]
   c0:	1e5a      	subs	r2, r3, #1
   c2:	60fa      	str	r2, [r7, #12]
   c4:	2b00      	cmp	r3, #0
   c6:	d1fa      	bne.n	be <GeneratePulseSequenceAndReadCAE+0xbe>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:922
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:924
    
     if(PulseSeq.delay3_loop_counts>0)
   c8:	4b0d      	ldr	r3, [pc, #52]	; (100 <GeneratePulseSequenceAndReadCAE+0x100>)
   ca:	8c9b      	ldrh	r3, [r3, #36]	; 0x24
   cc:	2b00      	cmp	r3, #0
   ce:	d00e      	beq.n	ee <GeneratePulseSequenceAndReadCAE+0xee>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:924
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:926
     {    
         SetOutputVoltage(NEGATIVE_VOLTAGE_MAX,PulseSeq.voltage_multiplication_factor);
   d0:	4b0b      	ldr	r3, [pc, #44]	; (100 <GeneratePulseSequenceAndReadCAE+0x100>)
@@ -2039,19 +2044,19 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:924
   d4:	2004      	movs	r0, #4
   d6:	4619      	mov	r1, r3
   d8:	f7ff fffe 	bl	0 <GeneratePulseSequenceAndReadCAE>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:925
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:927
         WHILE_DELAY_LOOP(PulseSeq.delay3_loop_counts)    
   dc:	4b08      	ldr	r3, [pc, #32]	; (100 <GeneratePulseSequenceAndReadCAE+0x100>)
   de:	8c9b      	ldrh	r3, [r3, #36]	; 0x24
   e0:	60fb      	str	r3, [r7, #12]
   e2:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:925 (discriminator 1)
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:927 (discriminator 1)
   e4:	68fb      	ldr	r3, [r7, #12]
   e6:	1e5a      	subs	r2, r3, #1
   e8:	60fa      	str	r2, [r7, #12]
   ea:	2b00      	cmp	r3, #0
   ec:	d1fa      	bne.n	e4 <GeneratePulseSequenceAndReadCAE+0xe4>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:928
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:930
     }
     
     SetOutputVoltage(ZERO_VOLTAGE,PulseSeq.voltage_multiplication_factor);                  
@@ -2060,7 +2065,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:928
   f2:	2002      	movs	r0, #2
   f4:	4619      	mov	r1, r3
   f6:	f7ff fffe 	bl	0 <GeneratePulseSequenceAndReadCAE>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:929
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:931
     }   
   fa:	3710      	adds	r7, #16
   fc:	46bd      	mov	sp, r7
@@ -2073,7 +2078,7 @@ Disassembly of section .text.SetOutputVoltage:
 
 00000000 <SetOutputVoltage>:
 SetOutputVoltage():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:944
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:946
 * Input          : OutputVoltage_code oVcode
 *                  multiplication_factor : float from 0 to 1
 * Return         : None
@@ -2086,14 +2091,14 @@ static void SetOutputVoltage(OutputVoltage_code oVcode,float multiplication_fact
    6:	4603      	mov	r3, r0
    8:	6039      	str	r1, [r7, #0]
    a:	71fb      	strb	r3, [r7, #7]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:948
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:950
   
         static u8 controlByteForMAX5439=0;
 
         volatile u32 nb_byteSent = 1;
    c:	2301      	movs	r3, #1
    e:	60fb      	str	r3, [r7, #12]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:950
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:952
         
         switch(oVcode)
   10:	79fb      	ldrb	r3, [r7, #7]
@@ -2106,7 +2111,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:950
   24:	00000079 	.word	0x00000079
   28:	00000081 	.word	0x00000081
   2c:	000000a5 	.word	0x000000a5
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:952
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:954
         {
             case POSITIVE_VOLTAGE_MAX:      controlByteForMAX5439= 63 + 64*multiplication_factor;  break;
   30:	ed97 7a00 	vldr	s14, [r7]
@@ -2120,7 +2125,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:952
   4e:	4b2e      	ldr	r3, [pc, #184]	; (108 <SetOutputVoltage+0x108>)
   50:	701a      	strb	r2, [r3, #0]
   52:	e039      	b.n	c8 <SetOutputVoltage+0xc8>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:953
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:955
             case POSITIVE_VOLTAGE_HALF:     controlByteForMAX5439= 63 + 32*multiplication_factor;  break; 
   54:	ed97 7a00 	vldr	s14, [r7]
   58:	eddf 7a2c 	vldr	s15, [pc, #176]	; 10c <SetOutputVoltage+0x10c>
@@ -2133,13 +2138,13 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:953
   72:	4b25      	ldr	r3, [pc, #148]	; (108 <SetOutputVoltage+0x108>)
   74:	701a      	strb	r2, [r3, #0]
   76:	e027      	b.n	c8 <SetOutputVoltage+0xc8>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:954
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:956
             case ZERO_VOLTAGE:              controlByteForMAX5439= 63 ; break;
   78:	4b23      	ldr	r3, [pc, #140]	; (108 <SetOutputVoltage+0x108>)
   7a:	223f      	movs	r2, #63	; 0x3f
   7c:	701a      	strb	r2, [r3, #0]
   7e:	e023      	b.n	c8 <SetOutputVoltage+0xc8>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:955
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:957
             case NEGATIVE_VOLTAGE_HALF:     controlByteForMAX5439= 63 - 32*multiplication_factor;  break;  
   80:	ed97 7a00 	vldr	s14, [r7]
   84:	eddf 7a21 	vldr	s15, [pc, #132]	; 10c <SetOutputVoltage+0x10c>
@@ -2152,7 +2157,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:955
   9e:	4b1a      	ldr	r3, [pc, #104]	; (108 <SetOutputVoltage+0x108>)
   a0:	701a      	strb	r2, [r3, #0]
   a2:	e011      	b.n	c8 <SetOutputVoltage+0xc8>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:956
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:958
             case NEGATIVE_VOLTAGE_MAX:      controlByteForMAX5439= 63 - 63*multiplication_factor;  break;  
   a4:	ed97 7a00 	vldr	s14, [r7]
   a8:	eddf 7a16 	vldr	s15, [pc, #88]	; 104 <SetOutputVoltage+0x104>
@@ -2165,7 +2170,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:956
   c2:	4b11      	ldr	r3, [pc, #68]	; (108 <SetOutputVoltage+0x108>)
   c4:	701a      	strb	r2, [r3, #0]
   c6:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:960
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:962
                                                                         //IH150203 not absolutely exact, but OK
         }
     
@@ -2177,7 +2182,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:960
   d2:	2100      	movs	r1, #0
   d4:	2200      	movs	r2, #0
   d6:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:962
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:964
 
         CX_Write(CX_SPI,&controlByteForMAX5439,&nb_byteSent);
   d8:	4b0d      	ldr	r3, [pc, #52]	; (110 <SetOutputVoltage+0x110>)
@@ -2187,7 +2192,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:962
   e2:	f107 020c 	add.w	r2, r7, #12
   e6:	2021      	movs	r0, #33	; 0x21
   e8:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:963
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:965
         CX_Write(CX_GPIO_PIN8,CX_GPIO_HIGH,0);  //IH141230 this rising edge of the NSS signal actually sets the wiper 
   ea:	4b09      	ldr	r3, [pc, #36]	; (110 <SetOutputVoltage+0x110>)
   ec:	681b      	ldr	r3, [r3, #0]
@@ -2196,7 +2201,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:963
   f4:	2101      	movs	r1, #1
   f6:	2200      	movs	r2, #0
   f8:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:968
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:970
                                                 // (see MAX5439 datasheet)
     
         //IH140912 we do not wait for end of the transmission here, neither do we check the success
@@ -2215,7 +2220,7 @@ Disassembly of section .text.GUI:
 
 00000000 <GUI>:
 GUI():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:978
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:980
 * Input          :  GUIaction
                     readout1
 * Return         : None
@@ -2229,7 +2234,7 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
    8:	460b      	mov	r3, r1
    a:	71fa      	strb	r2, [r7, #7]
    c:	80bb      	strh	r3, [r7, #4]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:994
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:996
        
 #define STIM_SINGLE_BAR_WIDTH     8
     
@@ -2238,672 +2243,680 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:994
     u16 barWidth = STIM_SINGLE_BAR_WIDTH;
    e:	2308      	movs	r3, #8
   10:	85fb      	strh	r3, [r7, #46]	; 0x2e
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:999
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1001
     
     static UpperPanelState_code thisUpperPanelState;
     static UpperPanelState_code lastUpperPanelState = UPPERPANELSTATE_UNDEFINED;  
         
     float readoutYScalingFactor = 0.15;  
-  12:	4b98      	ldr	r3, [pc, #608]	; (274 <GUI+0x274>)
+  12:	4b9a      	ldr	r3, [pc, #616]	; (27c <GUI+0x27c>)
   14:	62bb      	str	r3, [r7, #40]	; 0x28
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1001
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1003
     
         switch(GUIaction)
   16:	79fb      	ldrb	r3, [r7, #7]
   18:	2b03      	cmp	r3, #3
-  1a:	f200 81e5 	bhi.w	3e8 <GUI+0x3e8>
+  1a:	f200 81e9 	bhi.w	3f0 <GUI+0x3f0>
   1e:	a201      	add	r2, pc, #4	; (adr r2, 24 <GUI+0x24>)
   20:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
   24:	00000035 	.word	0x00000035
-  28:	000000b3 	.word	0x000000b3
+  28:	000000b9 	.word	0x000000b9
   2c:	00000035 	.word	0x00000035
-  30:	0000033f 	.word	0x0000033f
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1006
+  30:	00000347 	.word	0x00000347
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1009
         {
-        case GUI_CLEAR:         //IH140319 currently identical with GUI_INITIALIZE
+        
+        case GUI_CLEAR:   
         case GUI_INITIALIZE:
             
-            lastStimState = STIMSTATE_RUN;
-  34:	4b90      	ldr	r3, [pc, #576]	; (278 <GUI+0x278>)
-  36:	2201      	movs	r2, #1
+            lastUpperPanelState = UPPERPANELSTATE_UNDEFINED;  
+  34:	4b92      	ldr	r3, [pc, #584]	; (280 <GUI+0x280>)
+  36:	2200      	movs	r2, #0
   38:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1007
-            barPosX = 0;
-  3a:	4b90      	ldr	r3, [pc, #576]	; (27c <GUI+0x27c>)
-  3c:	2200      	movs	r2, #0
-  3e:	801a      	strh	r2, [r3, #0]
 C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1011
+            
+            lastStimState = STIMSTATE_RUN;
+  3a:	4b92      	ldr	r3, [pc, #584]	; (284 <GUI+0x284>)
+  3c:	2201      	movs	r2, #1
+  3e:	701a      	strb	r2, [r3, #0]
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1012
+            barPosX = 0;
+  40:	4b91      	ldr	r3, [pc, #580]	; (288 <GUI+0x288>)
+  42:	2200      	movs	r2, #0
+  44:	801a      	strh	r2, [r3, #0]
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1016
                             
             // graphics
             // These are default values
             DRAW_SetCharMagniCoeff(1);
-  40:	4b8f      	ldr	r3, [pc, #572]	; (280 <GUI+0x280>)
-  42:	681b      	ldr	r3, [r3, #0]
-  44:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
-  48:	2001      	movs	r0, #1
-  4a:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1012
+  46:	4b91      	ldr	r3, [pc, #580]	; (28c <GUI+0x28c>)
+  48:	681b      	ldr	r3, [r3, #0]
+  4a:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
+  4e:	2001      	movs	r0, #1
+  50:	4798      	blx	r3
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1017
             DRAW_SetTextColor(RGB_WHITE);     
-  4c:	4b8c      	ldr	r3, [pc, #560]	; (280 <GUI+0x280>)
-  4e:	681b      	ldr	r3, [r3, #0]
-  50:	f8d3 30b0 	ldr.w	r3, [r3, #176]	; 0xb0
-  54:	f64f 70ff 	movw	r0, #65535	; 0xffff
-  58:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1013
+  52:	4b8e      	ldr	r3, [pc, #568]	; (28c <GUI+0x28c>)
+  54:	681b      	ldr	r3, [r3, #0]
+  56:	f8d3 30b0 	ldr.w	r3, [r3, #176]	; 0xb0
+  5a:	f64f 70ff 	movw	r0, #65535	; 0xffff
+  5e:	4798      	blx	r3
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1018
             DRAW_SetBGndColor(STIM_LOWERPANEL_COLOR);        
-  5a:	4b89      	ldr	r3, [pc, #548]	; (280 <GUI+0x280>)
-  5c:	681b      	ldr	r3, [r3, #0]
-  5e:	f8d3 30b8 	ldr.w	r3, [r3, #184]	; 0xb8
-  62:	f248 0001 	movw	r0, #32769	; 0x8001
-  66:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1016
+  60:	4b8a      	ldr	r3, [pc, #552]	; (28c <GUI+0x28c>)
+  62:	681b      	ldr	r3, [r3, #0]
+  64:	f8d3 30b8 	ldr.w	r3, [r3, #184]	; 0xb8
+  68:	f248 0001 	movw	r0, #32769	; 0x8001
+  6c:	4798      	blx	r3
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1021
                         
             //Lower panel
             LCD_FillRect( 
-  68:	4b85      	ldr	r3, [pc, #532]	; (280 <GUI+0x280>)
-  6a:	681b      	ldr	r3, [r3, #0]
-  6c:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
-  70:	f248 0301 	movw	r3, #32769	; 0x8001
-  74:	9300      	str	r3, [sp, #0]
-  76:	2000      	movs	r0, #0
-  78:	2100      	movs	r1, #0
-  7a:	22f0      	movs	r2, #240	; 0xf0
-  7c:	231e      	movs	r3, #30
-  7e:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1022
+  6e:	4b87      	ldr	r3, [pc, #540]	; (28c <GUI+0x28c>)
+  70:	681b      	ldr	r3, [r3, #0]
+  72:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
+  76:	f248 0301 	movw	r3, #32769	; 0x8001
+  7a:	9300      	str	r3, [sp, #0]
+  7c:	2000      	movs	r0, #0
+  7e:	2100      	movs	r1, #0
+  80:	22f0      	movs	r2, #240	; 0xf0
+  82:	231e      	movs	r3, #30
+  84:	47a0      	blx	r4
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1027
                 0, 0, 
                 SCREEN_WIDTH, STIM_LOWERPANEL_HEIGHT, 
                 STIM_LOWERPANEL_COLOR );
         
             //Middle panel
             LCD_FillRect(
-  80:	4b7f      	ldr	r3, [pc, #508]	; (280 <GUI+0x280>)
-  82:	681b      	ldr	r3, [r3, #0]
-  84:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
-  88:	f246 1308 	movw	r3, #24840	; 0x6108
-  8c:	9300      	str	r3, [sp, #0]
-  8e:	2000      	movs	r0, #0
-  90:	211e      	movs	r1, #30
-  92:	22f0      	movs	r2, #240	; 0xf0
-  94:	2396      	movs	r3, #150	; 0x96
-  96:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1028
+  86:	4b81      	ldr	r3, [pc, #516]	; (28c <GUI+0x28c>)
+  88:	681b      	ldr	r3, [r3, #0]
+  8a:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
+  8e:	f246 1308 	movw	r3, #24840	; 0x6108
+  92:	9300      	str	r3, [sp, #0]
+  94:	2000      	movs	r0, #0
+  96:	211e      	movs	r1, #30
+  98:	22f0      	movs	r2, #240	; 0xf0
+  9a:	2396      	movs	r3, #150	; 0x96
+  9c:	47a0      	blx	r4
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1033
                 0, STIM_LOWERPANEL_HEIGHT, 
                 SCREEN_WIDTH, STIM_MIDDLEPANEL_HEIGHT,                 
                 STIM_MIDDLEPANEL_COLOR );
               
             //Upper panel
             LCD_FillRect(
-  98:	4b79      	ldr	r3, [pc, #484]	; (280 <GUI+0x280>)
-  9a:	681b      	ldr	r3, [r3, #0]
-  9c:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
-  a0:	f44f 5388 	mov.w	r3, #4352	; 0x1100
-  a4:	9300      	str	r3, [sp, #0]
-  a6:	2000      	movs	r0, #0
-  a8:	21b4      	movs	r1, #180	; 0xb4
-  aa:	22f0      	movs	r2, #240	; 0xf0
-  ac:	233c      	movs	r3, #60	; 0x3c
-  ae:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1034
+  9e:	4b7b      	ldr	r3, [pc, #492]	; (28c <GUI+0x28c>)
+  a0:	681b      	ldr	r3, [r3, #0]
+  a2:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
+  a6:	f44f 5388 	mov.w	r3, #4352	; 0x1100
+  aa:	9300      	str	r3, [sp, #0]
+  ac:	2000      	movs	r0, #0
+  ae:	21b4      	movs	r1, #180	; 0xb4
+  b0:	22f0      	movs	r2, #240	; 0xf0
+  b2:	233c      	movs	r3, #60	; 0x3c
+  b4:	47a0      	blx	r4
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1039
                 0, SCREEN_HEIGHT-STIM_UPPERPANEL_HEIGHT, 
                 SCREEN_WIDTH, 
                 STIM_UPPERPANEL_HEIGHT, 
                 STIM_UPPERPANEL_COLOR );
                     
             break;
-  b0:	e19a      	b.n	3e8 <GUI+0x3e8>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1039
-            
+  b6:	e19b      	b.n	3f0 <GUI+0x3f0>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1044
+                    
         case GUI_NORMAL_UPDATE:
                     
             
             if(Readout.isOverloaded)
-  b2:	4b74      	ldr	r3, [pc, #464]	; (284 <GUI+0x284>)
-  b4:	791b      	ldrb	r3, [r3, #4]
-  b6:	2b00      	cmp	r3, #0
-  b8:	d003      	beq.n	c2 <GUI+0xc2>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1041
+  b8:	4b75      	ldr	r3, [pc, #468]	; (290 <GUI+0x290>)
+  ba:	791b      	ldrb	r3, [r3, #4]
+  bc:	2b00      	cmp	r3, #0
+  be:	d003      	beq.n	c8 <GUI+0xc8>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1046
             {
                 thisUpperPanelState = UPPERPANELSTATE_OVERLOAD;                
-  ba:	4b73      	ldr	r3, [pc, #460]	; (288 <GUI+0x288>)
-  bc:	2201      	movs	r2, #1
-  be:	701a      	strb	r2, [r3, #0]
-  c0:	e00e      	b.n	e0 <GUI+0xe0>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1043
+  c0:	4b74      	ldr	r3, [pc, #464]	; (294 <GUI+0x294>)
+  c2:	2201      	movs	r2, #1
+  c4:	701a      	strb	r2, [r3, #0]
+  c6:	e00e      	b.n	e6 <GUI+0xe6>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1048
             }
             else if(StimState==STIMSTATE_IDLE || StimState==STIMSTATE_WAITING_FOR_RUN)
-  c2:	4b72      	ldr	r3, [pc, #456]	; (28c <GUI+0x28c>)
-  c4:	781b      	ldrb	r3, [r3, #0]
-  c6:	2b00      	cmp	r3, #0
-  c8:	d003      	beq.n	d2 <GUI+0xd2>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1043 (discriminator 1)
-  ca:	4b70      	ldr	r3, [pc, #448]	; (28c <GUI+0x28c>)
-  cc:	781b      	ldrb	r3, [r3, #0]
-  ce:	2b02      	cmp	r3, #2
-  d0:	d103      	bne.n	da <GUI+0xda>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1045
+  c8:	4b73      	ldr	r3, [pc, #460]	; (298 <GUI+0x298>)
+  ca:	781b      	ldrb	r3, [r3, #0]
+  cc:	2b00      	cmp	r3, #0
+  ce:	d003      	beq.n	d8 <GUI+0xd8>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1048 (discriminator 1)
+  d0:	4b71      	ldr	r3, [pc, #452]	; (298 <GUI+0x298>)
+  d2:	781b      	ldrb	r3, [r3, #0]
+  d4:	2b02      	cmp	r3, #2
+  d6:	d103      	bne.n	e0 <GUI+0xe0>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1050
             {
                 thisUpperPanelState = UPPERPANELSTATE_WAITING;                                
-  d2:	4b6d      	ldr	r3, [pc, #436]	; (288 <GUI+0x288>)
-  d4:	2202      	movs	r2, #2
-  d6:	701a      	strb	r2, [r3, #0]
-  d8:	e002      	b.n	e0 <GUI+0xe0>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1049
+  d8:	4b6e      	ldr	r3, [pc, #440]	; (294 <GUI+0x294>)
+  da:	2202      	movs	r2, #2
+  dc:	701a      	strb	r2, [r3, #0]
+  de:	e002      	b.n	e6 <GUI+0xe6>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1054
             }
             else                
             {   
                 thisUpperPanelState = UPPERPANELSTATE_DISPLAY_READOUT;                
-  da:	4b6b      	ldr	r3, [pc, #428]	; (288 <GUI+0x288>)
-  dc:	2203      	movs	r2, #3
-  de:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1051
+  e0:	4b6c      	ldr	r3, [pc, #432]	; (294 <GUI+0x294>)
+  e2:	2203      	movs	r2, #3
+  e4:	701a      	strb	r2, [r3, #0]
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1056
             }
             if((thisUpperPanelState == lastUpperPanelState) && (thisUpperPanelState != UPPERPANELSTATE_DISPLAY_READOUT)) break;
-  e0:	4b69      	ldr	r3, [pc, #420]	; (288 <GUI+0x288>)
-  e2:	781a      	ldrb	r2, [r3, #0]
-  e4:	4b6a      	ldr	r3, [pc, #424]	; (290 <GUI+0x290>)
-  e6:	781b      	ldrb	r3, [r3, #0]
-  e8:	429a      	cmp	r2, r3
-  ea:	d104      	bne.n	f6 <GUI+0xf6>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1051 (discriminator 1)
-  ec:	4b66      	ldr	r3, [pc, #408]	; (288 <GUI+0x288>)
-  ee:	781b      	ldrb	r3, [r3, #0]
-  f0:	2b03      	cmp	r3, #3
-  f2:	d000      	beq.n	f6 <GUI+0xf6>
-  f4:	e178      	b.n	3e8 <GUI+0x3e8>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1052
+  e6:	4b6b      	ldr	r3, [pc, #428]	; (294 <GUI+0x294>)
+  e8:	781a      	ldrb	r2, [r3, #0]
+  ea:	4b65      	ldr	r3, [pc, #404]	; (280 <GUI+0x280>)
+  ec:	781b      	ldrb	r3, [r3, #0]
+  ee:	429a      	cmp	r2, r3
+  f0:	d104      	bne.n	fc <GUI+0xfc>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1056 (discriminator 1)
+  f2:	4b68      	ldr	r3, [pc, #416]	; (294 <GUI+0x294>)
+  f4:	781b      	ldrb	r3, [r3, #0]
+  f6:	2b03      	cmp	r3, #3
+  f8:	d000      	beq.n	fc <GUI+0xfc>
+  fa:	e179      	b.n	3f0 <GUI+0x3f0>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1057
             lastUpperPanelState = thisUpperPanelState;    
-  f6:	4b64      	ldr	r3, [pc, #400]	; (288 <GUI+0x288>)
-  f8:	781a      	ldrb	r2, [r3, #0]
-  fa:	4b65      	ldr	r3, [pc, #404]	; (290 <GUI+0x290>)
-  fc:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1054
+  fc:	4b65      	ldr	r3, [pc, #404]	; (294 <GUI+0x294>)
+  fe:	781a      	ldrb	r2, [r3, #0]
+ 100:	4b5f      	ldr	r3, [pc, #380]	; (280 <GUI+0x280>)
+ 102:	701a      	strb	r2, [r3, #0]
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1059
         
             BUZZER_SetMode(BUZZER_OFF);  //switch out buzzer if it has been activated before
-  fe:	4b60      	ldr	r3, [pc, #384]	; (280 <GUI+0x280>)
- 100:	681b      	ldr	r3, [r3, #0]
- 102:	f8d3 3240 	ldr.w	r3, [r3, #576]	; 0x240
- 106:	2000      	movs	r0, #0
- 108:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1057
+ 104:	4b61      	ldr	r3, [pc, #388]	; (28c <GUI+0x28c>)
+ 106:	681b      	ldr	r3, [r3, #0]
+ 108:	f8d3 3240 	ldr.w	r3, [r3, #576]	; 0x240
+ 10c:	2000      	movs	r0, #0
+ 10e:	4798      	blx	r3
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1062
         
             // clear upper panel            
             LCD_FillRect(
- 10a:	4b5d      	ldr	r3, [pc, #372]	; (280 <GUI+0x280>)
- 10c:	681b      	ldr	r3, [r3, #0]
- 10e:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
- 112:	f44f 5388 	mov.w	r3, #4352	; 0x1100
- 116:	9300      	str	r3, [sp, #0]
- 118:	2000      	movs	r0, #0
- 11a:	21b4      	movs	r1, #180	; 0xb4
- 11c:	22f0      	movs	r2, #240	; 0xf0
- 11e:	233c      	movs	r3, #60	; 0x3c
- 120:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1065
+ 110:	4b5e      	ldr	r3, [pc, #376]	; (28c <GUI+0x28c>)
+ 112:	681b      	ldr	r3, [r3, #0]
+ 114:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
+ 118:	f44f 5388 	mov.w	r3, #4352	; 0x1100
+ 11c:	9300      	str	r3, [sp, #0]
+ 11e:	2000      	movs	r0, #0
+ 120:	21b4      	movs	r1, #180	; 0xb4
+ 122:	22f0      	movs	r2, #240	; 0xf0
+ 124:	233c      	movs	r3, #60	; 0x3c
+ 126:	47a0      	blx	r4
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1070
                 STIM_UPPERPANEL_HEIGHT, 
                 STIM_UPPERPANEL_COLOR );
             
             {
             u8 str[30];        
             if(thisUpperPanelState == UPPERPANELSTATE_OVERLOAD)
- 122:	4b59      	ldr	r3, [pc, #356]	; (288 <GUI+0x288>)
- 124:	781b      	ldrb	r3, [r3, #0]
- 126:	2b01      	cmp	r3, #1
- 128:	d113      	bne.n	152 <GUI+0x152>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1067
+ 128:	4b5a      	ldr	r3, [pc, #360]	; (294 <GUI+0x294>)
+ 12a:	781b      	ldrb	r3, [r3, #0]
+ 12c:	2b01      	cmp	r3, #1
+ 12e:	d113      	bne.n	158 <GUI+0x158>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1072
             {
                 strcpy(str,"    OVERLOAD");
- 12a:	f107 0208 	add.w	r2, r7, #8
- 12e:	4b59      	ldr	r3, [pc, #356]	; (294 <GUI+0x294>)
- 130:	4614      	mov	r4, r2
- 132:	cb0f      	ldmia	r3, {r0, r1, r2, r3}
- 134:	c407      	stmia	r4!, {r0, r1, r2}
- 136:	7023      	strb	r3, [r4, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1068
-                BUZZER_SetMode(BUZZER_ON);
- 138:	4b51      	ldr	r3, [pc, #324]	; (280 <GUI+0x280>)
- 13a:	681b      	ldr	r3, [r3, #0]
- 13c:	f8d3 3240 	ldr.w	r3, [r3, #576]	; 0x240
- 140:	2001      	movs	r0, #1
- 142:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1069
-                DRAW_SetCharMagniCoeff(2);            
- 144:	4b4e      	ldr	r3, [pc, #312]	; (280 <GUI+0x280>)
- 146:	681b      	ldr	r3, [r3, #0]
- 148:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
- 14c:	2002      	movs	r0, #2
- 14e:	4798      	blx	r3
- 150:	e027      	b.n	1a2 <GUI+0x1a2>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1071
-            }
-            else if(thisUpperPanelState == UPPERPANELSTATE_WAITING)
- 152:	4b4d      	ldr	r3, [pc, #308]	; (288 <GUI+0x288>)
- 154:	781b      	ldrb	r3, [r3, #0]
- 156:	2b02      	cmp	r3, #2
- 158:	d110      	bne.n	17c <GUI+0x17c>
+ 130:	f107 0208 	add.w	r2, r7, #8
+ 134:	4b59      	ldr	r3, [pc, #356]	; (29c <GUI+0x29c>)
+ 136:	4614      	mov	r4, r2
+ 138:	cb0f      	ldmia	r3, {r0, r1, r2, r3}
+ 13a:	c407      	stmia	r4!, {r0, r1, r2}
+ 13c:	7023      	strb	r3, [r4, #0]
 C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1073
-            {
-                strcpy(str,"    Waiting...");
- 15a:	f107 0208 	add.w	r2, r7, #8
- 15e:	4b4e      	ldr	r3, [pc, #312]	; (298 <GUI+0x298>)
- 160:	4614      	mov	r4, r2
- 162:	cb0f      	ldmia	r3, {r0, r1, r2, r3}
- 164:	c407      	stmia	r4!, {r0, r1, r2}
- 166:	8023      	strh	r3, [r4, #0]
- 168:	3402      	adds	r4, #2
- 16a:	0c1b      	lsrs	r3, r3, #16
- 16c:	7023      	strb	r3, [r4, #0]
+                BUZZER_SetMode(BUZZER_ON);
+ 13e:	4b53      	ldr	r3, [pc, #332]	; (28c <GUI+0x28c>)
+ 140:	681b      	ldr	r3, [r3, #0]
+ 142:	f8d3 3240 	ldr.w	r3, [r3, #576]	; 0x240
+ 146:	2001      	movs	r0, #1
+ 148:	4798      	blx	r3
 C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1074
                 DRAW_SetCharMagniCoeff(2);            
- 16e:	4b44      	ldr	r3, [pc, #272]	; (280 <GUI+0x280>)
- 170:	681b      	ldr	r3, [r3, #0]
- 172:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
- 176:	2002      	movs	r0, #2
- 178:	4798      	blx	r3
- 17a:	e012      	b.n	1a2 <GUI+0x1a2>
+ 14a:	4b50      	ldr	r3, [pc, #320]	; (28c <GUI+0x28c>)
+ 14c:	681b      	ldr	r3, [r3, #0]
+ 14e:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
+ 152:	2002      	movs	r0, #2
+ 154:	4798      	blx	r3
+ 156:	e027      	b.n	1a8 <GUI+0x1a8>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1076
+            }
+            else if(thisUpperPanelState == UPPERPANELSTATE_WAITING)
+ 158:	4b4e      	ldr	r3, [pc, #312]	; (294 <GUI+0x294>)
+ 15a:	781b      	ldrb	r3, [r3, #0]
+ 15c:	2b02      	cmp	r3, #2
+ 15e:	d110      	bne.n	182 <GUI+0x182>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1078
+            {
+                strcpy(str,"    Waiting...");
+ 160:	f107 0208 	add.w	r2, r7, #8
+ 164:	4b4e      	ldr	r3, [pc, #312]	; (2a0 <GUI+0x2a0>)
+ 166:	4614      	mov	r4, r2
+ 168:	cb0f      	ldmia	r3, {r0, r1, r2, r3}
+ 16a:	c407      	stmia	r4!, {r0, r1, r2}
+ 16c:	8023      	strh	r3, [r4, #0]
+ 16e:	3402      	adds	r4, #2
+ 170:	0c1b      	lsrs	r3, r3, #16
+ 172:	7023      	strb	r3, [r4, #0]
 C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1079
+                DRAW_SetCharMagniCoeff(2);            
+ 174:	4b45      	ldr	r3, [pc, #276]	; (28c <GUI+0x28c>)
+ 176:	681b      	ldr	r3, [r3, #0]
+ 178:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
+ 17c:	2002      	movs	r0, #2
+ 17e:	4798      	blx	r3
+ 180:	e012      	b.n	1a8 <GUI+0x1a8>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1084
             }
             else
             {
                 // display readout figure
                 UTIL_int2str( str, Readout.CAE1, 4, FALSE);    
- 17c:	4b40      	ldr	r3, [pc, #256]	; (280 <GUI+0x280>)
- 17e:	681b      	ldr	r3, [r3, #0]
- 180:	f8d3 42cc 	ldr.w	r4, [r3, #716]	; 0x2cc
- 184:	f107 0208 	add.w	r2, r7, #8
- 188:	4b3e      	ldr	r3, [pc, #248]	; (284 <GUI+0x284>)
- 18a:	681b      	ldr	r3, [r3, #0]
- 18c:	4610      	mov	r0, r2
- 18e:	4619      	mov	r1, r3
- 190:	2204      	movs	r2, #4
- 192:	2300      	movs	r3, #0
- 194:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1080
+ 182:	4b42      	ldr	r3, [pc, #264]	; (28c <GUI+0x28c>)
+ 184:	681b      	ldr	r3, [r3, #0]
+ 186:	f8d3 42cc 	ldr.w	r4, [r3, #716]	; 0x2cc
+ 18a:	f107 0208 	add.w	r2, r7, #8
+ 18e:	4b40      	ldr	r3, [pc, #256]	; (290 <GUI+0x290>)
+ 190:	681b      	ldr	r3, [r3, #0]
+ 192:	4610      	mov	r0, r2
+ 194:	4619      	mov	r1, r3
+ 196:	2204      	movs	r2, #4
+ 198:	2300      	movs	r3, #0
+ 19a:	47a0      	blx	r4
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1085
                 DRAW_SetCharMagniCoeff(4);            
- 196:	4b3a      	ldr	r3, [pc, #232]	; (280 <GUI+0x280>)
- 198:	681b      	ldr	r3, [r3, #0]
- 19a:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
- 19e:	2004      	movs	r0, #4
- 1a0:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1083
+ 19c:	4b3b      	ldr	r3, [pc, #236]	; (28c <GUI+0x28c>)
+ 19e:	681b      	ldr	r3, [r3, #0]
+ 1a0:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
+ 1a4:	2004      	movs	r0, #4
+ 1a6:	4798      	blx	r3
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1088
             }
             
             DRAW_SetTextColor(RGB_YELLOW);     
- 1a2:	4b37      	ldr	r3, [pc, #220]	; (280 <GUI+0x280>)
- 1a4:	681b      	ldr	r3, [r3, #0]
- 1a6:	f8d3 30b0 	ldr.w	r3, [r3, #176]	; 0xb0
- 1aa:	f24e 00ff 	movw	r0, #57599	; 0xe0ff
- 1ae:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1084
+ 1a8:	4b38      	ldr	r3, [pc, #224]	; (28c <GUI+0x28c>)
+ 1aa:	681b      	ldr	r3, [r3, #0]
+ 1ac:	f8d3 30b0 	ldr.w	r3, [r3, #176]	; 0xb0
+ 1b0:	f24e 00ff 	movw	r0, #57599	; 0xe0ff
+ 1b4:	4798      	blx	r3
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1089
             DRAW_SetBGndColor(STIM_UPPERPANEL_COLOR);        
- 1b0:	4b33      	ldr	r3, [pc, #204]	; (280 <GUI+0x280>)
- 1b2:	681b      	ldr	r3, [r3, #0]
- 1b4:	f8d3 30b8 	ldr.w	r3, [r3, #184]	; 0xb8
- 1b8:	f44f 5088 	mov.w	r0, #4352	; 0x1100
- 1bc:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1086
+ 1b6:	4b35      	ldr	r3, [pc, #212]	; (28c <GUI+0x28c>)
+ 1b8:	681b      	ldr	r3, [r3, #0]
+ 1ba:	f8d3 30b8 	ldr.w	r3, [r3, #184]	; 0xb8
+ 1be:	f44f 5088 	mov.w	r0, #4352	; 0x1100
+ 1c2:	4798      	blx	r3
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1091
             
             DRAW_DisplayStringWithMode( 0,180,str, 0, NORMAL_TEXT, LEFT);            
- 1be:	4b30      	ldr	r3, [pc, #192]	; (280 <GUI+0x280>)
- 1c0:	681b      	ldr	r3, [r3, #0]
- 1c2:	f8d3 40dc 	ldr.w	r4, [r3, #220]	; 0xdc
- 1c6:	f107 0308 	add.w	r3, r7, #8
- 1ca:	2200      	movs	r2, #0
- 1cc:	9200      	str	r2, [sp, #0]
- 1ce:	2200      	movs	r2, #0
- 1d0:	9201      	str	r2, [sp, #4]
- 1d2:	2000      	movs	r0, #0
- 1d4:	21b4      	movs	r1, #180	; 0xb4
- 1d6:	461a      	mov	r2, r3
- 1d8:	2300      	movs	r3, #0
- 1da:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1088
+ 1c4:	4b31      	ldr	r3, [pc, #196]	; (28c <GUI+0x28c>)
+ 1c6:	681b      	ldr	r3, [r3, #0]
+ 1c8:	f8d3 40dc 	ldr.w	r4, [r3, #220]	; 0xdc
+ 1cc:	f107 0308 	add.w	r3, r7, #8
+ 1d0:	2200      	movs	r2, #0
+ 1d2:	9200      	str	r2, [sp, #0]
+ 1d4:	2200      	movs	r2, #0
+ 1d6:	9201      	str	r2, [sp, #4]
+ 1d8:	2000      	movs	r0, #0
+ 1da:	21b4      	movs	r1, #180	; 0xb4
+ 1dc:	461a      	mov	r2, r3
+ 1de:	2300      	movs	r3, #0
+ 1e0:	47a0      	blx	r4
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1093
             
             DRAW_SetCharMagniCoeff(1);            
- 1dc:	4b28      	ldr	r3, [pc, #160]	; (280 <GUI+0x280>)
- 1de:	681b      	ldr	r3, [r3, #0]
- 1e0:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
- 1e4:	2001      	movs	r0, #1
- 1e6:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1089
-            DRAW_SetTextColor(RGB_WHITE);     
- 1e8:	4b25      	ldr	r3, [pc, #148]	; (280 <GUI+0x280>)
- 1ea:	681b      	ldr	r3, [r3, #0]
- 1ec:	f8d3 30b0 	ldr.w	r3, [r3, #176]	; 0xb0
- 1f0:	f64f 70ff 	movw	r0, #65535	; 0xffff
- 1f4:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1090
-            DRAW_SetBGndColor(STIM_LOWERPANEL_COLOR);        
- 1f6:	4b22      	ldr	r3, [pc, #136]	; (280 <GUI+0x280>)
- 1f8:	681b      	ldr	r3, [r3, #0]
- 1fa:	f8d3 30b8 	ldr.w	r3, [r3, #184]	; 0xb8
- 1fe:	f248 0001 	movw	r0, #32769	; 0x8001
- 202:	4798      	blx	r3
+ 1e2:	4b2a      	ldr	r3, [pc, #168]	; (28c <GUI+0x28c>)
+ 1e4:	681b      	ldr	r3, [r3, #0]
+ 1e6:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
+ 1ea:	2001      	movs	r0, #1
+ 1ec:	4798      	blx	r3
 C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1094
+            DRAW_SetTextColor(RGB_WHITE);     
+ 1ee:	4b27      	ldr	r3, [pc, #156]	; (28c <GUI+0x28c>)
+ 1f0:	681b      	ldr	r3, [r3, #0]
+ 1f2:	f8d3 30b0 	ldr.w	r3, [r3, #176]	; 0xb0
+ 1f6:	f64f 70ff 	movw	r0, #65535	; 0xffff
+ 1fa:	4798      	blx	r3
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1095
+            DRAW_SetBGndColor(STIM_LOWERPANEL_COLOR);        
+ 1fc:	4b23      	ldr	r3, [pc, #140]	; (28c <GUI+0x28c>)
+ 1fe:	681b      	ldr	r3, [r3, #0]
+ 200:	f8d3 30b8 	ldr.w	r3, [r3, #184]	; 0xb8
+ 204:	f248 0001 	movw	r0, #32769	; 0x8001
+ 208:	4798      	blx	r3
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1099
             }
         
             // display graphics
             switch(StimState)
- 204:	4b21      	ldr	r3, [pc, #132]	; (28c <GUI+0x28c>)
- 206:	781b      	ldrb	r3, [r3, #0]
- 208:	2b03      	cmp	r3, #3
- 20a:	f200 8087 	bhi.w	31c <GUI+0x31c>
- 20e:	a201      	add	r2, pc, #4	; (adr r2, 214 <GUI+0x214>)
- 210:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
- 214:	00000225 	.word	0x00000225
- 218:	0000024d 	.word	0x0000024d
- 21c:	00000225 	.word	0x00000225
- 220:	0000024d 	.word	0x0000024d
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1098
+ 20a:	4b23      	ldr	r3, [pc, #140]	; (298 <GUI+0x298>)
+ 20c:	781b      	ldrb	r3, [r3, #0]
+ 20e:	2b03      	cmp	r3, #3
+ 210:	f200 8088 	bhi.w	324 <GUI+0x324>
+ 214:	a201      	add	r2, pc, #4	; (adr r2, 21c <GUI+0x21c>)
+ 216:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+ 21a:	bf00      	nop
+ 21c:	0000022d 	.word	0x0000022d
+ 220:	00000255 	.word	0x00000255
+ 224:	0000022d 	.word	0x0000022d
+ 228:	00000255 	.word	0x00000255
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1103
             {
             case STIMSTATE_IDLE:  
             case STIMSTATE_WAITING_FOR_RUN:  
                 if(lastStimState!=STIMSTATE_IDLE)
- 224:	4b14      	ldr	r3, [pc, #80]	; (278 <GUI+0x278>)
- 226:	781b      	ldrb	r3, [r3, #0]
- 228:	2b00      	cmp	r3, #0
- 22a:	d00b      	beq.n	244 <GUI+0x244>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1101
+ 22c:	4b15      	ldr	r3, [pc, #84]	; (284 <GUI+0x284>)
+ 22e:	781b      	ldrb	r3, [r3, #0]
+ 230:	2b00      	cmp	r3, #0
+ 232:	d00b      	beq.n	24c <GUI+0x24c>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1106
                     {
                     //Clean middle panel
                     LCD_FillRect(
- 22c:	4b14      	ldr	r3, [pc, #80]	; (280 <GUI+0x280>)
- 22e:	681b      	ldr	r3, [r3, #0]
- 230:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
- 234:	f246 1308 	movw	r3, #24840	; 0x6108
- 238:	9300      	str	r3, [sp, #0]
- 23a:	2000      	movs	r0, #0
- 23c:	211e      	movs	r1, #30
- 23e:	22f0      	movs	r2, #240	; 0xf0
- 240:	2396      	movs	r3, #150	; 0x96
- 242:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1106
+ 234:	4b15      	ldr	r3, [pc, #84]	; (28c <GUI+0x28c>)
+ 236:	681b      	ldr	r3, [r3, #0]
+ 238:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
+ 23c:	f246 1308 	movw	r3, #24840	; 0x6108
+ 240:	9300      	str	r3, [sp, #0]
+ 242:	2000      	movs	r0, #0
+ 244:	211e      	movs	r1, #30
+ 246:	22f0      	movs	r2, #240	; 0xf0
+ 248:	2396      	movs	r3, #150	; 0x96
+ 24a:	47a0      	blx	r4
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1111
                         0, STIM_LOWERPANEL_HEIGHT, 
                         SCREEN_WIDTH, STIM_MIDDLEPANEL_HEIGHT,
                         STIM_MIDDLEPANEL_COLOR );                                                                           
                     }
                 lastStimState = STIMSTATE_IDLE;
- 244:	4b0c      	ldr	r3, [pc, #48]	; (278 <GUI+0x278>)
- 246:	2200      	movs	r2, #0
- 248:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1107
+ 24c:	4b0d      	ldr	r3, [pc, #52]	; (284 <GUI+0x284>)
+ 24e:	2200      	movs	r2, #0
+ 250:	701a      	strb	r2, [r3, #0]
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1112
                 break;
- 24a:	e067      	b.n	31c <GUI+0x31c>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1111
+ 252:	e067      	b.n	324 <GUI+0x324>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1116
         
             case STIMSTATE_RUN:                 
             case STIMSTATE_WAITING_FOR_IDLE:  
                 if(lastStimState!=STIMSTATE_RUN)
- 24c:	4b0a      	ldr	r3, [pc, #40]	; (278 <GUI+0x278>)
- 24e:	781b      	ldrb	r3, [r3, #0]
- 250:	2b01      	cmp	r3, #1
- 252:	d023      	beq.n	29c <GUI+0x29c>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1114
+ 254:	4b0b      	ldr	r3, [pc, #44]	; (284 <GUI+0x284>)
+ 256:	781b      	ldrb	r3, [r3, #0]
+ 258:	2b01      	cmp	r3, #1
+ 25a:	d023      	beq.n	2a4 <GUI+0x2a4>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1119
                     {
                     //Clean middle panel
                     LCD_FillRect(
- 254:	4b0a      	ldr	r3, [pc, #40]	; (280 <GUI+0x280>)
- 256:	681b      	ldr	r3, [r3, #0]
- 258:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
- 25c:	f246 1308 	movw	r3, #24840	; 0x6108
- 260:	9300      	str	r3, [sp, #0]
- 262:	2000      	movs	r0, #0
- 264:	211e      	movs	r1, #30
- 266:	22f0      	movs	r2, #240	; 0xf0
- 268:	2396      	movs	r3, #150	; 0x96
- 26a:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1119
+ 25c:	4b0b      	ldr	r3, [pc, #44]	; (28c <GUI+0x28c>)
+ 25e:	681b      	ldr	r3, [r3, #0]
+ 260:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
+ 264:	f246 1308 	movw	r3, #24840	; 0x6108
+ 268:	9300      	str	r3, [sp, #0]
+ 26a:	2000      	movs	r0, #0
+ 26c:	211e      	movs	r1, #30
+ 26e:	22f0      	movs	r2, #240	; 0xf0
+ 270:	2396      	movs	r3, #150	; 0x96
+ 272:	47a0      	blx	r4
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1124
                         0, STIM_LOWERPANEL_HEIGHT, 
                         SCREEN_WIDTH, STIM_MIDDLEPANEL_HEIGHT,                        
                         STIM_MIDDLEPANEL_COLOR );
                     
                     barPosX=0;
- 26c:	4b03      	ldr	r3, [pc, #12]	; (27c <GUI+0x27c>)
- 26e:	2200      	movs	r2, #0
- 270:	801a      	strh	r2, [r3, #0]
- 272:	e047      	b.n	304 <GUI+0x304>
- 274:	3e19999a 	.word	0x3e19999a
- 278:	00000334 	.word	0x00000334
- 27c:	00000172 	.word	0x00000172
- 280:	00000000 	.word	0x00000000
- 284:	0000002c 	.word	0x0000002c
- 288:	00000174 	.word	0x00000174
- 28c:	00000034 	.word	0x00000034
- 290:	00000175 	.word	0x00000175
- 294:	000000dc 	.word	0x000000dc
- 298:	000000ec 	.word	0x000000ec
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1123
+ 274:	4b04      	ldr	r3, [pc, #16]	; (288 <GUI+0x288>)
+ 276:	2200      	movs	r2, #0
+ 278:	801a      	strh	r2, [r3, #0]
+ 27a:	e047      	b.n	30c <GUI+0x30c>
+ 27c:	3e19999a 	.word	0x3e19999a
+ 280:	00000171 	.word	0x00000171
+ 284:	00000334 	.word	0x00000334
+ 288:	00000172 	.word	0x00000172
+ 28c:	00000000 	.word	0x00000000
+ 290:	0000002c 	.word	0x0000002c
+ 294:	00000174 	.word	0x00000174
+ 298:	00000034 	.word	0x00000034
+ 29c:	000000dc 	.word	0x000000dc
+ 2a0:	000000ec 	.word	0x000000ec
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1128
                     }
                 else
                     {
                     u16 barHeight = Readout.CAE1 * readoutYScalingFactor;
- 29c:	4b54      	ldr	r3, [pc, #336]	; (3f0 <GUI+0x3f0>)
- 29e:	681b      	ldr	r3, [r3, #0]
- 2a0:	ee07 3a90 	vmov	s15, r3
- 2a4:	eeb8 7a67 	vcvt.f32.u32	s14, s15
- 2a8:	edd7 7a0a 	vldr	s15, [r7, #40]	; 0x28
- 2ac:	ee67 7a27 	vmul.f32	s15, s14, s15
- 2b0:	eefc 7ae7 	vcvt.u32.f32	s15, s15
- 2b4:	ee17 3a90 	vmov	r3, s15
- 2b8:	84fb      	strh	r3, [r7, #38]	; 0x26
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1128
+ 2a4:	4b54      	ldr	r3, [pc, #336]	; (3f8 <GUI+0x3f8>)
+ 2a6:	681b      	ldr	r3, [r3, #0]
+ 2a8:	ee07 3a90 	vmov	s15, r3
+ 2ac:	eeb8 7a67 	vcvt.f32.u32	s14, s15
+ 2b0:	edd7 7a0a 	vldr	s15, [r7, #40]	; 0x28
+ 2b4:	ee67 7a27 	vmul.f32	s15, s14, s15
+ 2b8:	eefc 7ae7 	vcvt.u32.f32	s15, s15
+ 2bc:	ee17 3a90 	vmov	r3, s15
+ 2c0:	84fb      	strh	r3, [r7, #38]	; 0x26
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1133
                     if(barHeight>STIM_MIDDLEPANEL_HEIGHT)
                         {
                         barHeight>STIM_MIDDLEPANEL_HEIGHT;
                         }
                     LCD_FillRect(
- 2ba:	4b4e      	ldr	r3, [pc, #312]	; (3f4 <GUI+0x3f4>)
- 2bc:	681b      	ldr	r3, [r3, #0]
- 2be:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
- 2c2:	4b4d      	ldr	r3, [pc, #308]	; (3f8 <GUI+0x3f8>)
- 2c4:	881b      	ldrh	r3, [r3, #0]
- 2c6:	461a      	mov	r2, r3
- 2c8:	8dfb      	ldrh	r3, [r7, #46]	; 0x2e
- 2ca:	f64f 71ff 	movw	r1, #65535	; 0xffff
- 2ce:	9100      	str	r1, [sp, #0]
- 2d0:	4610      	mov	r0, r2
- 2d2:	211e      	movs	r1, #30
- 2d4:	461a      	mov	r2, r3
- 2d6:	2396      	movs	r3, #150	; 0x96
- 2d8:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1132
+ 2c2:	4b4e      	ldr	r3, [pc, #312]	; (3fc <GUI+0x3fc>)
+ 2c4:	681b      	ldr	r3, [r3, #0]
+ 2c6:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
+ 2ca:	4b4d      	ldr	r3, [pc, #308]	; (400 <GUI+0x400>)
+ 2cc:	881b      	ldrh	r3, [r3, #0]
+ 2ce:	461a      	mov	r2, r3
+ 2d0:	8dfb      	ldrh	r3, [r7, #46]	; 0x2e
+ 2d2:	f64f 71ff 	movw	r1, #65535	; 0xffff
+ 2d6:	9100      	str	r1, [sp, #0]
+ 2d8:	4610      	mov	r0, r2
+ 2da:	211e      	movs	r1, #30
+ 2dc:	461a      	mov	r2, r3
+ 2de:	2396      	movs	r3, #150	; 0x96
+ 2e0:	47a0      	blx	r4
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1137
                         barPosX, STIM_LOWERPANEL_HEIGHT, 
                         barWidth, STIM_MIDDLEPANEL_HEIGHT,                        
                         STIM_BARBG_COLOR );                    
                     LCD_FillRect(
- 2da:	4b46      	ldr	r3, [pc, #280]	; (3f4 <GUI+0x3f4>)
- 2dc:	681b      	ldr	r3, [r3, #0]
- 2de:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
- 2e2:	4b45      	ldr	r3, [pc, #276]	; (3f8 <GUI+0x3f8>)
- 2e4:	881b      	ldrh	r3, [r3, #0]
- 2e6:	4619      	mov	r1, r3
- 2e8:	8dfa      	ldrh	r2, [r7, #46]	; 0x2e
- 2ea:	8cfb      	ldrh	r3, [r7, #38]	; 0x26
- 2ec:	20f8      	movs	r0, #248	; 0xf8
- 2ee:	9000      	str	r0, [sp, #0]
- 2f0:	4608      	mov	r0, r1
- 2f2:	211e      	movs	r1, #30
- 2f4:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1136
+ 2e2:	4b46      	ldr	r3, [pc, #280]	; (3fc <GUI+0x3fc>)
+ 2e4:	681b      	ldr	r3, [r3, #0]
+ 2e6:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
+ 2ea:	4b45      	ldr	r3, [pc, #276]	; (400 <GUI+0x400>)
+ 2ec:	881b      	ldrh	r3, [r3, #0]
+ 2ee:	4619      	mov	r1, r3
+ 2f0:	8dfa      	ldrh	r2, [r7, #46]	; 0x2e
+ 2f2:	8cfb      	ldrh	r3, [r7, #38]	; 0x26
+ 2f4:	20f8      	movs	r0, #248	; 0xf8
+ 2f6:	9000      	str	r0, [sp, #0]
+ 2f8:	4608      	mov	r0, r1
+ 2fa:	211e      	movs	r1, #30
+ 2fc:	47a0      	blx	r4
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1141
                         barPosX, STIM_LOWERPANEL_HEIGHT, 
                         barWidth, barHeight,                        
                         STIM_BARFG_COLOR );                    
                     barPosX += barWidth;
- 2f6:	4b40      	ldr	r3, [pc, #256]	; (3f8 <GUI+0x3f8>)
- 2f8:	881a      	ldrh	r2, [r3, #0]
- 2fa:	8dfb      	ldrh	r3, [r7, #46]	; 0x2e
- 2fc:	4413      	add	r3, r2
- 2fe:	b29a      	uxth	r2, r3
- 300:	4b3d      	ldr	r3, [pc, #244]	; (3f8 <GUI+0x3f8>)
- 302:	801a      	strh	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1143
+ 2fe:	4b40      	ldr	r3, [pc, #256]	; (400 <GUI+0x400>)
+ 300:	881a      	ldrh	r2, [r3, #0]
+ 302:	8dfb      	ldrh	r3, [r7, #46]	; 0x2e
+ 304:	4413      	add	r3, r2
+ 306:	b29a      	uxth	r2, r3
+ 308:	4b3d      	ldr	r3, [pc, #244]	; (400 <GUI+0x400>)
+ 30a:	801a      	strh	r2, [r3, #0]
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1148
                     if(barPosX>SCREEN_WIDTH)
                         {
                         barPosX;
                         }
                     }
                 lastStimState = STIMSTATE_RUN;                
- 304:	4b3d      	ldr	r3, [pc, #244]	; (3fc <GUI+0x3fc>)
- 306:	2201      	movs	r2, #1
- 308:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1144
+ 30c:	4b3d      	ldr	r3, [pc, #244]	; (404 <GUI+0x404>)
+ 30e:	2201      	movs	r2, #1
+ 310:	701a      	strb	r2, [r3, #0]
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1149
                 if(barPosX>SCREEN_WIDTH)
- 30a:	4b3b      	ldr	r3, [pc, #236]	; (3f8 <GUI+0x3f8>)
- 30c:	881b      	ldrh	r3, [r3, #0]
- 30e:	2bf0      	cmp	r3, #240	; 0xf0
- 310:	d903      	bls.n	31a <GUI+0x31a>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1146
+ 312:	4b3b      	ldr	r3, [pc, #236]	; (400 <GUI+0x400>)
+ 314:	881b      	ldrh	r3, [r3, #0]
+ 316:	2bf0      	cmp	r3, #240	; 0xf0
+ 318:	d903      	bls.n	322 <GUI+0x322>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1151
                         {
                         lastStimState = STIMSTATE_IDLE;  //begin new graphics screen                
- 312:	4b3a      	ldr	r3, [pc, #232]	; (3fc <GUI+0x3fc>)
- 314:	2200      	movs	r2, #0
- 316:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1148
+ 31a:	4b3a      	ldr	r3, [pc, #232]	; (404 <GUI+0x404>)
+ 31c:	2200      	movs	r2, #0
+ 31e:	701a      	strb	r2, [r3, #0]
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1153
                         }
                 break;
- 318:	e7ff      	b.n	31a <GUI+0x31a>
- 31a:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1153
+ 320:	e7ff      	b.n	322 <GUI+0x322>
+ 322:	bf00      	nop
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1158
                                     
             }        
                                         
             //display current settings and time
             DRAW_DisplayStringWithMode( 8,10,GetSettingsString(), 0, NORMAL_TEXT, RIGHT);            
- 31c:	4b35      	ldr	r3, [pc, #212]	; (3f4 <GUI+0x3f4>)
- 31e:	681b      	ldr	r3, [r3, #0]
- 320:	f8d3 40dc 	ldr.w	r4, [r3, #220]	; 0xdc
- 324:	f7ff fffe 	bl	0 <GUI>
- 328:	4603      	mov	r3, r0
- 32a:	2200      	movs	r2, #0
- 32c:	9200      	str	r2, [sp, #0]
- 32e:	2202      	movs	r2, #2
- 330:	9201      	str	r2, [sp, #4]
- 332:	2008      	movs	r0, #8
- 334:	210a      	movs	r1, #10
- 336:	461a      	mov	r2, r3
- 338:	2300      	movs	r3, #0
- 33a:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1155
+ 324:	4b35      	ldr	r3, [pc, #212]	; (3fc <GUI+0x3fc>)
+ 326:	681b      	ldr	r3, [r3, #0]
+ 328:	f8d3 40dc 	ldr.w	r4, [r3, #220]	; 0xdc
+ 32c:	f7ff fffe 	bl	0 <GUI>
+ 330:	4603      	mov	r3, r0
+ 332:	2200      	movs	r2, #0
+ 334:	9200      	str	r2, [sp, #0]
+ 336:	2202      	movs	r2, #2
+ 338:	9201      	str	r2, [sp, #4]
+ 33a:	2008      	movs	r0, #8
+ 33c:	210a      	movs	r1, #10
+ 33e:	461a      	mov	r2, r3
+ 340:	2300      	movs	r3, #0
+ 342:	47a0      	blx	r4
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1160
                    
             break;            
- 33c:	e054      	b.n	3e8 <GUI+0x3e8>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1159
+ 344:	e054      	b.n	3f0 <GUI+0x3f0>
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1164
         
         case GUI_INTRO_SCREEN:            
             
             DRAW_SetCharMagniCoeff(2);
- 33e:	4b2d      	ldr	r3, [pc, #180]	; (3f4 <GUI+0x3f4>)
- 340:	681b      	ldr	r3, [r3, #0]
- 342:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
- 346:	2002      	movs	r0, #2
- 348:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1160
+ 346:	4b2d      	ldr	r3, [pc, #180]	; (3fc <GUI+0x3fc>)
+ 348:	681b      	ldr	r3, [r3, #0]
+ 34a:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
+ 34e:	2002      	movs	r0, #2
+ 350:	4798      	blx	r3
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1165
             DRAW_SetTextColor(RGB_GREEN);                 
- 34a:	4b2a      	ldr	r3, [pc, #168]	; (3f4 <GUI+0x3f4>)
- 34c:	681b      	ldr	r3, [r3, #0]
- 34e:	f8d3 30b0 	ldr.w	r3, [r3, #176]	; 0xb0
- 352:	f24e 0007 	movw	r0, #57351	; 0xe007
- 356:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1162
+ 352:	4b2a      	ldr	r3, [pc, #168]	; (3fc <GUI+0x3fc>)
+ 354:	681b      	ldr	r3, [r3, #0]
+ 356:	f8d3 30b0 	ldr.w	r3, [r3, #176]	; 0xb0
+ 35a:	f24e 0007 	movw	r0, #57351	; 0xe007
+ 35e:	4798      	blx	r3
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1167
             
             LCD_FillRect(
- 358:	4b26      	ldr	r3, [pc, #152]	; (3f4 <GUI+0x3f4>)
- 35a:	681b      	ldr	r3, [r3, #0]
- 35c:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
- 360:	f640 03fc 	movw	r3, #2300	; 0x8fc
- 364:	9300      	str	r3, [sp, #0]
- 366:	2000      	movs	r0, #0
- 368:	2100      	movs	r1, #0
- 36a:	22f0      	movs	r2, #240	; 0xf0
- 36c:	23f0      	movs	r3, #240	; 0xf0
- 36e:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1167
+ 360:	4b26      	ldr	r3, [pc, #152]	; (3fc <GUI+0x3fc>)
+ 362:	681b      	ldr	r3, [r3, #0]
+ 364:	f8d3 4118 	ldr.w	r4, [r3, #280]	; 0x118
+ 368:	f640 03fc 	movw	r3, #2300	; 0x8fc
+ 36c:	9300      	str	r3, [sp, #0]
+ 36e:	2000      	movs	r0, #0
+ 370:	2100      	movs	r1, #0
+ 372:	22f0      	movs	r2, #240	; 0xf0
+ 374:	23f0      	movs	r3, #240	; 0xf0
+ 376:	47a0      	blx	r4
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1172
             0, 0, 
             SCREEN_WIDTH, SCREEN_HEIGHT,                 
             RGB_ORANGE );
             
             DRAW_DisplayStringWithMode( 0,180,"STiM32", ALL_SCREEN, INVERTED_TEXT, CENTER);            
- 370:	4b20      	ldr	r3, [pc, #128]	; (3f4 <GUI+0x3f4>)
- 372:	681b      	ldr	r3, [r3, #0]
- 374:	f8d3 40dc 	ldr.w	r4, [r3, #220]	; 0xdc
- 378:	4b21      	ldr	r3, [pc, #132]	; (400 <GUI+0x400>)
- 37a:	2201      	movs	r2, #1
- 37c:	9200      	str	r2, [sp, #0]
- 37e:	2201      	movs	r2, #1
- 380:	9201      	str	r2, [sp, #4]
- 382:	2000      	movs	r0, #0
- 384:	21b4      	movs	r1, #180	; 0xb4
- 386:	461a      	mov	r2, r3
- 388:	f04f 33ff 	mov.w	r3, #4294967295
- 38c:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1168
+ 378:	4b20      	ldr	r3, [pc, #128]	; (3fc <GUI+0x3fc>)
+ 37a:	681b      	ldr	r3, [r3, #0]
+ 37c:	f8d3 40dc 	ldr.w	r4, [r3, #220]	; 0xdc
+ 380:	4b21      	ldr	r3, [pc, #132]	; (408 <GUI+0x408>)
+ 382:	2201      	movs	r2, #1
+ 384:	9200      	str	r2, [sp, #0]
+ 386:	2201      	movs	r2, #1
+ 388:	9201      	str	r2, [sp, #4]
+ 38a:	2000      	movs	r0, #0
+ 38c:	21b4      	movs	r1, #180	; 0xb4
+ 38e:	461a      	mov	r2, r3
+ 390:	f04f 33ff 	mov.w	r3, #4294967295
+ 394:	47a0      	blx	r4
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1173
             DRAW_SetCharMagniCoeff(1);
- 38e:	4b19      	ldr	r3, [pc, #100]	; (3f4 <GUI+0x3f4>)
- 390:	681b      	ldr	r3, [r3, #0]
- 392:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
- 396:	2001      	movs	r0, #1
- 398:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1169
+ 396:	4b19      	ldr	r3, [pc, #100]	; (3fc <GUI+0x3fc>)
+ 398:	681b      	ldr	r3, [r3, #0]
+ 39a:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
+ 39e:	2001      	movs	r0, #1
+ 3a0:	4798      	blx	r3
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1174
             DRAW_DisplayStringWithMode( 0,160,STIM32_VERSION, ALL_SCREEN, INVERTED_TEXT, CENTER);            
- 39a:	4b16      	ldr	r3, [pc, #88]	; (3f4 <GUI+0x3f4>)
- 39c:	681b      	ldr	r3, [r3, #0]
- 39e:	f8d3 40dc 	ldr.w	r4, [r3, #220]	; 0xdc
- 3a2:	4b18      	ldr	r3, [pc, #96]	; (404 <GUI+0x404>)
- 3a4:	2201      	movs	r2, #1
- 3a6:	9200      	str	r2, [sp, #0]
- 3a8:	2201      	movs	r2, #1
- 3aa:	9201      	str	r2, [sp, #4]
- 3ac:	2000      	movs	r0, #0
- 3ae:	21a0      	movs	r1, #160	; 0xa0
- 3b0:	461a      	mov	r2, r3
- 3b2:	f04f 33ff 	mov.w	r3, #4294967295
- 3b6:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1171
+ 3a2:	4b16      	ldr	r3, [pc, #88]	; (3fc <GUI+0x3fc>)
+ 3a4:	681b      	ldr	r3, [r3, #0]
+ 3a6:	f8d3 40dc 	ldr.w	r4, [r3, #220]	; 0xdc
+ 3aa:	4b18      	ldr	r3, [pc, #96]	; (40c <GUI+0x40c>)
+ 3ac:	2201      	movs	r2, #1
+ 3ae:	9200      	str	r2, [sp, #0]
+ 3b0:	2201      	movs	r2, #1
+ 3b2:	9201      	str	r2, [sp, #4]
+ 3b4:	2000      	movs	r0, #0
+ 3b6:	21a0      	movs	r1, #160	; 0xa0
+ 3b8:	461a      	mov	r2, r3
+ 3ba:	f04f 33ff 	mov.w	r3, #4294967295
+ 3be:	47a0      	blx	r4
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1176
         
             DRAW_SetCharMagniCoeff(1);
- 3b8:	4b0e      	ldr	r3, [pc, #56]	; (3f4 <GUI+0x3f4>)
- 3ba:	681b      	ldr	r3, [r3, #0]
- 3bc:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
- 3c0:	2001      	movs	r0, #1
- 3c2:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1172
+ 3c0:	4b0e      	ldr	r3, [pc, #56]	; (3fc <GUI+0x3fc>)
+ 3c2:	681b      	ldr	r3, [r3, #0]
+ 3c4:	f8d3 30a8 	ldr.w	r3, [r3, #168]	; 0xa8
+ 3c8:	2001      	movs	r0, #1
+ 3ca:	4798      	blx	r3
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1177
             DRAW_DisplayStringWithMode( 0,100,GetBatteryStatusString(), ALL_SCREEN, NORMAL_TEXT, CENTER);            
- 3c4:	4b0b      	ldr	r3, [pc, #44]	; (3f4 <GUI+0x3f4>)
- 3c6:	681b      	ldr	r3, [r3, #0]
- 3c8:	f8d3 40dc 	ldr.w	r4, [r3, #220]	; 0xdc
- 3cc:	f7ff fffe 	bl	0 <GUI>
- 3d0:	4603      	mov	r3, r0
- 3d2:	2200      	movs	r2, #0
- 3d4:	9200      	str	r2, [sp, #0]
- 3d6:	2201      	movs	r2, #1
- 3d8:	9201      	str	r2, [sp, #4]
- 3da:	2000      	movs	r0, #0
- 3dc:	2164      	movs	r1, #100	; 0x64
- 3de:	461a      	mov	r2, r3
- 3e0:	f04f 33ff 	mov.w	r3, #4294967295
- 3e4:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1173
+ 3cc:	4b0b      	ldr	r3, [pc, #44]	; (3fc <GUI+0x3fc>)
+ 3ce:	681b      	ldr	r3, [r3, #0]
+ 3d0:	f8d3 40dc 	ldr.w	r4, [r3, #220]	; 0xdc
+ 3d4:	f7ff fffe 	bl	0 <GUI>
+ 3d8:	4603      	mov	r3, r0
+ 3da:	2200      	movs	r2, #0
+ 3dc:	9200      	str	r2, [sp, #0]
+ 3de:	2201      	movs	r2, #1
+ 3e0:	9201      	str	r2, [sp, #4]
+ 3e2:	2000      	movs	r0, #0
+ 3e4:	2164      	movs	r1, #100	; 0x64
+ 3e6:	461a      	mov	r2, r3
+ 3e8:	f04f 33ff 	mov.w	r3, #4294967295
+ 3ec:	47a0      	blx	r4
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1178
             break;                                                     
- 3e6:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1175
+ 3ee:	bf00      	nop
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1180
         }
     }
- 3e8:	3734      	adds	r7, #52	; 0x34
- 3ea:	46bd      	mov	sp, r7
- 3ec:	bd90      	pop	{r4, r7, pc}
- 3ee:	bf00      	nop
- 3f0:	0000002c 	.word	0x0000002c
- 3f4:	00000000 	.word	0x00000000
- 3f8:	00000172 	.word	0x00000172
- 3fc:	00000334 	.word	0x00000334
- 400:	000000fc 	.word	0x000000fc
- 404:	00000104 	.word	0x00000104
+ 3f0:	3734      	adds	r7, #52	; 0x34
+ 3f2:	46bd      	mov	sp, r7
+ 3f4:	bd90      	pop	{r4, r7, pc}
+ 3f6:	bf00      	nop
+ 3f8:	0000002c 	.word	0x0000002c
+ 3fc:	00000000 	.word	0x00000000
+ 400:	00000172 	.word	0x00000172
+ 404:	00000334 	.word	0x00000334
+ 408:	000000fc 	.word	0x000000fc
+ 40c:	00000104 	.word	0x00000104
 
 Disassembly of section .text.SetAutorun:
 
 00000000 <SetAutorun>:
 SetAutorun():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1184
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1189
 * Description    : Sets the bit 7 in SYS2 backup register to autorun this application 
 * Input          : None                     
 * Return         : None
@@ -2912,7 +2925,7 @@ static void SetAutorun(void)
     {
    0:	b480      	push	{r7}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1186
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1191
         //IH150125 the autorun is currently set in the CircleOS menu
     }
    4:	46bd      	mov	sp, r7
@@ -2923,13 +2936,13 @@ Disassembly of section .text.BackUpParameters:
 
 00000000 <BackUpParameters>:
 BackUpParameters():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1189
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1194
 
 static void BackUpParameters(void)
 {   
    0:	b580      	push	{r7, lr}
    2:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1190
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1195
     UTIL_WriteBackupRegister (BKP_FREQUENCY, PulseSeq.frequency);
    4:	4b0e      	ldr	r3, [pc, #56]	; (40 <BackUpParameters+0x40>)
    6:	681b      	ldr	r3, [r3, #0]
@@ -2939,7 +2952,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1190
   10:	2007      	movs	r0, #7
   12:	4611      	mov	r1, r2
   14:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1191
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1196
     UTIL_WriteBackupRegister (BKP_PULSESEQ, PulseSeq.pulseSeq);
   16:	4b0a      	ldr	r3, [pc, #40]	; (40 <BackUpParameters+0x40>)
   18:	681b      	ldr	r3, [r3, #0]
@@ -2949,7 +2962,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1191
   22:	2008      	movs	r0, #8
   24:	4611      	mov	r1, r2
   26:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1192
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1197
     UTIL_WriteBackupRegister (BKP_PULSEPEAKVOLTAGE, PulseSeq.peakVoltage);
   28:	4b05      	ldr	r3, [pc, #20]	; (40 <BackUpParameters+0x40>)
   2a:	681b      	ldr	r3, [r3, #0]
@@ -2959,11 +2972,11 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1192
   34:	2009      	movs	r0, #9
   36:	4611      	mov	r1, r2
   38:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1194
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1199
 
 return;
   3a:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1195
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1200
 }
   3c:	bd80      	pop	{r7, pc}
   3e:	bf00      	nop
@@ -2974,14 +2987,14 @@ Disassembly of section .text.RestoreParameters:
 
 00000000 <RestoreParameters>:
 RestoreParameters():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1198
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1203
 
 static void RestoreParameters(void)
 {
    0:	b580      	push	{r7, lr}
    2:	b084      	sub	sp, #16
    4:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1199
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1204
     u32 p_Frequency             = UTIL_ReadBackupRegister (BKP_FREQUENCY);
    6:	4b1d      	ldr	r3, [pc, #116]	; (7c <RestoreParameters+0x7c>)
    8:	681b      	ldr	r3, [r3, #0]
@@ -2989,7 +3002,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1199
    e:	2007      	movs	r0, #7
   10:	4798      	blx	r3
   12:	60f8      	str	r0, [r7, #12]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1200
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1205
     u32 p_PulseSeq              = UTIL_ReadBackupRegister (BKP_PULSESEQ);
   14:	4b19      	ldr	r3, [pc, #100]	; (7c <RestoreParameters+0x7c>)
   16:	681b      	ldr	r3, [r3, #0]
@@ -2997,7 +3010,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1200
   1c:	2008      	movs	r0, #8
   1e:	4798      	blx	r3
   20:	60b8      	str	r0, [r7, #8]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1201
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1206
     u32 p_PulsePeakVoltage      = UTIL_ReadBackupRegister (BKP_PULSEPEAKVOLTAGE);
   22:	4b16      	ldr	r3, [pc, #88]	; (7c <RestoreParameters+0x7c>)
   24:	681b      	ldr	r3, [r3, #0]
@@ -3005,60 +3018,60 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1201
   2a:	2009      	movs	r0, #9
   2c:	4798      	blx	r3
   2e:	6078      	str	r0, [r7, #4]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1204
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1209
 
     // set defaults if backup not valid
     if(p_Frequency>0)           { PulseSeq.frequency = p_Frequency;         }  else  { PulseSeq.frequency = FREQUENCY_1KHZ; }
   30:	68fb      	ldr	r3, [r7, #12]
   32:	2b00      	cmp	r3, #0
   34:	d004      	beq.n	40 <RestoreParameters+0x40>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1204 (discriminator 1)
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1209 (discriminator 1)
   36:	68fb      	ldr	r3, [r7, #12]
   38:	b2da      	uxtb	r2, r3
   3a:	4b11      	ldr	r3, [pc, #68]	; (80 <RestoreParameters+0x80>)
   3c:	701a      	strb	r2, [r3, #0]
   3e:	e002      	b.n	46 <RestoreParameters+0x46>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1204 (discriminator 2)
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1209 (discriminator 2)
   40:	4b0f      	ldr	r3, [pc, #60]	; (80 <RestoreParameters+0x80>)
   42:	2201      	movs	r2, #1
   44:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1205
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1210
     if(p_PulseSeq>0)            { PulseSeq.pulseSeq = p_PulseSeq;           }  else  { PulseSeq.pulseSeq  = PULSESEQUENCE_1;  }
   46:	68bb      	ldr	r3, [r7, #8]
   48:	2b00      	cmp	r3, #0
   4a:	d004      	beq.n	56 <RestoreParameters+0x56>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1205 (discriminator 1)
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1210 (discriminator 1)
   4c:	68bb      	ldr	r3, [r7, #8]
   4e:	b2da      	uxtb	r2, r3
   50:	4b0b      	ldr	r3, [pc, #44]	; (80 <RestoreParameters+0x80>)
   52:	705a      	strb	r2, [r3, #1]
   54:	e002      	b.n	5c <RestoreParameters+0x5c>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1205 (discriminator 2)
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1210 (discriminator 2)
   56:	4b0a      	ldr	r3, [pc, #40]	; (80 <RestoreParameters+0x80>)
   58:	2201      	movs	r2, #1
   5a:	705a      	strb	r2, [r3, #1]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1206
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1211
     if(p_PulsePeakVoltage>0)    { PulseSeq.peakVoltage = p_PulsePeakVoltage;}  else  { PulseSeq.peakVoltage  = PULSEPEAKVOLTAGE_8V
   5c:	687b      	ldr	r3, [r7, #4]
   5e:	2b00      	cmp	r3, #0
   60:	d004      	beq.n	6c <RestoreParameters+0x6c>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1206 (discriminator 1)
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1211 (discriminator 1)
   62:	687b      	ldr	r3, [r7, #4]
   64:	b2da      	uxtb	r2, r3
   66:	4b06      	ldr	r3, [pc, #24]	; (80 <RestoreParameters+0x80>)
   68:	709a      	strb	r2, [r3, #2]
   6a:	e002      	b.n	72 <RestoreParameters+0x72>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1206 (discriminator 2)
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1211 (discriminator 2)
   6c:	4b04      	ldr	r3, [pc, #16]	; (80 <RestoreParameters+0x80>)
   6e:	2201      	movs	r2, #1
   70:	709a      	strb	r2, [r3, #2]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1210
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1215
     ;  }
 
                 
     return;
   72:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1211
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1216
 }
   74:	3710      	adds	r7, #16
   76:	46bd      	mov	sp, r7
@@ -3071,14 +3084,14 @@ Disassembly of section .text.GetSettingsString:
 
 00000000 <GetSettingsString>:
 GetSettingsString():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1214
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1219
 
 static char* GetSettingsString(void)
     {
    0:	b590      	push	{r4, r7, lr}
    2:	b08b      	sub	sp, #44	; 0x2c
    4:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1220
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1225
         char *frequency_string;
         char *pulseSeq_string;
         char *peakVoltage_string;
@@ -3093,32 +3106,32 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1220
   10:	d007      	beq.n	22 <GetSettingsString+0x22>
   12:	2b01      	cmp	r3, #1
   14:	d108      	bne.n	28 <GetSettingsString+0x28>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1223
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1228
         {
             case FREQUENCY_1KHZ:
                     frequency_string = "1kHz";                    
   16:	4b55      	ldr	r3, [pc, #340]	; (16c <GetSettingsString+0x16c>)
   18:	627b      	str	r3, [r7, #36]	; 0x24
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1224
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1229
                     break;
   1a:	e005      	b.n	28 <GetSettingsString+0x28>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1226
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1231
             case FREQUENCY_2KHZ:
                     frequency_string = "2kHz";                    
   1c:	4b54      	ldr	r3, [pc, #336]	; (170 <GetSettingsString+0x170>)
   1e:	627b      	str	r3, [r7, #36]	; 0x24
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1227
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1232
                     break;
   20:	e002      	b.n	28 <GetSettingsString+0x28>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1229
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1234
             case FREQUENCY_3KHZ:
                     frequency_string = "3kHz";                    
   22:	4b54      	ldr	r3, [pc, #336]	; (174 <GetSettingsString+0x174>)
   24:	627b      	str	r3, [r7, #36]	; 0x24
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1230
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1235
                     break;
   26:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1233
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1238
         }
     
         switch(PulseSeq.pulseSeq)
@@ -3133,40 +3146,40 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1233
   3c:	0000004f 	.word	0x0000004f
   40:	00000055 	.word	0x00000055
   44:	0000005b 	.word	0x0000005b
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1236
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1241
         {
             case PULSESEQUENCE_1:
                     pulseSeq_string = "Seq1";                    
   48:	4b4b      	ldr	r3, [pc, #300]	; (178 <GetSettingsString+0x178>)
   4a:	623b      	str	r3, [r7, #32]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1237
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1242
                     break;
   4c:	e008      	b.n	60 <GetSettingsString+0x60>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1239
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1244
             case PULSESEQUENCE_2:
                     pulseSeq_string = "Seq2";                    
   4e:	4b4b      	ldr	r3, [pc, #300]	; (17c <GetSettingsString+0x17c>)
   50:	623b      	str	r3, [r7, #32]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1240
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1245
                     break;
   52:	e005      	b.n	60 <GetSettingsString+0x60>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1242
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1247
             case PULSESEQUENCE_3:
                     pulseSeq_string = "Seq3";                    
   54:	4b4a      	ldr	r3, [pc, #296]	; (180 <GetSettingsString+0x180>)
   56:	623b      	str	r3, [r7, #32]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1243
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1248
                     break;
   58:	e002      	b.n	60 <GetSettingsString+0x60>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1245
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1250
             case PULSESEQUENCE_4:
                     pulseSeq_string = "Seq4";                    
   5a:	4b4a      	ldr	r3, [pc, #296]	; (184 <GetSettingsString+0x184>)
   5c:	623b      	str	r3, [r7, #32]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1246
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1251
                     break;
   5e:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1249
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1254
         }
     
         switch(PulseSeq.peakVoltage)
@@ -3178,32 +3191,32 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1249
   6a:	d007      	beq.n	7c <GetSettingsString+0x7c>
   6c:	2b01      	cmp	r3, #1
   6e:	d108      	bne.n	82 <GetSettingsString+0x82>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1252
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1257
         {
             case PULSEPEAKVOLTAGE_8V:
                     peakVoltage_string = "8V";                    
   70:	4b45      	ldr	r3, [pc, #276]	; (188 <GetSettingsString+0x188>)
   72:	61fb      	str	r3, [r7, #28]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1253
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1258
                     break;
   74:	e005      	b.n	82 <GetSettingsString+0x82>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1255
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1260
             case PULSEPEAKVOLTAGE_6V:
                     peakVoltage_string = "6V";                    
   76:	4b45      	ldr	r3, [pc, #276]	; (18c <GetSettingsString+0x18c>)
   78:	61fb      	str	r3, [r7, #28]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1256
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1261
                     break;
   7a:	e002      	b.n	82 <GetSettingsString+0x82>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1258
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1263
             case PULSEPEAKVOLTAGE_4V:
                     peakVoltage_string = "4V";                    
   7c:	4b44      	ldr	r3, [pc, #272]	; (190 <GetSettingsString+0x190>)
   7e:	61fb      	str	r3, [r7, #28]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1259
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1264
                     break;
   80:	bf00      	nop
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1266
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1271
 
         {
         u32 THH, TMM, TSS;
@@ -3217,7 +3230,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1266
   8e:	f107 010c 	add.w	r1, r7, #12
   92:	f107 0208 	add.w	r2, r7, #8
   96:	4798      	blx	r3
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1267
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1272
         UTIL_int2str( mm_string, TMM, 2, TRUE);    
   98:	4b3e      	ldr	r3, [pc, #248]	; (194 <GetSettingsString+0x194>)
   9a:	681b      	ldr	r3, [r3, #0]
@@ -3229,7 +3242,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1267
   a8:	2202      	movs	r2, #2
   aa:	2301      	movs	r3, #1
   ac:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1268
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1273
         UTIL_int2str( ss_string, TSS, 2, TRUE);    
   ae:	4b39      	ldr	r3, [pc, #228]	; (194 <GetSettingsString+0x194>)
   b0:	681b      	ldr	r3, [r3, #0]
@@ -3241,7 +3254,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1268
   be:	2202      	movs	r2, #2
   c0:	2301      	movs	r3, #1
   c2:	47a0      	blx	r4
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1269
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1274
         strcpy(time_string, mm_string+1);   
   c4:	f107 0214 	add.w	r2, r7, #20
   c8:	1d3b      	adds	r3, r7, #4
@@ -3249,7 +3262,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1269
   cc:	4610      	mov	r0, r2
   ce:	4619      	mov	r1, r3
   d0:	f7ff fffe 	bl	0 <strcpy>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1270
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1275
         strcat(time_string,":");    
   d4:	f107 0314 	add.w	r3, r7, #20
   d8:	4618      	mov	r0, r3
@@ -3260,7 +3273,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1270
   e6:	4a2c      	ldr	r2, [pc, #176]	; (198 <GetSettingsString+0x198>)
   e8:	8812      	ldrh	r2, [r2, #0]
   ea:	801a      	strh	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1271
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1276
         strcat(time_string, ss_string+1);    //IH150212 the "+1" solves the bug with leading space in the ss_string and mm_string
   ec:	f107 0214 	add.w	r2, r7, #20
   f0:	463b      	mov	r3, r7
@@ -3268,7 +3281,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1271
   f4:	4610      	mov	r0, r2
   f6:	4619      	mov	r1, r3
   f8:	f7ff fffe 	bl	0 <strcat>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1277
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1282
         //IH150128 Hours are ignored
         }
         
@@ -3278,7 +3291,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1277
   fc:	4827      	ldr	r0, [pc, #156]	; (19c <GetSettingsString+0x19c>)
   fe:	6a79      	ldr	r1, [r7, #36]	; 0x24
  100:	f7ff fffe 	bl	0 <strcpy>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1278
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1283
         strcat(SettingsStatusString, "   ");            // lenght = 3
  104:	4825      	ldr	r0, [pc, #148]	; (98 <strlen+0x98>)
  106:	f7ff fffe 	bl	0 <strlen>
@@ -3289,12 +3302,12 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1278
  112:	4a23      	ldr	r2, [pc, #140]	; (1a0 <GetSettingsString+0x1a0>)
  114:	6810      	ldr	r0, [r2, #0]
  116:	6018      	str	r0, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1279
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1284
         strcat(SettingsStatusString, pulseSeq_string);  // length = 4
  118:	4820      	ldr	r0, [pc, #128]	; (19c <GetSettingsString+0x19c>)
  11a:	6a39      	ldr	r1, [r7, #32]
  11c:	f7ff fffe 	bl	0 <strcat>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1280
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1285
         strcat(SettingsStatusString, "   ");            // lenght = 3
  120:	481e      	ldr	r0, [pc, #120]	; (7c <strlen+0x7c>)
  122:	f7ff fffe 	bl	0 <strlen>
@@ -3305,12 +3318,12 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1280
  12e:	4a1c      	ldr	r2, [pc, #112]	; (1a0 <GetSettingsString+0x1a0>)
  130:	6810      	ldr	r0, [r2, #0]
  132:	6018      	str	r0, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1281
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1286
         strcat(SettingsStatusString, peakVoltage_string);  // length = 2
  134:	4819      	ldr	r0, [pc, #100]	; (19c <GetSettingsString+0x19c>)
  136:	69f9      	ldr	r1, [r7, #28]
  138:	f7ff fffe 	bl	0 <strcat>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1282
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1287
         strcat(SettingsStatusString, "   ");            // lenght = 3
  13c:	4817      	ldr	r0, [pc, #92]	; (60 <strlen+0x60>)
  13e:	f7ff fffe 	bl	0 <strlen>
@@ -3321,17 +3334,17 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1282
  14a:	4a15      	ldr	r2, [pc, #84]	; (1a0 <GetSettingsString+0x1a0>)
  14c:	6810      	ldr	r0, [r2, #0]
  14e:	6018      	str	r0, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1283
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1288
         strcat(SettingsStatusString, time_string);      // length = 5
  150:	f107 0314 	add.w	r3, r7, #20
  154:	4811      	ldr	r0, [pc, #68]	; (19c <GetSettingsString+0x19c>)
  156:	4619      	mov	r1, r3
  158:	f7ff fffe 	bl	0 <strcat>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1285
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1290
     
         return SettingsStatusString;
  15c:	4b0f      	ldr	r3, [pc, #60]	; (19c <GetSettingsString+0x19c>)
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1286
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1291
     }
  15e:	4618      	mov	r0, r3
  160:	372c      	adds	r7, #44	; 0x2c
@@ -3358,14 +3371,14 @@ Disassembly of section .text.GetBatteryStatusString:
 
 00000000 <GetBatteryStatusString>:
 GetBatteryStatusString():
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1289
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1294
 
 static char* GetBatteryStatusString(void)
     {
    0:	b580      	push	{r7, lr}
    2:	b082      	sub	sp, #8
    4:	af00      	add	r7, sp, #0
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1290
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1295
         u16 vbat_mV = UTIL_GetBat();
    6:	4b0e      	ldr	r3, [pc, #56]	; (40 <GetBatteryStatusString+0x40>)
    8:	681b      	ldr	r3, [r3, #0]
@@ -3373,7 +3386,7 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1290
    e:	4798      	blx	r3
   10:	4603      	mov	r3, r0
   12:	80fb      	strh	r3, [r7, #6]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1293
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1298
         
         // max string lenght is BATTERY_STATUS_STRING_LENGHT
         strcpy(BatteryStatusString, "Battery OK");
@@ -3385,24 +3398,24 @@ C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1293
   1e:	3302      	adds	r3, #2
   20:	0c12      	lsrs	r2, r2, #16
   22:	701a      	strb	r2, [r3, #0]
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1294
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1299
         if(vbat_mV<VBAT_MV_LOW)
   24:	88fb      	ldrh	r3, [r7, #6]
   26:	f5b3 6f7a 	cmp.w	r3, #4000	; 0xfa0
   2a:	d204      	bcs.n	36 <GetBatteryStatusString+0x36>
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1296
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1301
         {
             strcpy(BatteryStatusString, "Battery LOW");
   2c:	4b05      	ldr	r3, [pc, #20]	; (44 <GetBatteryStatusString+0x44>)
   2e:	4a07      	ldr	r2, [pc, #28]	; (4c <GetBatteryStatusString+0x4c>)
   30:	ca07      	ldmia	r2, {r0, r1, r2}
   32:	e883 0007 	stmia.w	r3, {r0, r1, r2}
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1299
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1304
         }
     
         return BatteryStatusString;
   36:	4b03      	ldr	r3, [pc, #12]	; (44 <GetBatteryStatusString+0x44>)
-C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1300
+C:\Users\igor.hollaender\Documents\GitHub\STiM32/STiM32.c:1305
     }
   38:	4618      	mov	r0, r3
   3a:	3708      	adds	r7, #8
