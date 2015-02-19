@@ -3,14 +3,11 @@
 * File Name          :  STiM32.c
 * Description        :  STIMULATOR Control firmware 
 *
-* Last revision      :  IH 2015-02-16
+* Last revision      :  IH 2015-02-19
 *
 *   TODO:
 **
 *   IH150216    Fine tune the limits for Run/Idle (100 is too high at 4V)
-*   IH150216    Time string shows SS values over 60 (??)
-*   IH150216    Time is not updated during 'waiting'
-*   IH150216    Implement time string showing net measuremement time
 *
 *******************************************************************************/
 
@@ -27,7 +24,7 @@
 //#define DEBUG_NOHW
 
 /* Private defines -----------------------------------------------------------*/
-#define STIM32_VERSION          "150216a"
+#define STIM32_VERSION          "150219a"
 
 #define  STIMULATOR_HANDLER_ID  UNUSED5_SCHHDL_ID
 #define  GUIUPDATE_DIVIDER      1       // GUI is called every 100 SysTicks
@@ -38,6 +35,8 @@
 #define  VBAT_MV_LOW                    4000
 #define  BATTERY_STATUS_STRING_LENGHT   8
 #define  SETTINGS_STRING_LENGHT         32
+#define  TOTALTIME_STRING_LENGHT        8
+#define  NETTIME_STRING_LENGHT          8
 
 #define  BKP_FREQUENCY          BKP_USER1
 #define  BKP_PULSESEQ           BKP_USER2
@@ -196,6 +195,9 @@ static void BackUpParameters(void);
 static void RestoreParameters(void);
 static char* GetBatteryStatusString(void);
 static char* GetSettingsString(void);
+static char* GetTotalTimeString(void);
+static char* GetNetTimeString(void);
+static void StartNetTimeTimer(void);
 
 static void SetOutputVoltage(OutputVoltage_code, float multiplication_factor);
 static void GeneratePulseSequenceAndReadCAE(void);        
@@ -241,11 +243,11 @@ tMenu MenuSetPulseSequence =
     5, 0, 0, 0, 0, 0,
     0,
     {
-        { "PSeq 1",     SetPulseSequence_1,    Application_Handler,    0 },
-        { "PSeq 2",     SetPulseSequence_2,    Application_Handler ,   0 },
-        { "PSeq 3",     SetPulseSequence_3,    Application_Handler ,   0 },
-        { "PSeq 4",     SetPulseSequence_4,    Application_Handler ,   0 },
-        { "Cancel",     Cancel,                Application_Handler,    0 },
+        { "+200us",             SetPulseSequence_1,    Application_Handler,    0 },
+        { "-50us",              SetPulseSequence_2,    Application_Handler ,   0 },
+        { "+50us/o50us/+50us",  SetPulseSequence_3,    Application_Handler ,   0 },
+        { "+400us",             SetPulseSequence_4,    Application_Handler ,   0 },
+        { "Cancel",             Cancel,                Application_Handler,    0 },
     }
 };
 
@@ -291,6 +293,10 @@ static u8 MyFifoTxBuffer[FIFO_SIZE];
 
 static char BatteryStatusString[BATTERY_STATUS_STRING_LENGHT];
 static char SettingsStatusString[SETTINGS_STRING_LENGHT];
+static char TotalTimeString[TOTALTIME_STRING_LENGHT];
+static char NetTimeString[NETTIME_STRING_LENGHT];
+
+static u16 NetTimer_StartTime;
 
 /*******************************************************************************
 * Function Name  : STIMULATOR_Handler
@@ -401,7 +407,7 @@ if((frequency_cnt++) % PulseSeq.frequency_divider)
         case STIMSTATE_WAITING_FOR_IDLE:  
                 if(Readout.CAE1 > ReadoutLimit_CAE1_for_Idle)
                     {
-                    StimState = STIMSTATE_RUN;
+                    StimState = STIMSTATE_RUN;                    
                     }
                 else                    
                     if(++state_change_cnt == STATECHANGE_CNT_LIMIT)
@@ -419,6 +425,7 @@ if((frequency_cnt++) % PulseSeq.frequency_divider)
                     if(++state_change_cnt == STATECHANGE_CNT_LIMIT)
                         {
                         StimState = STIMSTATE_RUN;
+                        StartNetTimeTimer();
                         }                                          
                 break;
     }
@@ -995,6 +1002,8 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
 #define STIM_SINGLE_BAR_WIDTH     8
     
     static StimState_code lastStimState = STIMSTATE_RUN;
+    static u32 lastReadoutValue = 0;
+    static u32 roundedReadout; 
     static u16 barPosX = 0;
     u16 barWidth = STIM_SINGLE_BAR_WIDTH;
     
@@ -1043,7 +1052,8 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
                     
         case GUI_NORMAL_UPDATE:
                     
-            
+            DRAW_DisplayStringWithMode( 8,30,GetTotalTimeString(), 0, NORMAL_TEXT, RIGHT);            
+        
             if(Readout.isOverloaded)
             {
                 thisUpperPanelState = UPPERPANELSTATE_OVERLOAD;                
@@ -1061,13 +1071,8 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
         
             BUZZER_SetMode(BUZZER_OFF);  //switch out buzzer if it has been activated before
         
-            // clear upper panel            
-            LCD_FillRect(
-                0, SCREEN_HEIGHT-STIM_UPPERPANEL_HEIGHT, 
-                SCREEN_WIDTH, 
-                STIM_UPPERPANEL_HEIGHT, 
-                STIM_UPPERPANEL_COLOR );
             
+              
             {
             u8 str[30];        
             if(thisUpperPanelState == UPPERPANELSTATE_OVERLOAD)
@@ -1084,14 +1089,35 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
             else
             {
                 // display readout figure
-                UTIL_int2str( str, Readout.CAE1, 4, FALSE);    
+                // IH150219 value rounded to multiple of 50
+                u32 rounding=50;
+                roundedReadout = Readout.CAE1/rounding;
+                roundedReadout *= rounding;
+                UTIL_int2str( str, roundedReadout, 4, FALSE);                    
                 DRAW_SetCharMagniCoeff(4);            
             }
             
             DRAW_SetTextColor(RGB_YELLOW);     
-            DRAW_SetBGndColor(STIM_UPPERPANEL_COLOR);        
-            
-            DRAW_DisplayStringWithMode( 0,180,str, 0, NORMAL_TEXT, LEFT);            
+            DRAW_SetBGndColor(STIM_UPPERPANEL_COLOR);   
+
+   
+            //IH150219 HACK: to reduce display flickering
+            if((lastReadoutValue!=roundedReadout) || (thisUpperPanelState != UPPERPANELSTATE_DISPLAY_READOUT))                 
+            {    
+                // clear upper panel            
+                LCD_FillRect(
+                    0, SCREEN_HEIGHT-STIM_UPPERPANEL_HEIGHT, 
+                    SCREEN_WIDTH, 
+                    STIM_UPPERPANEL_HEIGHT, 
+                    STIM_UPPERPANEL_COLOR );        
+                // display string in the upper panel
+                DRAW_DisplayStringWithMode( 0,180,str, 0, NORMAL_TEXT, LEFT);                        
+                if(thisUpperPanelState == UPPERPANELSTATE_DISPLAY_READOUT)
+                {
+                    lastReadoutValue=roundedReadout;
+                }                
+            }
+        
             
             DRAW_SetCharMagniCoeff(1);            
             DRAW_SetTextColor(RGB_WHITE);     
@@ -1153,12 +1179,22 @@ static void GUI(GUIaction_code GUIaction, u16 readout1)
                         {
                         lastStimState = STIMSTATE_IDLE;  //begin new graphics screen                
                         }
+                
+                // show net time
+                DRAW_SetTextColor(RGB_YELLOW);    
+                DRAW_SetCharMagniCoeff(2);                                
+                DRAW_SetBGndColor(STIM_UPPERPANEL_COLOR);        
+                DRAW_DisplayStringWithMode( 8,150,GetNetTimeString(), 0, NORMAL_TEXT, RIGHT);    
+                DRAW_SetCharMagniCoeff(1);            
+                DRAW_SetTextColor(RGB_WHITE);     
+                DRAW_SetBGndColor(STIM_LOWERPANEL_COLOR); 
+                       
                 break;
                                     
             }        
+                                     
+            DRAW_DisplayStringWithMode( 8,10,GetSettingsString(), 0, NORMAL_TEXT, RIGHT);   
                                         
-            //display current settings and time
-            DRAW_DisplayStringWithMode( 8,10,GetSettingsString(), 0, NORMAL_TEXT, RIGHT);            
                    
             break;            
         
@@ -1219,7 +1255,7 @@ static void RestoreParameters(void)
 }
 
 static char* GetSettingsString(void)
-    {
+{
         char *frequency_string;
         char *pulseSeq_string;
         char *peakVoltage_string;
@@ -1266,11 +1302,25 @@ static char* GetSettingsString(void)
                     peakVoltage_string = "4V";                    
                     break;
         }       
+        
+        // max string lenght is SETTINGS_STRING_LENGHT
+        strcpy(SettingsStatusString, frequency_string); // lenght = 4
+        strcat(SettingsStatusString, "   ");            // lenght = 3
+        strcat(SettingsStatusString, pulseSeq_string);  // length = 4
+        strcat(SettingsStatusString, "   ");            // lenght = 3
+        strcat(SettingsStatusString, peakVoltage_string);  // length = 2
+            
+        return SettingsStatusString;
+}
 
-        {
-        u32 THH, TMM, TSS;
+
+static char* GetTotalTimeString(void)
+{
+        u8 THH, TMM, TSS;
         char mm_string[3];
         char ss_string[3];
+        char time_string[6];
+
         RTC_GetTime (&THH, &TMM, &TSS);
         UTIL_int2str( mm_string, TMM, 2, TRUE);    
         UTIL_int2str( ss_string, TSS, 2, TRUE);    
@@ -1278,23 +1328,35 @@ static char* GetSettingsString(void)
         strcat(time_string,":");    
         strcat(time_string, ss_string+1);    //IH150212 the "+1" solves the bug with leading space in the ss_string and mm_string
         //IH150128 Hours are ignored
-        }
+
+        strcpy(TotalTimeString, time_string);
+        return TotalTimeString;        
+}
+
+static char* GetNetTimeString(void)
+{        
+        u8 THH, TMM, TSS;
+        u16 NetTimer_ActualTime;
+        char seconds_string[5];
+       
+        RTC_GetTime (&THH, &TMM, &TSS);
+        NetTimer_ActualTime = (u16)THH*3600 + (u16)TMM*60 + (u16)TSS;       
         
-    
-        // max string lenght is SETTINGS_STRING_LENGHT
-        strcpy(SettingsStatusString, frequency_string); // lenght = 4
-        strcat(SettingsStatusString, "   ");            // lenght = 3
-        strcat(SettingsStatusString, pulseSeq_string);  // length = 4
-        strcat(SettingsStatusString, "   ");            // lenght = 3
-        strcat(SettingsStatusString, peakVoltage_string);  // length = 2
-        strcat(SettingsStatusString, "   ");            // lenght = 3
-        strcat(SettingsStatusString, time_string);      // length = 5
-    
-        return SettingsStatusString;
-    }
+        UTIL_int2str( seconds_string, NetTimer_ActualTime-NetTimer_StartTime, 3, FALSE);            
+
+        strcpy(NetTimeString, seconds_string);
+        return NetTimeString;        
+}
+
+static void StartNetTimeTimer(void)
+{
+        u8 THH, TMM, TSS;
+        RTC_GetTime (&THH, &TMM, &TSS);
+        NetTimer_StartTime = (u16)THH*3600 + (u16)TMM*60 + (u16)TSS;
+}
 
 static char* GetBatteryStatusString(void)
-    {
+{
         u16 vbat_mV = UTIL_GetBat();
         
         // max string lenght is BATTERY_STATUS_STRING_LENGHT
@@ -1305,4 +1367,4 @@ static char* GetBatteryStatusString(void)
         }
     
         return BatteryStatusString;
-    }
+}

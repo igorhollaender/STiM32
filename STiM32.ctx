@@ -3,10 +3,10 @@
 	<STiM32>
 		<CodeView TopRow="134218012" Focus="134218016" >
 			<CodeReport>
-				<0>143</0>
-				<1>159</1>
-				<2>86</2>
-				<3>486</3>
+				<0>141</0>
+				<1>158</1>
+				<2>84</2>
+				<3>491</3>
 														
 			</CodeReport>
 										
@@ -36,8 +36,8 @@
 			
 	</Flags>
 	<Views>
-		<View File=".\STiM32.c" Line="26" Index="0" focus="1" />
-		<View File="..\..\..\..\..\Raisonance\Ride\Lib\ARM\CircleOS\circle_api.h" Line="1072" Index="1" />
+		<View File=".\STiM32.c" Line="1093" Index="0" focus="1" />
+		<View File="..\..\..\..\..\Raisonance\Ride\Lib\ARM\CircleOS\circle_api.h" Line="1" Index="1" />
 	</Views>
 	<BookMarks>
 		<BookMark File="" Line="0" />
@@ -75,6 +75,11 @@
 		</GrepReplaceWhat>
 	</Grep>
 	<FindStrings>
+		<Find>round</Find>
+		<Find>NetTime</Find>
+		<Find>u32</Find>
+		<Find>Start</Find>
+		<Find>getCounter</Find>
 		<Find>100</Find>
 		<Find>Pla</Find>
 		<Find>Play</Find>
@@ -90,11 +95,6 @@
 		<Find>RTC</Find>
 		<Find>bool</Find>
 		<Find>false</Find>
-		<Find>DisplayTim</Find>
-		<Find>Display_Tim</Find>
-		<Find>GUI</Find>
-		<Find>Limit</Find>
-		<Find>DRAW</Find>
 	</FindStrings>
 	<ReplaceStrings/>
 </Debug>
